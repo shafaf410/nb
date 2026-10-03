@@ -69,12 +69,12 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
       <motion.header
         initial={{ y: -36, opacity: 0 }}
         animate={showNav ? { y: 0, opacity: 1 } : { y: -36, opacity: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-2.5 sm:top-5 left-0 right-0 z-50 pointer-events-none px-3 sm:px-6 lg:px-8"
       >
         <div className="max-w-7xl mx-auto flex justify-center">
           <nav
-            className={`pointer-events-auto relative w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`${showNav ? "pointer-events-auto" : "pointer-events-none invisible"} relative w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               isScrolled
                 ? "max-w-5xl bg-[#050B14]/92 backdrop-blur-2xl py-2 px-3.5 sm:py-2.5 sm:px-7 rounded-full border border-white/[0.12] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)]"
                 : "max-w-7xl bg-[#070D16]/85 backdrop-blur-xl py-2.5 px-4 sm:py-3.5 sm:px-8 rounded-full border border-white/[0.09] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.55)]"

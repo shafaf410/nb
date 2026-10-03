@@ -30,13 +30,16 @@ function MainContent() {
     scrollToRequestForm();
   };
 
+  // Nav only appears after scrolling through the video intro into the website
+  const isNavVisible = introProgress >= 0.90;
+
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2]">
       {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro) */}
       <VideoScrollIntro onProgress={setIntroProgress} />
 
-      {/* 1. High-Prestige Floating Navigation (fades in on page load, compacts on scroll) */}
-      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={true} />
+      {/* 1. High-Prestige Floating Navigation (only revealed after scrolling) */}
+      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={isNavVisible} />
 
       {/* 2. Main Website Experience (Hero, Ticker, Disciplines, Global Network, Form, Footer) */}
       <div className="relative z-10 shadow-[0_-24px_60px_rgba(7,13,22,0.6)]">
