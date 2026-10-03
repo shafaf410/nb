@@ -30,16 +30,13 @@ function MainContent() {
     scrollToRequestForm();
   };
 
-  // Nav appears smoothly when video reaches the iconic final frame
-  const isNavVisible = introProgress >= 0.75;
-
   return (
     <main className="min-h-screen flex flex-col bg-[#FAF7F2]">
-      {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Zero UI / Pure Cinema) */}
+      {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro) */}
       <VideoScrollIntro onProgress={setIntroProgress} />
 
-      {/* 1. High-Prestige Floating Navigation (revealed as video transition completes) */}
-      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={isNavVisible} />
+      {/* 1. High-Prestige Floating Navigation (fades in on page load, compacts on scroll) */}
+      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={true} />
 
       {/* 2. Main Website Experience (Hero, Ticker, Disciplines, Global Network, Form, Footer) */}
       <div className="relative z-10 shadow-[0_-24px_60px_rgba(7,13,22,0.6)]">

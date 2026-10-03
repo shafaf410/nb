@@ -42,6 +42,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const stateRef = useRef({
     targetProgress: 0,
     currentProgress: 0,
+    renderedIndex: -1,
     animId: 0,
   });
 
@@ -52,22 +53,53 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     if (!ctx) return;
 
     const img = frameCache[index];
-    if (img) {
-      if (img.complete && img.naturalWidth > 0) {
-        if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
-          canvas.width = img.naturalWidth;
-          canvas.height = img.naturalHeight;
-        }
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      } else {
-        img.onload = () => {
-          if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-          }
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
+    if (!img) return;
+
+    const render = () => {
+      if (!img.naturalWidth || !img.naturalHeight) return;
+
+      const cWidth = canvas.clientWidth || window.innerWidth;
+      const cHeight = canvas.clientHeight || window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      const targetW = Math.round(cWidth * dpr);
+      const targetH = Math.round(cHeight * dpr);
+
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
       }
+
+      // Responsive object-cover calculation directly in canvas
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const canvasRatio = canvas.width / canvas.height;
+
+      let drawW = canvas.width;
+      let drawH = canvas.height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (canvasRatio > imgRatio) {
+        drawH = canvas.width / imgRatio;
+        offsetY = (canvas.height - drawH) / 2;
+      } else {
+        drawW = canvas.height * imgRatio;
+        offsetX = (canvas.width - drawW) / 2;
+      }
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "medium";
+      ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+    };
+
+    if (img.complete && img.naturalWidth > 0) {
+      render();
+    } else {
+      img.onload = () => {
+        if (stateRef.current.renderedIndex === index) {
+          render();
+        }
+      };
     }
   }, []);
 
@@ -76,24 +108,22 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     preloadAllFrames(() => {
       drawFrame(0);
     });
-    // If already preloaded, paint frame 0 immediately
     if (frameCache[0]?.complete) {
       drawFrame(0);
     }
   }, [drawFrame]);
 
-  // Smooth, continuous 120 FPS scroll tracking with golden-ratio damping
+  // Smooth, continuous 120 FPS scroll tracking with responsive damping
   useEffect(() => {
-    let lastRenderedIndex = -1;
     let animId = 0;
 
     const render = () => {
       const state = stateRef.current;
       const delta = state.targetProgress - state.currentProgress;
 
-      // 0.10 LERP damping: weighted, buttery 120 FPS continuous interpolation for slower cinematic glide
-      if (Math.abs(delta) > 0.0002) {
-        state.currentProgress += delta * 0.10;
+      // 0.22 LERP damping: responsive, silky, stops cleanly without runaway video auto-play
+      if (Math.abs(delta) > 0.0005) {
+        state.currentProgress += delta * 0.22;
         animId = requestAnimationFrame(render);
       } else {
         state.currentProgress = state.targetProgress;
@@ -104,17 +134,15 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       setScrollProgress(progress);
       onProgress?.(progress);
 
-      // Map progress: 0.0 -> 0.75 scrolls through all 120 frames with slower, rich pacing
-      // 0.75 -> 1.0 holds the final NORVIAN + Earth logo frame for one full scroll
-      const videoPlayProgress = Math.min(1, progress / 0.75);
+      // Map progress evenly across all 120 frames (0 to 119) with no dead zones or freezing
       const frameIndex = Math.min(
         TOTAL_FRAMES - 1,
-        Math.max(0, Math.round(videoPlayProgress * (TOTAL_FRAMES - 1)))
+        Math.max(0, Math.round(progress * (TOTAL_FRAMES - 1)))
       );
 
-      if (frameIndex !== lastRenderedIndex) {
+      if (frameIndex !== state.renderedIndex) {
+        state.renderedIndex = frameIndex;
         drawFrame(frameIndex);
-        lastRenderedIndex = frameIndex;
       }
     };
 
@@ -134,29 +162,36 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
+    const handleResize = () => {
+      handleScroll();
+      if (stateRef.current.renderedIndex >= 0) {
+        drawFrame(stateRef.current.renderedIndex);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
 
     // Initial sync
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("resize", handleResize);
       if (animId) cancelAnimationFrame(animId);
     };
   }, [drawFrame, onProgress]);
 
   // Subtle 3D camera forward glide
-  const cameraScale = 1 + scrollProgress * 0.05;
+  const cameraScale = 1 + scrollProgress * 0.04;
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[460vh] md:h-[680vh] bg-[#070D16]"
+      className="relative w-full h-[320vh] md:h-[450vh] bg-[#070D16]"
     >
       {/* Pinned Fullscreen Cinematic Stage */}
-      <div className="sticky top-0 h-screen w-screen overflow-hidden z-20">
+      <div className="sticky top-0 h-screen w-full overflow-hidden z-20">
         <div
           className="relative w-full h-full flex items-center justify-center overflow-hidden"
           style={{
@@ -167,7 +202,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Hardware-Accelerated 120 FPS Canvas */}
           <canvas
             ref={canvasRef}
-            className="w-full h-full object-cover select-none pointer-events-none"
+            className="w-full h-full select-none pointer-events-none"
             style={{
               transform: `scale(${cameraScale}) translateZ(0)`,
               willChange: "transform",
