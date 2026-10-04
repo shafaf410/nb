@@ -35,6 +35,7 @@ function preloadAllFrames(onFirstFrame?: () => void) {
 
 export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -134,6 +135,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       setScrollProgress(progress);
       onProgress?.(progress);
 
+      if (canvasRef.current) {
+        canvasRef.current.style.transform = `scale(${1 + progress * 0.04}) translateZ(0)`;
+      }
+
       // Map progress evenly across all 120 frames (0 to 119) with no dead zones or freezing
       const frameIndex = Math.min(
         TOTAL_FRAMES - 1,
@@ -156,6 +161,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
       const clamped = Math.max(0, Math.min(1, scrollY / totalScrollable));
       stateRef.current.targetProgress = clamped;
+
+      // Hide the fixed canvas stage when completely scrolled past by the 2nd page
+      if (stageRef.current) {
+        const isCovered = scrollY > totalScrollable + window.innerHeight * 1.15;
+        stageRef.current.style.visibility = isCovered ? "hidden" : "visible";
+      }
 
       if (!animId) {
         animId = requestAnimationFrame(render);
@@ -188,10 +199,13 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[320vh] md:h-[450vh] bg-[#070D16]"
+      className="relative w-full h-[300vh] md:h-[400vh] bg-[#070D16]"
     >
-      {/* Pinned Fullscreen Cinematic Stage */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden z-20">
+      {/* Static Fixed Fullscreen Stage: Stays static at top: 0 while 2nd page scrolls above it */}
+      <div
+        ref={stageRef}
+        className="fixed top-0 left-0 h-screen w-full overflow-hidden z-0 bg-[#070D16]"
+      >
         <div
           className="relative w-full h-full flex items-center justify-center overflow-hidden"
           style={{

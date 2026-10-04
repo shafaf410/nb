@@ -71,11 +71,53 @@ html {
   scroll-padding-top: 100px;
 }
 
-/* Hide scrollbar utility */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Lenis smooth scrolling rules */
+html.lenis, html.lenis body {
+  height: auto;
 }
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Mask & typography clip utilities */
+.mask-text-container {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+/* Shutter reveal utility */
+.shutter-mask {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Refined magnetic link underline */
+.hover-underline-reveal {
+  position: relative;
+}
+.hover-underline-reveal::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-underline-reveal:hover::after {
+  transform: scaleX(1);
+}
+

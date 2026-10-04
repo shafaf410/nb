@@ -39,7 +39,7 @@ export default function IndustryModal({
     shipbuilding: {
       title: t.industries.shipbuilding.title,
       subtitle: t.industries.shipbuilding.subtitle,
-      image: "/images/shipbuilding.jpg",
+      image: "/images/shipbuilding_real.jpg",
       roles: t.industries.shipbuilding.skills.map((skill, idx) => ({
         name: skill,
         cert: t.industries.shipbuilding.badge,
@@ -54,7 +54,7 @@ export default function IndustryModal({
     construction: {
       title: t.industries.construction.title,
       subtitle: t.industries.construction.subtitle,
-      image: "/images/construction.jpg",
+      image: "/images/construction_real.jpg",
       roles: t.industries.construction.skills.map((skill, idx) => ({
         name: skill,
         cert: t.industries.construction.badge,

@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import VideoScrollIntro from "@/components/VideoScrollIntro";
-import HeroSection from "@/components/HeroSection";
-import LiveDeploymentsTicker from "@/components/LiveDeploymentsTicker";
+import IntroCinematicSection from "@/components/IntroCinematicSection";
 import IndustriesSection from "@/components/IndustriesSection";
-import GlobalNetworkSection from "@/components/GlobalNetworkSection";
 import WhyNorvianSection from "@/components/WhyNorvianSection";
 import WorkforceFormSection from "@/components/WorkforceFormSection";
 import IndustryModal from "@/components/IndustryModal";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 function MainContent() {
@@ -34,45 +32,39 @@ function MainContent() {
   const isNavVisible = introProgress >= 0.90;
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#FAF7F2]">
-      {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro) */}
-      <VideoScrollIntro onProgress={setIntroProgress} />
+    <SmoothScroll>
+      <main className="min-h-screen flex flex-col bg-[#070D16]">
+        {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro - Unchanged) */}
+        <VideoScrollIntro onProgress={setIntroProgress} />
 
-      {/* 1. High-Prestige Floating Navigation (only revealed after scrolling) */}
-      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={isNavVisible} />
+        {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
+        <div className="relative z-10 bg-[#FAF7F2] shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">
+          {/* Section 1: Intro Section — Cinematic Manifesto (WE MOVE WHAT MATTERS.) */}
+          <IntroCinematicSection onRequestWorkforce={scrollToRequestForm} />
 
-      {/* 2. Main Website Experience (Hero, Ticker, Disciplines, Global Network, Form, Footer) */}
-      <div className="relative z-10 shadow-[0_-24px_60px_rgba(7,13,22,0.6)]">
-        <HeroSection onRequestWorkforce={scrollToRequestForm} />
+          {/* Section 2: Specialized Industries with Pinned Horizontal Reel */}
+          <IndustriesSection
+            onSelectIndustry={(key) => setActiveModal(key)}
+          />
 
-        {/* 3. Live Verified Deployments Ticker across Europe */}
-        <LiveDeploymentsTicker />
+          {/* Regulatory Pillars & Scandinavian Working Directives */}
+          <WhyNorvianSection />
 
-        {/* 4. Specialized Industries with ISO & Code 95 Badges */}
-        <IndustriesSection
-          onSelectIndustry={(key) => setActiveModal(key)}
-        />
+          {/* 9. Section 11: Final CTA Section (BUILD YOUR NEXT TEAM.) */}
+          <WorkforceFormSection initialIndustry={prefilledIndustry} />
 
-        {/* 5. Global Corridor: Interactive Map, Flight Arcs, 4-Phase Timeline & Live Stats */}
-        <GlobalNetworkSection />
+          {/* 10. Detailed Industry Disciplines Modal */}
+          <IndustryModal
+            industryKey={activeModal}
+            onClose={() => setActiveModal(null)}
+            onRequestForIndustry={handleRequestForIndustry}
+          />
 
-        {/* 6. Why Norvian: Compliance Pillars & Scandinavian Working Directives */}
-        <WhyNorvianSection />
-
-        {/* 7. Executive Workforce Deployment Request Portal */}
-        <WorkforceFormSection initialIndustry={prefilledIndustry} />
-
-        {/* 8. Detailed Industry Disciplines Modal */}
-        <IndustryModal
-          industryKey={activeModal}
-          onClose={() => setActiveModal(null)}
-          onRequestForIndustry={handleRequestForIndustry}
-        />
-
-        {/* 9. High-Authority Corporate Footer */}
-        <Footer />
-      </div>
-    </main>
+          {/* 11. High-Authority Corporate Footer */}
+          <Footer />
+        </div>
+      </main>
+    </SmoothScroll>
   );
 }
 
