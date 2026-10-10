@@ -63,6 +63,9 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const chapterTextRef = useRef<HTMLSpanElement>(null);
+
   const [showPrompt, setShowPrompt] = useState(true);
 
   const stateRef = useRef({
@@ -97,79 +100,31 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         canvas.height = targetH;
       }
 
-      // Responsive rendering: Mobile Portrait vs Desktop/Landscape
+      // Responsive rendering: Full-Bleed Cover (Reel format on Mobile Portrait, Cinematic Widescreen on Desktop)
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const canvasRatio = canvas.width / canvas.height;
 
       ctx.imageSmoothingEnabled = true;
 
-      if (canvasRatio < 1.0) {
-        // --- MOBILE PORTRAIT MODE ---
-        // On tall portrait screens, instead of cropping out 75% of the video width,
-        // we present the video in a luxurious mobile cinematic theatre mode:
-        // 1. Dynamic ambient backdrop filling the portrait screen with soft atmospheric light
-        ctx.save();
-        ctx.globalAlpha = 0.32;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      let drawW = canvas.width;
+      let drawH = canvas.height;
+      let offsetX = 0;
+      let offsetY = 0;
 
-        // Moody vignette over backdrop
-        const bgGrad = ctx.createRadialGradient(
-          canvas.width / 2,
-          canvas.height / 2,
-          canvas.width * 0.25,
-          canvas.width / 2,
-          canvas.height / 2,
-          canvas.height * 0.75
-        );
-        bgGrad.addColorStop(0, "rgba(7, 13, 22, 0.45)");
-        bgGrad.addColorStop(1, "rgba(7, 13, 22, 0.98)");
-        ctx.fillStyle = bgGrad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.restore();
-
-        // 2. Razor-sharp, 100% visible 16:9 cinematic video centered in the mobile viewport
-        // Every detail is preserved: NORVIAN AB crane, full Volvo truck, warehouse, and rotating Earth globe
-        const fitW = canvas.width;
-        const fitH = canvas.width / imgRatio;
-        const fitX = 0;
-        const fitY = (canvas.height - fitH) / 2;
-
-        ctx.imageSmoothingQuality = "high";
-        ctx.drawImage(img, fitX, fitY, fitW, fitH);
-
-        // Soft feathering at the top & bottom edges of the 16:9 frame for a seamless ambient blend
-        const edgeBlendHeight = Math.min(24 * dpr, fitH * 0.12);
-
-        const topGrad = ctx.createLinearGradient(0, fitY, 0, fitY + edgeBlendHeight);
-        topGrad.addColorStop(0, "rgba(7, 13, 22, 0.75)");
-        topGrad.addColorStop(1, "rgba(7, 13, 22, 0)");
-        ctx.fillStyle = topGrad;
-        ctx.fillRect(0, fitY, fitW, edgeBlendHeight);
-
-        const botGrad = ctx.createLinearGradient(0, fitY + fitH - edgeBlendHeight, 0, fitY + fitH);
-        botGrad.addColorStop(0, "rgba(7, 13, 22, 0)");
-        botGrad.addColorStop(1, "rgba(7, 13, 22, 0.75)");
-        ctx.fillStyle = botGrad;
-        ctx.fillRect(0, fitY + fitH - edgeBlendHeight, fitW, edgeBlendHeight);
+      if (canvasRatio > imgRatio) {
+        // Wider than 16:9 (e.g. ultra-wide desktop monitors)
+        drawH = canvas.width / imgRatio;
+        offsetY = (canvas.height - drawH) / 2;
       } else {
-        // --- DESKTOP & LANDSCAPE MODE ---
-        // Classic edge-to-edge cinematic cover
-        let drawW = canvas.width;
-        let drawH = canvas.height;
-        let offsetX = 0;
-        let offsetY = 0;
-
-        if (canvasRatio > imgRatio) {
-          drawH = canvas.width / imgRatio;
-          offsetY = (canvas.height - drawH) / 2;
-        } else {
-          drawW = canvas.height * imgRatio;
-          offsetX = (canvas.width - drawW) / 2;
-        }
-
-        ctx.imageSmoothingQuality = "medium";
-        ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+        // Taller than 16:9 (Mobile Portrait Reel format / vertical phone screens)
+        // Completely covers 100% of the vertical screen height with zero letterbox bars!
+        drawW = canvas.height * imgRatio;
+        // In Reel mode on mobile, keep the primary subject (ship bow/crane, truck, warehouse, globe) centered:
+        offsetX = (canvas.width - drawW) / 2;
       }
+
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
     };
 
     if (img.complete && img.naturalWidth > 0) {
@@ -227,6 +182,23 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       if (frameIndex !== state.currentFrame) {
         state.currentFrame = frameIndex;
         drawFrame(frameIndex);
+      }
+
+      // Fluid Direct DOM updates for 60fps/120fps Reel HUD (Zero React re-render lag)
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = `${Math.min(100, Math.max(0, t * 100))}%`;
+      }
+
+      if (chapterTextRef.current) {
+        if (frameIndex <= 31) {
+          chapterTextRef.current.innerText = "01 • SHIPBUILDING & MARINE";
+        } else if (frameIndex <= 88) {
+          chapterTextRef.current.innerText = "02 • CONTINENTAL LOGISTICS";
+        } else if (frameIndex <= 128) {
+          chapterTextRef.current.innerText = "03 • TERMINAL OPERATIONS";
+        } else {
+          chapterTextRef.current.innerText = "04 • GLOBAL NETWORK";
+        }
       }
 
       // 2. Viewport Scroll progression (Curtain Slide):
@@ -301,6 +273,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           setShowPrompt(true);
           drawFrame(0);
           onProgress?.(0);
+          if (progressBarRef.current) {
+            progressBarRef.current.style.width = "0%";
+          }
+          if (chapterTextRef.current) {
+            chapterTextRef.current.innerText = "01 • SHIPBUILDING & MARINE";
+          }
           if (stageRef.current) {
             stageRef.current.style.visibility = "visible";
           }
@@ -314,17 +292,18 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
-    // 2. Touch event for mobile: ONE swipe down initiates auto-scroll
+    // 2. Touch event for mobile: ONE swipe up or tap initiates auto-scroll reel
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (stateRef.current.hasCompleted) return;
+      if (stateRef.current.hasCompleted || stateRef.current.isAutoScrolling) return;
       const currentY = e.touches[0].clientY;
       const diffY = touchStartY - currentY;
-      if (diffY > 10) {
+      // Reel swipe gesture (vertical movement up or down)
+      if (diffY > 8 || Math.abs(diffY) > 20) {
         if (e.cancelable) e.preventDefault();
         startAutoScroll();
       }
@@ -356,6 +335,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         setShowPrompt(true);
         drawFrame(0);
         onProgress?.(0);
+        if (progressBarRef.current) {
+          progressBarRef.current.style.width = "0%";
+        }
+        if (chapterTextRef.current) {
+          chapterTextRef.current.innerText = "01 • SHIPBUILDING & MARINE";
+        }
         if (stageRef.current) {
           stageRef.current.style.visibility = "visible";
         }
@@ -401,7 +386,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         ref={stageRef}
         onClick={startAutoScroll}
         onTouchEnd={(e) => {
-          // Trigger immediate auto-scroll on mobile tap without click delay
+          // Immediate responsive trigger on mobile touch/tap
           if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
             e.preventDefault();
             startAutoScroll();
@@ -416,7 +401,29 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             transformStyle: "preserve-3d",
           }}
         >
-          {/* Hardware-Accelerated Canvas */}
+          {/* Top Reel Progress Bar (Reel format on mobile & widescreen) */}
+          <div className="absolute top-0 inset-x-0 h-1 bg-white/10 z-30 pointer-events-none">
+            <div
+              ref={progressBarRef}
+              className="h-full bg-gradient-to-r from-[#C59C58] via-[#E8C587] to-[#C59C58] shadow-[0_0_12px_rgba(197,156,88,0.9)]"
+              style={{ width: "0%" }}
+            />
+          </div>
+
+          {/* Reel Category Pill (Subtle Nordic Reel HUD below Navbar) */}
+          <div className="absolute top-20 sm:top-24 left-4 sm:left-8 z-20 pointer-events-none flex items-center gap-2">
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white shadow-xl">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58] animate-pulse" />
+              <span
+                ref={chapterTextRef}
+                className="text-[9.5px] sm:text-[10px] uppercase font-mono tracking-[0.22em] font-semibold text-white/95"
+              >
+                01 • SHIPBUILDING & MARINE
+              </span>
+            </div>
+          </div>
+
+          {/* Hardware-Accelerated Canvas (Full-bleed 100dvh portrait Reel format on mobile) */}
           <canvas
             ref={canvasRef}
             className="w-full h-full select-none pointer-events-none"
@@ -427,18 +434,30 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             }}
           />
 
-          {/* Subtle cinematic vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#070D16]/50 via-transparent to-[#070D16]/30 pointer-events-none" />
+          {/* Vertical Vignette Gradients for True Reel Format legibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070D16]/65 via-transparent to-[#070D16]/75 pointer-events-none" />
 
-          {/* Bottom subtle scroll / tap prompt before user initiates auto-scroll */}
+          {/* Bottom Reel Prompt: Swipe Up or Tap to Play */}
           {showPrompt && (
-            <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 opacity-85 z-10 px-4 text-center">
-              <span className="w-5 h-9 rounded-full border border-white/30 flex items-start justify-center p-1 bg-black/40 backdrop-blur-xs shadow-lg">
-                <span className="w-1.5 h-2.5 bg-[#C59C58] rounded-full animate-bounce" />
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-white/70 font-medium whitespace-nowrap">
-                <span className="md:hidden">Swipe or Tap to Enter</span>
-                <span className="hidden md:inline">Scroll to Enter</span>
+            <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2.5 pointer-events-none transition-opacity duration-500 opacity-95 z-20 px-4 text-center">
+              <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black/70 backdrop-blur-md border border-[#C59C58]/50 shadow-[0_12px_36px_rgba(0,0,0,0.85)]">
+                <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-ping" />
+                <span className="text-[10.5px] sm:text-xs uppercase tracking-[0.22em] text-white font-medium whitespace-nowrap">
+                  <span className="md:hidden">Swipe up or Tap to play</span>
+                  <span className="hidden md:inline">Scroll to play Reel</span>
+                </span>
+                <svg
+                  className="w-4 h-4 text-[#C59C58] animate-bounce"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                </svg>
+              </div>
+              <span className="text-[9px] uppercase tracking-[0.25em] text-white/50 font-mono">
+                NORVIAN AB • SCANDIC CORRIDOR
               </span>
             </div>
           )}
