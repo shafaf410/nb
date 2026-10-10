@@ -7,8 +7,8 @@ interface VideoScrollIntroProps {
 }
 
 const TOTAL_FRAMES = 165;
-// Luxurious, unhurried cinematic pace (~6.0 seconds total)
-const AUTO_SCROLL_DURATION = 6000;
+// Full 10-second cinematic presentation pace (10000ms total)
+const AUTO_SCROLL_DURATION = 10000;
 
 // Persistent module-level frame cache
 const frameCache: HTMLImageElement[] = [];
@@ -153,9 +153,9 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const t = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
 
       // 1. Video frame progression:
-      // Plays through all 165 frames smoothly across the first 80% of time (~4.8s at 34fps),
+      // Plays through all 165 frames smoothly across the first 85% of time (~8.5s),
       // then rests on the illuminated globe while the curtain gracefully slides into place
-      const frameT = Math.min(1, t / 0.80);
+      const frameT = Math.min(1, t / 0.85);
       const frameProgress =
         frameT < 0.5 ? 2 * frameT * frameT : -1 + (4 - 2 * frameT) * frameT;
 
@@ -170,11 +170,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
 
       // 2. Viewport Scroll progression (Curtain Slide):
-      // Begins smoothly sliding up at t > 0.58 (as the globe illuminates),
+      // Begins smoothly sliding up at t > 0.65 (as the globe illuminates),
       // seamlessly unveiling the manifesto section with ZERO dark blue empty gap!
       let scrollProgress = 0;
-      if (t > 0.58) {
-        const scrollT = (t - 0.58) / 0.42;
+      if (t > 0.65) {
+        const scrollT = (t - 0.65) / 0.35;
         scrollProgress =
           scrollT < 0.5
             ? 2 * scrollT * scrollT
