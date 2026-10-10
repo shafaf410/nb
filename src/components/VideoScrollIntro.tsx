@@ -153,16 +153,22 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const t = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
 
       // 1. Video frame progression:
-      // Plays through all 165 frames smoothly across the first 85% of time (~8.5s),
-      // then rests on the illuminated globe while the curtain gracefully slides into place
-      const frameT = Math.min(1, t / 0.85);
-      const frameProgress =
-        frameT < 0.5 ? 2 * frameT * frameT : -1 + (4 - 2 * frameT) * frameT;
-
-      const frameIndex = Math.min(
-        TOTAL_FRAMES - 1,
-        Math.floor(frameProgress * (TOTAL_FRAMES - 1))
-      );
+      // Frames 0-31 (new shipbuilding video) take the initial ~1.8s (t: 0 -> 0.18)
+      // Frames 32-164 (truck, doors opening, golden globe) take a generous 7.0s (t: 0.18 -> 0.88),
+      // making all frames after 032 noticeably slower, unhurried, and cinematic!
+      let frameIndex = 0;
+      if (t <= 0.18) {
+        const p1 = t / 0.18;
+        frameIndex = Math.min(31, Math.floor(p1 * 32));
+      } else if (t <= 0.88) {
+        const p2 = (t - 0.18) / 0.70;
+        frameIndex = Math.min(
+          TOTAL_FRAMES - 1,
+          32 + Math.floor(p2 * (TOTAL_FRAMES - 1 - 32))
+        );
+      } else {
+        frameIndex = TOTAL_FRAMES - 1;
+      }
 
       if (frameIndex !== state.currentFrame) {
         state.currentFrame = frameIndex;
