@@ -7,8 +7,8 @@ interface VideoScrollIntroProps {
 }
 
 const TOTAL_FRAMES = 165;
-// Duration in ms to play through the 165 frames and scroll into the website
-const AUTO_SCROLL_DURATION = 3200; 
+// Slightly slower, luxurious cinematic pace (~4.6 seconds total)
+const AUTO_SCROLL_DURATION = 4600;
 
 // Persistent module-level frame cache
 const frameCache: HTMLImageElement[] = [];
@@ -50,12 +50,12 @@ function preloadAllFrames(onFirstFrame?: () => void) {
       if (typeof window !== "undefined" && "requestIdleCallback" in window) {
         (window as any).requestIdleCallback(() => loadRemaining(endIdx + 1));
       } else {
-        setTimeout(() => loadRemaining(endIdx + 1), 50);
+        setTimeout(() => loadRemaining(endIdx + 1), 40);
       }
     }
   };
 
-  setTimeout(() => loadRemaining(initialBatch + 1), 60);
+  setTimeout(() => loadRemaining(initialBatch + 1), 50);
 }
 
 export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) {
@@ -148,29 +148,20 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     const container = containerRef.current;
     const targetScrollY = container ? container.offsetHeight : window.innerHeight;
 
-    // Trigger smooth scroll via Lenis or fallback window scrollTo
-    if (typeof window !== "undefined" && (window as any).lenis) {
-      (window as any).lenis.scrollTo(targetScrollY, {
-        duration: AUTO_SCROLL_DURATION / 1000,
-        easing: (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
-        lock: false,
-      });
-    }
-
     const step = (now: number) => {
       const elapsed = now - state.startTime;
-      const rawProgress = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
+      const t = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
 
-      // Smooth cinematic easeInOut curve
-      const progress =
-        rawProgress < 0.5
-          ? 2 * rawProgress * rawProgress
-          : -1 + (4 - 2 * rawProgress) * rawProgress;
+      // 1. Video frame progression:
+      // Plays through all 165 frames smoothly across the first 76% of time (~3.5s),
+      // then rests on the settled globe/network while the curtain slides into view
+      const frameT = Math.min(1, t / 0.76);
+      const frameProgress =
+        frameT < 0.5 ? 2 * frameT * frameT : -1 + (4 - 2 * frameT) * frameT;
 
-      // Render corresponding frame
       const frameIndex = Math.min(
         TOTAL_FRAMES - 1,
-        Math.floor(progress * TOTAL_FRAMES)
+        Math.floor(frameProgress * (TOTAL_FRAMES - 1))
       );
 
       if (frameIndex !== state.currentFrame) {
@@ -178,28 +169,50 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         drawFrame(frameIndex);
       }
 
+      // 2. Viewport Scroll progression (Curtain Slide):
+      // Begins smoothly sliding up at t > 0.52 (as the globe lights up),
+      // seamlessly covering the fixed video stage directly with the manifesto content
+      // with ZERO dark blue empty space in between!
+      let scrollProgress = 0;
+      if (t > 0.52) {
+        const scrollT = (t - 0.52) / 0.48;
+        scrollProgress =
+          scrollT < 0.5
+            ? 2 * scrollT * scrollT
+            : -1 + (4 - 2 * scrollT) * scrollT;
+      }
+
+      const currentScrollTarget = scrollProgress * targetScrollY;
+
+      if (typeof window !== "undefined") {
+        if ((window as any).lenis) {
+          (window as any).lenis.scrollTo(currentScrollTarget, { immediate: true });
+        } else {
+          window.scrollTo(0, currentScrollTarget);
+        }
+      }
+
       if (canvasRef.current) {
-        canvasRef.current.style.transform = `scale(${1 + progress * 0.04}) translateZ(0)`;
+        canvasRef.current.style.transform = `scale(${1 + t * 0.03}) translateZ(0)`;
       }
 
-      // If Lenis is not active, advance native scroll smoothly
-      if (typeof window !== "undefined" && !(window as any).lenis) {
-        window.scrollTo(0, progress * targetScrollY);
-      }
+      onProgress?.(t);
 
-      onProgress?.(progress);
-
-      if (rawProgress < 1) {
+      if (t < 1) {
         state.rafId = requestAnimationFrame(step);
       } else {
-        // Complete auto-scroll sequence
+        // Complete auto-scroll cleanly
         state.isAutoScrolling = false;
         state.hasCompleted = true;
         onProgress?.(1.0);
 
-        if (stageRef.current) {
-          stageRef.current.style.display = "none";
-          stageRef.current.style.visibility = "hidden";
+        // Ensure final scroll sits cleanly at the target
+        if (typeof window !== "undefined") {
+          if ((window as any).lenis) {
+            (window as any).lenis.scrollTo(targetScrollY, { immediate: true });
+          } else {
+            window.scrollTo(0, targetScrollY);
+          }
         }
       }
     };
@@ -217,10 +230,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       stateRef.current.hasCompleted = true;
       setShowPrompt(false);
       onProgress?.(1.0);
-      if (stageRef.current) {
-        stageRef.current.style.display = "none";
-        stageRef.current.style.visibility = "hidden";
-      }
       return;
     }
 
@@ -234,7 +243,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           drawFrame(0);
           onProgress?.(0);
           if (stageRef.current) {
-            stageRef.current.style.display = "block";
             stageRef.current.style.visibility = "visible";
           }
         }
@@ -272,24 +280,24 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
-    // 4. Scroll position watcher for reset when returning to the very top
+    // 4. Scroll position watcher: hide stage only far down to save GPU, reset at top
     const handleScroll = () => {
       const scrollY = window.scrollY || window.pageYOffset || 0;
       if (container) {
-        const isCovered = scrollY >= container.offsetHeight;
-        if (isCovered && stageRef.current) {
-          stageRef.current.style.display = "none";
-          stageRef.current.style.visibility = "hidden";
+        // Only hide far down the page (beyond 1.5 screen heights) so no dark blue flash occurs
+        const isFarDown = scrollY > container.offsetHeight * 1.5;
+        if (stageRef.current) {
+          stageRef.current.style.visibility = isFarDown ? "hidden" : "visible";
         }
       }
 
+      // Reset when user returns to top
       if (scrollY <= 5 && stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
         stateRef.current.hasCompleted = false;
         setShowPrompt(true);
         drawFrame(0);
         onProgress?.(0);
         if (stageRef.current) {
-          stageRef.current.style.display = "block";
           stageRef.current.style.visibility = "visible";
         }
       } else if (scrollY > 15 && !stateRef.current.isAutoScrolling && !stateRef.current.hasCompleted) {
@@ -318,7 +326,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[150vh] md:h-[180vh] bg-[#070D16]"
+      className="relative w-full h-screen bg-[#070D16]"
     >
       {/* Static Fixed Fullscreen Stage */}
       <div
