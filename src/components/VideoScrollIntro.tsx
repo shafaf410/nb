@@ -6,9 +6,9 @@ interface VideoScrollIntroProps {
   onProgress?: (progress: number) => void;
 }
 
-const TOTAL_FRAMES = 165;
-// Full 10-second cinematic presentation pace (10000ms total)
-const AUTO_SCROLL_DURATION = 10000;
+const TOTAL_FRAMES = 118;
+// Full cinematic playback duration for ship2_1 video sequence
+const AUTO_SCROLL_DURATION = 5000;
 
 // Persistent module-level frame cache
 const frameCache: HTMLImageElement[] = [];
@@ -152,23 +152,16 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const elapsed = now - state.startTime;
       const t = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
 
-      // 1. Video frame progression:
-      // Frames 0-31 (new shipbuilding video) take the initial ~1.8s (t: 0 -> 0.18)
-      // Frames 32-164 (truck, doors opening, golden globe) take a generous 7.0s (t: 0.18 -> 0.88),
-      // making all frames after 032 noticeably slower, unhurried, and cinematic!
-      let frameIndex = 0;
-      if (t <= 0.18) {
-        const p1 = t / 0.18;
-        frameIndex = Math.min(31, Math.floor(p1 * 32));
-      } else if (t <= 0.88) {
-        const p2 = (t - 0.18) / 0.70;
-        frameIndex = Math.min(
-          TOTAL_FRAMES - 1,
-          32 + Math.floor(p2 * (TOTAL_FRAMES - 1 - 32))
-        );
-      } else {
-        frameIndex = TOTAL_FRAMES - 1;
-      }
+      // 1. Video frame progression across all 118 frames of ship2_1:
+      // Plays through the cruise ship indoor hall and the dramatic zoom into the NORVIAN AB crane
+      const frameT = Math.min(1, t / 0.84);
+      const frameProgress =
+        frameT < 0.5 ? 2 * frameT * frameT : -1 + (4 - 2 * frameT) * frameT;
+
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.floor(frameProgress * (TOTAL_FRAMES - 1))
+      );
 
       if (frameIndex !== state.currentFrame) {
         state.currentFrame = frameIndex;
@@ -176,11 +169,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
 
       // 2. Viewport Scroll progression (Curtain Slide):
-      // Begins smoothly sliding up at t > 0.65 (as the globe illuminates),
-      // seamlessly unveiling the manifesto section with ZERO dark blue empty gap!
+      // Smoothly glides up as the camera finishes its zoom-in,
+      // seamlessly unveiling the manifesto section with ZERO dark blue gap!
       let scrollProgress = 0;
-      if (t > 0.65) {
-        const scrollT = (t - 0.65) / 0.35;
+      if (t > 0.60) {
+        const scrollT = (t - 0.60) / 0.40;
         scrollProgress =
           scrollT < 0.5
             ? 2 * scrollT * scrollT
