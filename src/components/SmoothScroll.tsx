@@ -66,7 +66,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     document.addEventListener("click", handleAnchorClick);
 
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 400);
+
     return () => {
+      clearTimeout(refreshTimer);
       document.removeEventListener("click", handleAnchorClick);
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
