@@ -53,9 +53,14 @@ export default function ServiceDetailPage({
   const pageContainerRef = useRef<HTMLDivElement>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
-  // Keyboard navigation & body scroll lock with scroll restoration
+  // Keyboard navigation, background scroll lock, Lenis control, and scroll reset
   useEffect(() => {
     if (!serviceKey) return;
+
+    // Pause Lenis so it cannot intercept wheel or touch events on the modal
+    if (typeof window !== "undefined" && (window as any).lenis) {
+      (window as any).lenis.stop();
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -67,11 +72,26 @@ export default function ServiceDetailPage({
 
     // Save scroll position and lock background
     const prevScrollY = window.scrollY;
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    // Reset modal scroll position to top whenever opened or switched
+    if (pageContainerRef.current) {
+      pageContainerRef.current.scrollTop = 0;
+    }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+
+      // Resume Lenis smooth scroll
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        (window as any).lenis.start();
+      }
+
       // Ensure background scroll position is strictly preserved
       if (typeof window !== "undefined") {
         window.scrollTo(0, prevScrollY);
@@ -85,27 +105,23 @@ export default function ServiceDetailPage({
   const Icon = data.icon;
 
   // MacBook Opening Animation:
-  // Scales up gently from the trigger area into full-screen with subtle lid-tilt perspective
+  // Smoothly fades in and scales gently without breaking CSS scroll container mechanics
   const macBookAnimationVariants: Variants = {
     initial: shouldReduceMotion
       ? { opacity: 0 }
       : {
           opacity: 0,
-          scale: 0.94,
-          rotateX: 7,
           y: 24,
-          transformOrigin: "bottom center",
+          scale: 0.985,
         },
     animate: shouldReduceMotion
       ? { opacity: 1 }
       : {
           opacity: 1,
-          scale: 1,
-          rotateX: 0,
           y: 0,
-          transformOrigin: "bottom center",
+          scale: 1,
           transition: {
-            duration: 0.42,
+            duration: 0.38,
             ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
           },
         },
@@ -113,12 +129,10 @@ export default function ServiceDetailPage({
       ? { opacity: 0 }
       : {
           opacity: 0,
-          scale: 0.95,
-          rotateX: 5,
           y: 18,
-          transformOrigin: "bottom center",
+          scale: 0.985,
           transition: {
-            duration: 0.3,
+            duration: 0.22,
             ease: [0.25, 1, 0.5, 1] as [number, number, number, number],
           },
         },
@@ -133,81 +147,102 @@ export default function ServiceDetailPage({
     setOpenFaqIndex((prev) => (prev === idx ? null : idx));
   };
 
+  const handleSwitchService = (key: ServiceKey) => {
+    if (pageContainerRef.current) {
+      pageContainerRef.current.scrollTop = 0;
+    }
+    if (onSwitchService) {
+      onSwitchService(key);
+    }
+  };
+
   const serviceKeys: ServiceKey[] = ["shipbuilding", "construction", "logistics"];
   const otherServices = serviceKeys.filter((k) => k !== serviceKey);
 
   return (
     <AnimatePresence mode="wait">
-      <div 
-        className="fixed inset-0 z-[100] w-full h-[100dvh] overflow-hidden bg-black/80 backdrop-blur-md flex items-center justify-center"
-        style={{ perspective: 1200 }}
+      <motion.div
+        ref={pageContainerRef}
+        key="service-detail-modal"
+        data-lenis-prevent="true"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="fixed inset-0 z-[100] w-full h-[100dvh] overflow-y-auto overflow-x-hidden bg-[#070D16] text-white selection:bg-[#C59C58] selection:text-[#070D16] overscroll-contain [scrollbar-width:thin] [scrollbar-color:#C59C58_#070D16] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#070D16] [&::-webkit-scrollbar-thumb]:bg-[#C59C58]/50 hover:[&::-webkit-scrollbar-thumb]:bg-[#C59C58] [&::-webkit-scrollbar-thumb]:rounded-full"
+        style={{
+          WebkitOverflowScrolling: "touch",
+          touchAction: "pan-y",
+        }}
+        onWheel={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
       >
+        {/* 1. Fixed Persistent Header with Norvian AB Branding and Accessible Exit Button */}
+        <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-8 lg:px-12 py-2.5 sm:py-3.5 bg-[#070D16]/95 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+          {/* Left: Norvian AB Crest & Scandic Roots Identifier */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <Image
+              src="/logo.png"
+              alt="NORVIAN AB"
+              width={140}
+              height={34}
+              className="h-6 sm:h-8 w-auto object-contain"
+              priority
+            />
+            <div className="hidden sm:flex flex-col border-l border-white/15 pl-3">
+              <span className="text-[10px] font-bold tracking-[0.22em] text-white/90 uppercase">
+                SCANDIC ROOTS
+              </span>
+              <span className="text-[8px] font-mono tracking-wider text-[#C59C58] uppercase">
+                Specialized Workforce Alliance
+              </span>
+            </div>
+          </div>
+
+          {/* Center: Interactive Service Tabs Switcher */}
+          {onSwitchService && (
+            <div className="flex items-center gap-1 sm:gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10">
+              {serviceKeys.map((key) => {
+                const item = SERVICES_DATA[key];
+                const isCurrent = key === serviceKey;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => handleSwitchService(key)}
+                    className={`px-2.5 sm:px-3.5 py-1 rounded-full text-[9px] sm:text-[11px] font-mono tracking-wider transition-all duration-200 cursor-pointer ${
+                      isCurrent
+                        ? "bg-[#C59C58] text-[#070D16] font-bold shadow-md"
+                        : "text-white/60 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    <span className="hidden sm:inline">{item.number} </span>
+                    {key === "shipbuilding" ? "SHIPBUILDING" : key === "construction" ? "CONSTRUCTION" : "LOGISTICS"}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Right: Persistent, High-Contrast Accessible Exit Button */}
+          <button
+            onClick={onClose}
+            aria-label={`Exit ${data.title} page and return to slide`}
+            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/20 hover:border-[#C59C58] backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95"
+          >
+            <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase">EXIT</span>
+            <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-90" />
+          </button>
+        </header>
+
+        {/* 2. Inner Animated Content Body */}
         <motion.div
-          ref={pageContainerRef}
           key={data.id}
           variants={macBookAnimationVariants}
           initial="initial"
           animate="animate"
           exit="exit"
-          className="relative w-full h-full overflow-y-auto bg-[#070D16] text-white selection:bg-[#C59C58] selection:text-[#070D16]"
+          className="relative w-full flex flex-col"
         >
-          {/* 1. Fixed Persistent Header with Norvian AB Branding and Accessible Exit Button */}
-          <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-8 lg:px-12 py-2.5 sm:py-3.5 bg-[#070D16]/95 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-            {/* Left: Norvian AB Crest & Scandic Roots Identifier */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <Image
-                src="/logo.png"
-                alt="NORVIAN AB"
-                width={140}
-                height={34}
-                className="h-6 sm:h-8 w-auto object-contain"
-                priority
-              />
-              <div className="hidden sm:flex flex-col border-l border-white/15 pl-3">
-                <span className="text-[10px] font-bold tracking-[0.22em] text-white/90 uppercase">
-                  SCANDIC ROOTS
-                </span>
-                <span className="text-[8px] font-mono tracking-wider text-[#C59C58] uppercase">
-                  Specialized Workforce Alliance
-                </span>
-              </div>
-            </div>
-
-            {/* Center: Interactive Service Tabs Switcher */}
-            {onSwitchService && (
-              <div className="flex items-center gap-1 sm:gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10">
-                {serviceKeys.map((key) => {
-                  const item = SERVICES_DATA[key];
-                  const isCurrent = key === serviceKey;
-                  return (
-                    <button
-                      key={key}
-                      onClick={() => onSwitchService(key)}
-                      className={`px-2.5 sm:px-3.5 py-1 rounded-full text-[9px] sm:text-[11px] font-mono tracking-wider transition-all duration-200 cursor-pointer ${
-                        isCurrent
-                          ? "bg-[#C59C58] text-[#070D16] font-bold shadow-md"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      <span className="hidden sm:inline">{item.number} </span>
-                      {key === "shipbuilding" ? "SHIPBUILDING" : key === "construction" ? "CONSTRUCTION" : "LOGISTICS"}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Right: Persistent, High-Contrast Accessible Exit Button */}
-            <button
-              onClick={onClose}
-              aria-label={`Exit ${data.title} page and return to slide`}
-              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/20 hover:border-[#C59C58] backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95"
-            >
-              <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase">EXIT</span>
-              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-90" />
-            </button>
-          </header>
-
           {/* Subtle Ambient Top Accent Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-96 bg-[#C59C58]/10 blur-[130px] rounded-full pointer-events-none" />
 
@@ -882,7 +917,7 @@ export default function ServiceDetailPage({
             </div>
           </footer>
         </motion.div>
-      </div>
+      </motion.div>
     </AnimatePresence>
   );
 }
