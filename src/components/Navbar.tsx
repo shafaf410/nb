@@ -108,11 +108,11 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
                   className="h-8 sm:h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                   priority
                 />
-                <div className="hidden md:flex flex-col border-l border-white/15 pl-3 sm:pl-3.5">
-                  <span className="text-[9px] sm:text-[9.5px] tracking-[0.24em] text-white/70 font-semibold uppercase leading-tight">
+                <div className="hidden xl:flex flex-col border-l border-white/15 pl-3.5">
+                  <span className="text-[9px] tracking-[0.24em] text-white/70 font-semibold uppercase leading-tight">
                     {t.nav.brandSub}
                   </span>
-                  <span className="text-[7.5px] sm:text-[8px] tracking-[0.18em] text-[#C59C58] font-bold uppercase mt-0.5">
+                  <span className="text-[7.5px] tracking-[0.18em] text-[#C59C58] font-bold uppercase mt-0.5">
                     Nordic Workforce • EU
                   </span>
                 </div>
@@ -124,7 +124,7 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
               initial={{ opacity: 0, y: -8 }}
               animate={showNav ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
               transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:flex items-center gap-5 xl:gap-7 relative z-10"
+              className="hidden lg:flex items-center gap-4 xl:gap-6 relative z-10"
             >
               {navLinks.map((link) => (
                 <div
@@ -135,11 +135,11 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
                 >
                   <a
                     href={link.href}
-                    className="text-[12.5px] xl:text-[13px] font-medium tracking-wide text-white/75 hover:text-white transition-all duration-200 py-2 group flex items-center gap-1.5 hover:-translate-y-0.5"
+                    className="text-[12px] xl:text-[12.5px] font-medium tracking-wide text-white/70 hover:text-white transition-all duration-200 py-1.5 group flex items-center gap-1.5 hover:-translate-y-0.5"
                   >
                     <span>{link.label}</span>
                     {link.hasDropdown ? (
-                      <span className="inline-flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-white/[0.08] text-[#E6C687] border border-white/12">
+                      <span className="inline-flex items-center gap-1 text-[8.5px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-white/[0.08] text-[#E6C687] border border-white/10">
                         <span>{link.badge}</span>
                         <ChevronDown
                           className={`w-3 h-3 text-[#E6C687] transition-transform duration-300 ease-out ${
@@ -148,8 +148,7 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
                         />
                       </span>
                     ) : link.badge ? (
-                      <span className="inline-flex items-center gap-1 text-[8.5px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-[#0C1B14] text-[#4ADE80] border border-[#22C55E]/25">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#4ADE80] animate-pulse" />
+                      <span className="inline-flex items-center gap-1 text-[8.5px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-white/[0.08] text-white/80 border border-white/10">
                         <span>{link.badge}</span>
                       </span>
                     ) : null}
@@ -217,7 +216,7 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
               {/* Single Strong CTA: Request Workforce Matching Mockup */}
               <button
                 onClick={onRequestWorkforce}
-                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-5 sm:px-6 py-2 rounded-full text-xs font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_16px_rgba(197,156,88,0.25)] hover:shadow-[0_0_24px_rgba(197,156,88,0.45)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-4.5 sm:px-5 py-1.5 rounded-full text-[11px] font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_14px_rgba(197,156,88,0.22)] hover:shadow-[0_0_20px_rgba(197,156,88,0.4)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <span className="relative z-10 font-bold">{t.nav.requestShort}</span>
               </button>

@@ -152,43 +152,29 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
     <section
       ref={sectionRef}
       id="intro-manifesto"
-      className="relative min-h-[92vh] lg:min-h-screen flex items-center pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 lg:pb-28 px-4 sm:px-6 lg:px-12 overflow-hidden bg-[#FAF7F2] text-[#0B1522]"
+      className="relative min-h-[90vh] lg:h-screen lg:min-h-[680px] lg:max-h-[920px] flex items-center pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-0 lg:pb-0 px-4 sm:px-8 lg:px-14 xl:px-16 overflow-hidden bg-[#FAF7F2] text-[#0B1522]"
     >
-      {/* Background Architectural Accent Lines (Matching Mockup Left Geometry) */}
-      <div className="absolute inset-0 pointer-events-none select-none z-10 opacity-70">
+      {/* Background Architectural Accent Lines (Clean & Serene Guidelines) */}
+      <div className="absolute inset-0 pointer-events-none select-none z-10 opacity-60">
         {/* Left vertical guideline */}
-        <div className="absolute left-4 sm:left-8 lg:left-14 top-0 bottom-0 w-[1px] bg-[#C59C58]/35" />
-
-        {/* Architectural diagonal and cross lines (Matching Mockup Far Left Geometry) */}
-        <svg
-          className="absolute left-0 top-0 bottom-0 h-full w-24 sm:w-32 stroke-[#C59C58]/30 stroke-[1px] pointer-events-none"
-          fill="none"
-        >
-          {/* Diagonal intersecting lines */}
-          <line x1="0" y1="60" x2="60" y2="120" />
-          <line x1="0" y1="180" x2="60" y2="120" />
-          <line x1="60" y1="120" x2="120" y2="60" />
-          <line x1="0" y1="520" x2="60" y2="580" />
-          <line x1="0" y1="640" x2="60" y2="580" />
-          <line x1="60" y1="580" x2="120" y2="520" />
-        </svg>
+        <div className="absolute left-4 sm:left-8 lg:left-14 top-0 bottom-0 w-[1px] bg-[#C59C58]/30" />
 
         {/* Subtle geometric corner diamonds */}
-        <div className="absolute left-4 sm:left-8 lg:left-14 top-20 -translate-x-1/2 flex items-center justify-center">
-          <div className="w-2.5 h-2.5 rotate-45 border border-[#C59C58]/55 bg-[#FAF7F2]" />
+        <div className="absolute left-4 sm:left-8 lg:left-14 top-20 sm:top-24 -translate-x-1/2 flex items-center justify-center">
+          <div className="w-2 h-2 rotate-45 border border-[#C59C58]/55 bg-[#FAF7F2]" />
         </div>
-        <div className="absolute left-4 sm:left-8 lg:left-14 bottom-28 -translate-x-1/2 flex items-center justify-center">
-          <div className="w-2.5 h-2.5 rotate-45 border border-[#C59C58]/55 bg-[#FAF7F2]" />
+        <div className="absolute left-4 sm:left-8 lg:left-14 bottom-20 sm:bottom-24 -translate-x-1/2 flex items-center justify-center">
+          <div className="w-2 h-2 rotate-45 border border-[#C59C58]/55 bg-[#FAF7F2]" />
         </div>
       </div>
 
-      {/* Right Scenic Truck Photography with Soft Feathered Edge (Exact Match to Mockup) */}
+      {/* Right Scenic Truck Photography with Soft Feathered Edge (Positioned cleanly on the right half) */}
       <div
         ref={imageWrapperRef}
-        className="absolute top-0 right-0 bottom-0 w-full lg:w-[68%] xl:w-[65%] pointer-events-none select-none overflow-hidden z-0"
+        className="absolute top-0 right-0 bottom-0 w-full lg:w-[56%] xl:w-[53%] pointer-events-none select-none overflow-hidden z-0"
         style={{
-          maskImage: "radial-gradient(ellipse 92% 82% at 72% 50%, black 42%, rgba(0,0,0,0.8) 65%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 92% 82% at 72% 50%, black 42%, rgba(0,0,0,0.8) 65%, transparent 100%)",
+          maskImage: "radial-gradient(ellipse 95% 85% at 75% 50%, black 45%, rgba(0,0,0,0.85) 65%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 95% 85% at 75% 50%, black 45%, rgba(0,0,0,0.85) 65%, transparent 100%)",
         }}
       >
         <div
@@ -199,71 +185,71 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             src="/images/norvian_truck.jpg"
             alt="NORVIAN AB Continental Transport and Heavy Logistics in Norway"
             fill
-            sizes="(max-width: 1024px) 100vw, 68vw"
-            className="object-cover object-[72%_center] sm:object-[68%_center] lg:object-[64%_center] xl:object-[62%_center] brightness-[1.01] contrast-[1.02]"
+            sizes="(max-width: 1024px) 100vw, 55vw"
+            className="object-cover object-[75%_center] sm:object-[70%_center] lg:object-[68%_center] brightness-[1.01] contrast-[1.02]"
             priority
           />
 
           {/* Smooth feathered dissolves that blend seamlessly with the #FAF7F2 cream background */}
-          {/* Left-edge smooth feather: dissolves over the text area */}
-          <div className="absolute inset-y-0 left-0 w-full sm:w-[62%] lg:w-[50%] bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/90 to-transparent pointer-events-none" />
+          {/* Left-edge smooth feather: clears space for the text column */}
+          <div className="absolute inset-y-0 left-0 w-full sm:w-[55%] lg:w-[45%] bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/85 to-transparent pointer-events-none" />
           
           {/* Bottom edge gentle fade */}
-          <div className="absolute inset-x-0 bottom-0 h-40 sm:h-56 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/80 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-36 sm:h-48 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/75 to-transparent pointer-events-none" />
           
           {/* Top edge soft fade */}
-          <div className="absolute inset-x-0 top-0 h-32 sm:h-44 bg-gradient-to-b from-[#FAF7F2] via-[#FAF7F2]/65 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-28 sm:h-36 bg-gradient-to-b from-[#FAF7F2] via-[#FAF7F2]/60 to-transparent pointer-events-none" />
 
           {/* Right edge soft fade */}
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#FAF7F2]/45 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#FAF7F2]/40 to-transparent pointer-events-none" />
         </div>
       </div>
 
-      {/* Decorative Sparkle Accent on Road (Matching Mockup Lower Right) */}
-      <div className="absolute right-[8%] sm:right-[12%] lg:right-[14%] bottom-[12%] sm:bottom-[15%] pointer-events-none z-10 select-none opacity-70 hidden sm:block">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="text-[#C59C58] drop-shadow-sm">
+      {/* Decorative Sparkle Accent on Road (Subtle lower right) */}
+      <div className="absolute right-[8%] sm:right-[12%] lg:right-[13%] bottom-[12%] sm:bottom-[15%] pointer-events-none z-10 select-none opacity-60 hidden sm:block">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#C59C58] drop-shadow-xs">
           <path d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z" fill="currentColor" />
         </svg>
       </div>
 
-      {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto w-full relative z-20 pl-2 sm:pl-8 lg:pl-14">
-        <div className="max-w-xl lg:max-w-2xl space-y-6 sm:space-y-8">
+      {/* Main Content Area: Focused, Serene Editorial Column with Generous Negative Space */}
+      <div className="max-w-7xl mx-auto w-full relative z-20 pl-2 sm:pl-6 lg:pl-10">
+        <div className="max-w-lg lg:max-w-[490px] xl:max-w-[510px]">
           
-          {/* 1. Top Category Badge (Matching Mockup ☉ THE NORVIAN MANIFESTO —— 01 / CORRIDOR) */}
-          <div ref={badgeRef} className="flex items-center gap-3 sm:gap-4">
-            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C59C58] flex items-center gap-2">
+          {/* 1. Top Category Badge */}
+          <div ref={badgeRef} className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <span className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-[0.26em] text-[#C59C58] flex items-center gap-2">
               <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-[#C59C58] text-[7px] leading-none text-[#C59C58]">
                 ☉
               </span>
               THE NORVIAN MANIFESTO
             </span>
-            <span className="h-[1px] w-12 sm:w-20 bg-[#C59C58]/60" />
-            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[#0B1522]/50 font-medium">
+            <span className="h-[1px] w-12 sm:w-16 bg-[#C59C58]/55" />
+            <span className="text-[10px] sm:text-[10.5px] uppercase tracking-[0.2em] text-[#0B1522]/50 font-medium">
               01 / CORRIDOR
             </span>
           </div>
 
-          {/* 2. Headline: WE MOVE WHAT MATTERS. */}
-          <div className="space-y-0 sm:space-y-1">
+          {/* 2. Headline: WE MOVE WHAT MATTERS. (Proper editorial scale, no crowding) */}
+          <div className="space-y-0 leading-[0.98]">
             <div
               ref={headlineLine1Ref}
-              className="overflow-hidden py-0.5 leading-[1.0]"
+              className="overflow-hidden py-0.5 leading-[0.98]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-normal tracking-[-0.03em] text-[#0B1522]">
-                <span className="inline-block mr-3 sm:mr-5 word-item">WE</span>
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-[66px] xl:text-[74px] font-normal tracking-[-0.03em] text-[#0B1522]">
+                <span className="inline-block mr-3 sm:mr-4 word-item">WE</span>
                 <span className="inline-block word-item">MOVE</span>
               </h1>
             </div>
 
             <div
               ref={headlineLine2Ref}
-              className="overflow-hidden py-0.5 leading-[1.0]"
+              className="overflow-hidden py-0.5 leading-[0.98]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h2 className="font-serif text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-normal tracking-[-0.03em] text-[#0B1522]">
-                <span className="inline-block mr-3 sm:mr-5 word-item italic font-serif text-[#C59C58]">WHAT</span>
+              <h2 className="font-serif text-4xl sm:text-6xl lg:text-[66px] xl:text-[74px] font-normal tracking-[-0.03em] text-[#0B1522]">
+                <span className="inline-block mr-3 sm:mr-4 word-item italic font-serif text-[#C59C58]">WHAT</span>
                 <span className="inline-block word-item">MATTERS.</span>
               </h2>
             </div>
@@ -272,41 +258,41 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
           {/* 3. Supporting Description Paragraph */}
           <p
             ref={subtitleRef}
-            className="text-sm sm:text-base lg:text-[16.5px] text-[#0B1522]/80 font-light leading-relaxed max-w-xl pt-1"
+            className="mt-4 sm:mt-5 text-[14px] sm:text-[15px] lg:text-[15.5px] text-[#0B1522]/75 font-light leading-[1.65] max-w-[460px]"
           >
             Industry moves at the speed of human mastery. We engineer compliant, end-to-end workforce corridors connecting qualified specialists with Europe’s most demanding maritime shipyards, infrastructure projects, and strategic transport networks.
           </p>
 
-          {/* 4. The 3 Verified Credential Pills (Exact Match to Mockup) */}
+          {/* 4. The 3 Verified Credential Pills (Single neat row / compact flow) */}
           <div
             ref={statsLineRef}
-            className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1"
+            className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2 sm:gap-2.5"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2 rounded-full bg-white/80 hover:bg-white border border-[#0B1522]/15 shadow-[0_2px_8px_rgba(11,21,34,0.04)] text-xs text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-xs">☉</span>
+            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
+              <span className="text-[#C59C58] text-[11px]">☉</span>
               <span><strong className="font-semibold text-[#0B1522]">DNV & ISO 9001</strong> Verified</span>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2 rounded-full bg-white/80 hover:bg-white border border-[#0B1522]/15 shadow-[0_2px_8px_rgba(11,21,34,0.04)] text-xs text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-xs">☉</span>
+            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
+              <span className="text-[#C59C58] text-[11px]">☉</span>
               <span><strong className="font-semibold text-[#0B1522]">100% Tax & Legal</strong> Compliant</span>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2 rounded-full bg-white/80 hover:bg-white border border-[#0B1522]/15 shadow-[0_2px_8px_rgba(11,21,34,0.04)] text-xs text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-xs">☉</span>
+            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
+              <span className="text-[#C59C58] text-[11px]">☉</span>
               <span><strong className="font-semibold text-[#0B1522]">21-Day</strong> Deployment Window</span>
             </div>
           </div>
 
-          {/* 5. Request Workforce Action Button (Matching Mockup Dark Pill CTA) */}
+          {/* 5. Request Workforce Action Button */}
           {onRequestWorkforce && (
-            <div className="pt-2 sm:pt-4">
+            <div className="mt-6 sm:mt-7">
               <button
                 onClick={onRequestWorkforce}
-                className="group inline-flex items-center gap-3.5 bg-[#0B1522] hover:bg-[#142337] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_16px_32px_-8px_rgba(11,21,34,0.25)] border border-[#C59C58]/35 hover:border-[#C59C58] active:scale-95 cursor-pointer overflow-hidden"
+                className="group inline-flex items-center gap-3 bg-[#0B1522] hover:bg-[#142337] text-white px-6 sm:px-7 py-3 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_12px_24px_-6px_rgba(11,21,34,0.2)] border border-[#C59C58]/35 hover:border-[#C59C58] active:scale-95 cursor-pointer overflow-hidden"
               >
                 <span>REQUEST WORKFORCE</span>
-                <ArrowRight className="w-4 h-4 text-[#C59C58] transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+                <ArrowRight className="w-3.5 h-3.5 text-[#C59C58] transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
               </button>
             </div>
           )}
