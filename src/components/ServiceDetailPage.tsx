@@ -22,10 +22,19 @@ import {
   ChevronDown,
   Building,
   Briefcase,
-  CheckCircle2
+  CheckCircle2,
+  Quote,
+  Layers,
+  FileText
 } from "lucide-react";
+import { 
+  SERVICES_DATA, 
+  type ServiceKey, 
+  type ServiceDetailItem 
+} from "@/components/servicesData";
 
-export type ServiceKey = "shipbuilding" | "construction" | "logistics";
+export type { ServiceKey, ServiceDetailItem };
+export { SERVICES_DATA };
 
 interface ServiceDetailPageProps {
   serviceKey: ServiceKey | null;
@@ -33,348 +42,6 @@ interface ServiceDetailPageProps {
   onRequestForIndustry: (serviceName: string) => void;
   onSwitchService?: (serviceKey: ServiceKey) => void;
 }
-
-export const SERVICES_DATA: Record<
-  ServiceKey,
-  {
-    id: ServiceKey;
-    number: string;
-    code: string;
-    title: string;
-    heading: string;
-    badge: string;
-    complianceBadges: string[];
-    shortDescription: string;
-    detailedDescription: string;
-    workforce: string[];
-    expertise: string[];
-    ctaText: string;
-    image: string;
-    icon: typeof Anchor;
-    stats: { value: string; label: string; sub: string }[];
-    tradeSpecialties: { title: string; desc: string; certs: string }[];
-    deploymentProcess: { step: string; title: string; desc: string }[];
-    caseStudy: { project: string; clientType: string; timeline: string; impact: string };
-    faqs: { q: string; a: string }[];
-  }
-> = {
-  shipbuilding: {
-    id: "shipbuilding",
-    number: "01",
-    code: "DISCIPLINE 01 / MARITIME",
-    title: "Shipbuilding",
-    heading: "Empowering Shipbuilders",
-    badge: "DNV & ISO 9606-1 CERTIFIED",
-    complianceBadges: ["DNV Standard", "ISO 9606-1 Welders", "Lloyd's Register Compliant", "Turnkey Mobilization"],
-    shortDescription:
-      "Skilled welders, fitters and marine specialists from Asia, supporting shipyards with the workforce needed to build, repair and maintain vessels.",
-    detailedDescription:
-      "Scandic Roots connects shipyards and marine engineering companies with skilled professionals for demanding shipbuilding projects. From steel fabrication to vessel assembly, we help employers source suitable talent to support project schedules, quality standards and operational requirements.",
-    workforce: [
-      "Certified Welders",
-      "Ship Fitters",
-      "Pipe Fitters",
-      "Steel Fabricators",
-      "Structural Fitters",
-      "Marine Technicians",
-      "Mechanical Fitters",
-    ],
-    expertise: [
-      "Ship construction and assembly",
-      "Hull fabrication and steelwork",
-      "Welding and metal fabrication",
-      "Marine piping and fitting",
-      "Ship repair and maintenance",
-    ],
-    ctaText: "Find Shipbuilding Talent",
-    image: "/images/shipbuilding_real.jpg",
-    icon: Anchor,
-    stats: [
-      { value: "2–4 Wks", label: "Mobilization Time", sub: "Fast-track onboarding directly to shipyard gate" },
-      { value: "100%", label: "DNV & ISO Verified", sub: "Rigorous 6G & multi-position pre-tested welders" },
-      { value: "98.4%", label: "Contract Retention", sub: "High satisfaction across Nordic naval & commercial drydocks" },
-      { value: "1,200+", label: "Marine Craftsmen", sub: "Successfully mobilized across Northern Europe" },
-    ],
-    tradeSpecialties: [
-      {
-        title: "Naval Certified Welders (141 / 135 / 136 / 111)",
-        desc: "Experienced TIG, MIG/MAG, and Flux-Core welders tested in 6G/6GR positions on high-tensile naval steel, duplex, and aluminum superstructures.",
-        certs: "ISO 9606-1 • DNV GL • Lloyd's Register",
-      },
-      {
-        title: "Hull & Structural Steel Fitters",
-        desc: "Precision heavy plate assembly, 3D laser-aligned sub-blocks, frame erection, and fairing for commercial cargo, offshore vessels, and cruise ships.",
-        certs: "Naval Blueprint Mastery • NDT Visual VT-2",
-      },
-      {
-        title: "High-Pressure Marine Pipe Fitters",
-        desc: "Fabrication, spooling, and installation of ballast, fuel, hydraulic, and fire extinguishing piping systems under strict maritime pressure tolerances.",
-        certs: "ASME IX • EN ISO 15614 • Flange Alignment",
-      },
-      {
-        title: "Marine Mechanical & Propulsion Technicians",
-        desc: "Engine room overhaul, shaft line alignment, thruster and rudder servicing, valve installation, and auxiliary machinery maintenance.",
-        certs: "STCW Orientation • OEM Engine System Training",
-      },
-    ],
-    deploymentProcess: [
-      {
-        step: "01",
-        title: "Technical Scoping & Weld Procedure Matching",
-        desc: "We analyze your shipyard's WPS (Welding Procedure Specifications), project blueprints, and delivery milestones to formulate exact crew profiles.",
-      },
-      {
-        step: "02",
-        title: "Hands-On Trade Testing & Third-Party Inspection",
-        desc: "Candidates perform live welding tests, radiography (RT/UT), and pipe-fitting mockups evaluated by European-accredited testing officers in Asia.",
-      },
-      {
-        step: "03",
-        title: "Turnkey Nordic Legal, Visa & Tax Processing",
-        desc: "We coordinate fast-track European work permits, consular visas, D-numbers / tax registrations, health checks, and mandatory maritime safety courses.",
-      },
-      {
-        step: "04",
-        title: "Shipyard Mobilization & On-Site Supervision",
-        desc: "Crews arrive with safety gear and lodging arranged. A dedicated bilingual coordinator assists with daily shift briefings, safety, and integration.",
-      },
-    ],
-    caseStudy: {
-      project: "240-Meter Commercial Cruise Vessel Dry Dock Refit",
-      clientType: "Leading Northern European Naval Shipyard",
-      timeline: "65 Welders & Fitters Deployed in 22 Days",
-      impact: "Zero weld rejection rate on initial ultrasound inspection (NDT Level II); completed hull reinforcement 6 days ahead of dry dock schedule.",
-    },
-    faqs: [
-      {
-        q: "How do you ensure candidate welders meet Scandinavian shipyard quality standards?",
-        a: "Every candidate undergoes live test coupons in certified Asian test facilities evaluated against your exact Welding Procedure Specifications (WPS). We inspect all welds using Non-Destructive Testing (Visual, Ultrasonic, and X-ray) before visa submission.",
-      },
-      {
-        q: "Who handles flights, accommodation, and Scandinavian tax registration?",
-        a: "Scandic Roots handles the entire operational lifecycle: international travel, local Scandinavian housing near the yard, work permits, D-number/tax registrations, insurance, and mandatory shipyard safety inductions.",
-      },
-      {
-        q: "What is your replacement guarantee if a worker does not match our requirements?",
-        a: "We provide an ironclad 48-hour replacement guarantee. If any technician does not meet on-site quality benchmarks during the initial trial period, we substitute them at zero additional cost to your yard.",
-      },
-      {
-        q: "Do your marine technicians communicate in English?",
-        a: "Yes. All selected professionals speak professional working English. Furthermore, each larger deployment includes an on-site bilingual coordinator to ensure smooth daily communication between yard foremen and workers.",
-      },
-    ],
-  },
-  construction: {
-    id: "construction",
-    number: "02",
-    code: "DISCIPLINE 02 / CIVIL",
-    title: "Construction",
-    heading: "Building Stronger Futures",
-    badge: "EN 1090 & ISO 45001 CERTIFIED",
-    complianceBadges: ["EN 1090 Steel", "ISO 45001 Safety", "Eurocode Compliant", "Pre-Tested Trade Skills"],
-    shortDescription:
-      "Reliable construction professionals and skilled tradespeople to support infrastructure, commercial and industrial projects.",
-    detailedDescription:
-      "We help construction companies source skilled workers who can contribute to projects of different sizes and complexities. Our focus is on connecting employers with suitable candidates whose practical skills and experience match the demands of the job.",
-    workforce: [
-      "Construction Workers",
-      "Welders",
-      "Steel Fabricators",
-      "Structural Fitters",
-      "Concrete Workers",
-      "Mechanical Installers",
-      "General Skilled Tradespeople",
-    ],
-    expertise: [
-      "Industrial construction",
-      "Structural steel installation",
-      "Infrastructure development",
-      "Commercial construction",
-      "On-site technical and trade support",
-    ],
-    ctaText: "Find Construction Talent",
-    image: "/images/construction_real.jpg",
-    icon: Building2,
-    stats: [
-      { value: "14–21 Days", label: "Crew Deployment", sub: "Rapid on-site mobilization across Scandinavia" },
-      { value: "EN 1090", label: "Structural Compliance", sub: "Fully certified structural steel erectors & riggers" },
-      { value: "0 Incidents", label: "Safety Orientation", sub: "Mandatory pre-departure Nordic HSE induction" },
-      { value: "850+", label: "Tradespeople Mobilized", sub: "Battery gigafactories, bridges & industrial hubs" },
-    ],
-    tradeSpecialties: [
-      {
-        title: "EN 1090 Structural Steel Erectors",
-        desc: "Certified riggers and erectors for high-altitude steel frameworks, multi-story industrial halls, crane runways, and pre-engineered metal buildings.",
-        certs: "EN 1090 Execution Class 2/3 • High-Altitude IPAF",
-      },
-      {
-        title: "Industrial Formwork & Concrete Specialists",
-        desc: "Expert assembly of Doka, PERI, and Paschal modular formwork systems, heavy rebar tying, slipform casting, and industrial slab finishing.",
-        certs: "Eurocode 2 Concrete • Crane Rigging Slinger",
-      },
-      {
-        title: "Heavy Mechanical & MEP Plant Installers",
-        desc: "Assembly and positioning of industrial manufacturing equipment, HVAC ductwork networks, overhead crane rails, and conveyor transport belts.",
-        certs: "Machinery Alignment • Torque Verification",
-      },
-      {
-        title: "Infrastructure & Civil Works Trades",
-        desc: "Highway retaining structures, bridge piers, pre-cast concrete tunnel elements, drainage networks, and heavy foundation works.",
-        certs: "Scandinavian ID06 / ByggID • ISO 45001 Safety",
-      },
-    ],
-    deploymentProcess: [
-      {
-        step: "01",
-        title: "Project Scope & Crew Skill Specification",
-        desc: "We analyze your architectural schedules, site timeline, and trade quotas to construct tailored crews of foremen, journeymen, and installers.",
-      },
-      {
-        step: "02",
-        title: "Trade Competency Assessment & Background Verification",
-        desc: "Candidates undergo rigorous practical trade examinations in simulated building conditions, safety testing, and verified employment audits.",
-      },
-      {
-        step: "03",
-        title: "European Documentation & Site ID Registration",
-        desc: "Full legal visa issuance, local tax registrations (D-number / Skatteverket), European health cover, and registration on Scandinavian site platforms (ID06).",
-      },
-      {
-        step: "04",
-        title: "On-Site Delivery, Tooling & Safety Induction",
-        desc: "Workers arrive equipped with compliant winter/summer PPE, tools, and local transport. An on-site supervisor oversees smooth project integration.",
-      },
-    ],
-    caseStudy: {
-      project: "80,000 m² Battery Gigafactory & Logistics Hub",
-      clientType: "Tier-1 Scandinavian General Contractor",
-      timeline: "50 Structural Steel & Concrete Specialists in 18 Days",
-      impact: "Accelerated structural envelope completion by 3 weeks, enabling interior mechanical fit-out to begin ahead of winter freeze.",
-    },
-    faqs: [
-      {
-        q: "Are the construction workers familiar with Scandinavian weather and safety regulations?",
-        a: "Yes. All workers complete extensive Nordic Health, Safety, and Environment (HSE) orientation before departure. They are trained in cold-weather construction practices, fall prevention, scaffolding safety, and Scandinavian site conduct.",
-      },
-      {
-        q: "Do workers come with their own personal protective equipment (PPE)?",
-        a: "Yes. Scandic Roots equips all deployed professionals with European-standard CE/EN certified PPE, including high-visibility thermal clothing, safety helmets, steel-toe boots, and safety harnesses.",
-      },
-      {
-        q: "Can you provide smaller specialized crews or large multi-disciplinary teams?",
-        a: "We support both. We routinely supply agile crews of 4 to 8 specialist steel erectors as well as complete turnkey teams of 40 to 80 mixed civil, concrete, and mechanical workers for major industrial projects.",
-      },
-      {
-        q: "How are local accommodations and site commuting handled?",
-        a: "We source and manage all furnished housing near your construction site, coordinate local crew vans for daily site transport, and manage all utility and tenancy logistics.",
-      },
-    ],
-  },
-  logistics: {
-    id: "logistics",
-    number: "03",
-    code: "DISCIPLINE 03 / FLEET",
-    title: "Transport & Logistics",
-    heading: "Driving Logistics Forward",
-    badge: "EU CODE 95 & ADR CERTIFIED",
-    complianceBadges: ["EU Code 95 CPC", "ADR Dangerous Goods", "Tachograph Verified", "Nordic Winter Ready"],
-    shortDescription:
-      "Experienced truck and trailer drivers to help transport and logistics companies keep goods moving and operations running smoothly.",
-    detailedDescription:
-      "Scandic Roots supports transport businesses by connecting them with suitable professional drivers for their operational needs. We focus on relevant driving experience, role requirements and the documentation necessary for employment and legal driving eligibility in the destination country.",
-    workforce: [
-      "Heavy Goods Vehicle (HGV) Drivers",
-      "Truck Drivers",
-      "Trailer Drivers",
-      "Long-Haul Drivers",
-      "Freight Transport Drivers",
-    ],
-    expertise: [
-      "Long-distance freight transport",
-      "Commercial vehicle operations",
-      "Trailer and heavy vehicle driving",
-      "Transport workforce sourcing",
-      "Driver qualification and documentation coordination",
-    ],
-    ctaText: "Find Qualified Drivers",
-    image: "/images/norvian_truck.jpg",
-    icon: Truck,
-    stats: [
-      { value: "Code 95", label: "EU CPC Certified", sub: "100% compliant commercial articulated driving licenses" },
-      { value: "5M+ Km", label: "Nordic Winter Haulage", sub: "Trained on extreme ice, snow & mountain corridors" },
-      { value: "48 Hours", label: "Emergency Replacement", sub: "Guaranteed driver continuity for peak freight lanes" },
-      { value: "650+", label: "HGV / CE Drivers", sub: "Successfully mobilized for European logistics fleets" },
-    ],
-    tradeSpecialties: [
-      {
-        title: "Class CE Articulated Long-Haul Drivers",
-        desc: "Experienced operators for 40-tonne semi-trailers, curtain-siders, box trailers, and intermodal sea-container transport across Scandinavian highways.",
-        certs: "EU Driving License CE • Digital Tachograph Card",
-      },
-      {
-        title: "Temperature-Controlled & Reefer Haulage",
-        desc: "Specialized drivers trained in cold-chain integrity, food and pharmaceutical transport protocols, Thermo King/Carrier unit monitoring, and HACCP rules.",
-        certs: "ATP Certificate • Cold-Chain Monitoring",
-      },
-      {
-        title: "ADR Dangerous Goods Transport Specialists",
-        desc: "Certified chemical, petroleum, and pressurized gas transport drivers trained in hazardous materials handling, spill response, and safety protocols.",
-        certs: "ADR Tank & Package Certificate • Emergency Handling",
-      },
-      {
-        title: "Severe Winter & Mountain Corridor Pilots",
-        desc: "Extensive practical experience handling Nordic winter conditions, including snow chain fitting, black ice negotiation, and mountain pass descents.",
-        certs: "Nordic Winter Driving Certified • Eco-Driving",
-      },
-    ],
-    deploymentProcess: [
-      {
-        step: "01",
-        title: "Fleet Requirements & Route Profiling",
-        desc: "We analyze your fleet composition (Scania, Volvo, MAN), transmission systems, route profiles (domestic Nordic, trans-European), and schedule types.",
-      },
-      {
-        step: "02",
-        title: "Simulator & Practical Driving Examination",
-        desc: "Drivers undergo maneuvering tests, reversing into loading docks, coupling procedures, tachograph regulation quizzes, and alcohol/drug screenings.",
-      },
-      {
-        step: "03",
-        title: "EU License Conversion & Code 95 Accreditation",
-        desc: "We manage European driver license verification, Code 95 Certificate of Professional Competence, digital tachograph cards, and residence permits.",
-      },
-      {
-        step: "04",
-        title: "Fleet Integration & Route Familiarization",
-        desc: "Drivers arrive at your logistics terminal ready for route orientation. We support dispatchers with ongoing communication and driver welfare.",
-      },
-    ],
-    caseStudy: {
-      project: "Nordic Peak Seasonal E-Commerce & Grocery Freight Corridor",
-      clientType: "International Logistics & Freight Forwarder",
-      timeline: "45 Class CE Articulated Drivers Mobilized in 25 Days",
-      impact: "Maintained 99.6% on-time delivery metric during peak pre-Christmas winter blizzard conditions with zero major driving incidents.",
-    },
-    faqs: [
-      {
-        q: "Do all drivers possess valid EU Code 95 and digital driver cards?",
-        a: "Yes. Every driver deployed through Scandic Roots arrives with valid EU-recognized Class CE qualifications, Code 95 CPC accreditation, and an active digital tachograph smart card for full legal compliance.",
-      },
-      {
-        q: "Are the drivers tested on modern European commercial vehicles?",
-        a: "All drivers have extensive operational experience driving modern Euro 6 commercial tractor-trailers (Volvo FH, Scania R/S series, Mercedes-Benz Actros) with automated and manual transmissions.",
-      },
-      {
-        q: "How do you verify drivers' understanding of EU driving hours and rest periods?",
-        a: "Drivers must pass a comprehensive examination on European Regulation (EC) No 561/2006 governing driving times, rest breaks, and tachograph recording rules before receiving visa clearance.",
-      },
-      {
-        q: "Can drivers handle extreme Scandinavian winter driving conditions?",
-        a: "Yes. Drivers complete practical training on snow chain installation, slippery surface vehicle recovery, defensive winter driving, and mountain pass navigation prior to arriving in the Nordics.",
-      },
-    ],
-  },
-};
 
 export default function ServiceDetailPage({
   serviceKey,
@@ -466,7 +133,6 @@ export default function ServiceDetailPage({
     setOpenFaqIndex((prev) => (prev === idx ? null : idx));
   };
 
-  // Other two services for footer switcher
   const serviceKeys: ServiceKey[] = ["shipbuilding", "construction", "logistics"];
   const otherServices = serviceKeys.filter((k) => k !== serviceKey);
 
@@ -486,15 +152,15 @@ export default function ServiceDetailPage({
           className="relative w-full h-full overflow-y-auto bg-[#070D16] text-white selection:bg-[#C59C58] selection:text-[#070D16]"
         >
           {/* 1. Fixed Persistent Header with Norvian AB Branding and Accessible Exit Button */}
-          <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-4 sm:px-8 lg:px-12 py-3 sm:py-4 bg-[#070D16]/92 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+          <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-8 lg:px-12 py-2.5 sm:py-3.5 bg-[#070D16]/95 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
             {/* Left: Norvian AB Crest & Scandic Roots Identifier */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3">
               <Image
                 src="/logo.png"
                 alt="NORVIAN AB"
-                width={150}
-                height={36}
-                className="h-7 sm:h-8 md:h-9 w-auto object-contain"
+                width={140}
+                height={34}
+                className="h-6 sm:h-8 w-auto object-contain"
                 priority
               />
               <div className="hidden sm:flex flex-col border-l border-white/15 pl-3">
@@ -507,21 +173,38 @@ export default function ServiceDetailPage({
               </div>
             </div>
 
-            {/* Center: Current Service Badge */}
-            <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs text-white/70 font-mono tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58] animate-pulse" />
-              <span>SERVICE /</span>
-              <span className="text-white font-semibold uppercase">{data.title}</span>
-            </div>
+            {/* Center: Interactive Service Tabs Switcher */}
+            {onSwitchService && (
+              <div className="flex items-center gap-1 sm:gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10">
+                {serviceKeys.map((key) => {
+                  const item = SERVICES_DATA[key];
+                  const isCurrent = key === serviceKey;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => onSwitchService(key)}
+                      className={`px-2.5 sm:px-3.5 py-1 rounded-full text-[9px] sm:text-[11px] font-mono tracking-wider transition-all duration-200 cursor-pointer ${
+                        isCurrent
+                          ? "bg-[#C59C58] text-[#070D16] font-bold shadow-md"
+                          : "text-white/60 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      <span className="hidden sm:inline">{item.number} </span>
+                      {key === "shipbuilding" ? "SHIPBUILDING" : key === "construction" ? "CONSTRUCTION" : "LOGISTICS"}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Right: Persistent, High-Contrast Accessible Exit Button */}
             <button
               onClick={onClose}
               aria-label={`Exit ${data.title} page and return to slide`}
-              className="flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/20 hover:border-[#C59C58] backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/20 hover:border-[#C59C58] backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95"
             >
-              <span className="text-xs font-semibold tracking-wider uppercase">EXIT</span>
-              <X className="w-4 h-4 transition-transform duration-200 group-hover:rotate-90" />
+              <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase">EXIT</span>
+              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-90" />
             </button>
           </header>
 
@@ -529,11 +212,11 @@ export default function ServiceDetailPage({
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-96 bg-[#C59C58]/10 blur-[130px] rounded-full pointer-events-none" />
 
           {/* 2. Hero Section */}
-          <section className="relative pt-8 sm:pt-12 pb-10 sm:pb-14 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto">
+          <section className="relative pt-6 sm:pt-12 pb-8 sm:pb-14 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
               {/* Left Column: Heading, Short Description, and Primary CTA */}
-              <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+              <div className="lg:col-span-7 space-y-4 sm:space-y-6">
                 
                 {/* Meta Badge */}
                 <motion.div
@@ -554,7 +237,7 @@ export default function ServiceDetailPage({
                   </span>
                 </motion.div>
 
-                {/* Main Heading (Exact from prompt) */}
+                {/* Main Heading */}
                 <motion.h1
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -564,7 +247,7 @@ export default function ServiceDetailPage({
                   {data.heading}
                 </motion.h1>
 
-                {/* Short Description (Exact from prompt) */}
+                {/* Short Description */}
                 <motion.p
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -579,11 +262,11 @@ export default function ServiceDetailPage({
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.4 }}
-                  className="pt-2 sm:pt-4 flex flex-wrap items-center gap-4"
+                  className="pt-2 sm:pt-4 flex flex-wrap items-center gap-3 sm:gap-4"
                 >
                   <button
                     onClick={handleCtaClick}
-                    className="group inline-flex items-center justify-between gap-4 px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-[#C59C58] hover:bg-[#D4AF37] text-[#070D16] font-semibold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_12px_32px_-6px_rgba(197,156,88,0.45)] cursor-pointer active:scale-95"
+                    className="group inline-flex items-center justify-between gap-4 px-7 sm:px-9 py-3 sm:py-3.5 rounded-full bg-[#C59C58] hover:bg-[#D4AF37] text-[#070D16] font-semibold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_12px_32px_-6px_rgba(197,156,88,0.45)] cursor-pointer active:scale-95"
                   >
                     <span>{data.ctaText}</span>
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -591,7 +274,7 @@ export default function ServiceDetailPage({
 
                   <button
                     onClick={onClose}
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-xs font-semibold uppercase tracking-wider transition-all border border-white/10 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-xs font-semibold uppercase tracking-wider transition-all border border-white/10 cursor-pointer"
                   >
                     <span>Back to Carousel</span>
                   </button>
@@ -599,14 +282,14 @@ export default function ServiceDetailPage({
 
               </div>
 
-              {/* Right Column: High-Quality Industrial Photograph with gentle reveal */}
+              {/* Right Column: High-Quality Industrial Photograph */}
               <motion.div
                 initial={{ opacity: 0, scale: 1.04 }}
                 animate={{ opacity: 1, scale: 1.0 }}
                 transition={{ delay: 0.15, duration: 0.55, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                 className="lg:col-span-5 relative"
               >
-                <div className="relative h-64 sm:h-80 lg:h-[460px] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.85)] bg-black">
+                <div className="relative h-60 sm:h-80 lg:h-[460px] w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.85)] bg-black">
                   <Image
                     src={data.image}
                     alt={data.heading}
@@ -621,7 +304,7 @@ export default function ServiceDetailPage({
                   {/* Bottom Image Tag */}
                   <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/75 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
                     <span className="font-mono uppercase tracking-wider text-[11px] text-[#C59C58]">
-                      NORWEGIAN AB • SPEC
+                      NORVIAN AB • SPEC
                     </span>
                     <span className="font-serif text-lg font-light text-white/50">
                       0{data.number}
@@ -634,7 +317,7 @@ export default function ServiceDetailPage({
           </section>
 
           {/* 3. High-Impact Performance Metrics Strip */}
-          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-4 sm:py-6">
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-3 sm:py-5">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {data.stats.map((stat, idx) => (
                 <motion.div
@@ -660,7 +343,7 @@ export default function ServiceDetailPage({
           </section>
 
           {/* 4. Detailed Description Editorial Card */}
-          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-6 sm:py-8">
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-5 sm:py-7">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -683,7 +366,7 @@ export default function ServiceDetailPage({
           </section>
 
           {/* 5. Dual Pillars: "Our Workforce Includes" & "Our Expertise" */}
-          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12">
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-6 sm:py-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               
               {/* Column 1: Our Workforce Includes */}
@@ -708,16 +391,16 @@ export default function ServiceDetailPage({
                   </div>
                 </div>
 
-                <ul className="space-y-2.5 sm:space-y-3 pt-2">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
                   {data.workforce.map((item, idx) => (
                     <li
                       key={idx}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
+                      className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
                     >
-                      <div className="w-6 h-6 rounded-lg bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
-                        <Check className="w-3.5 h-3.5" />
+                      <div className="w-5 h-5 rounded-md bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
+                        <Check className="w-3 h-3" />
                       </div>
-                      <span className="text-sm sm:text-base text-white/90 font-light group-hover:text-white transition-colors">
+                      <span className="text-xs sm:text-sm text-white/90 font-light group-hover:text-white transition-colors leading-tight">
                         {item}
                       </span>
                     </li>
@@ -747,16 +430,16 @@ export default function ServiceDetailPage({
                   </div>
                 </div>
 
-                <ul className="space-y-2.5 sm:space-y-3 pt-2">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
                   {data.expertise.map((item, idx) => (
                     <li
                       key={idx}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
+                      className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
                     >
-                      <div className="w-6 h-6 rounded-lg bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
-                        <Check className="w-3.5 h-3.5" />
+                      <div className="w-5 h-5 rounded-md bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
+                        <Check className="w-3 h-3" />
                       </div>
-                      <span className="text-sm sm:text-base text-white/90 font-light group-hover:text-white transition-colors">
+                      <span className="text-xs sm:text-sm text-white/90 font-light group-hover:text-white transition-colors leading-tight">
                         {item}
                       </span>
                     </li>
@@ -767,7 +450,57 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 6. Deep-Dive Trade Specializations Cards */}
+          {/* 6. Technical Standards & Competence Matrix (NEW) */}
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
+            <div className="space-y-2 mb-8">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
+                ENGINEERING RIGOR & TOLERANCES
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
+                Technical Standards & Testing Matrix
+              </h2>
+              <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
+                Every trade is independently assessed and certified to European operational norms before deployment.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              {data.technicalMatrix.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.08, duration: 0.4 }}
+                  className="p-5 sm:p-6 rounded-2xl bg-[#09101C] border border-white/10 hover:border-[#C59C58]/50 transition-all space-y-3"
+                >
+                  <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
+                    <h4 className="text-base sm:text-lg font-medium text-white">
+                      {item.discipline}
+                    </h4>
+                    <span className="text-[10px] sm:text-xs font-mono text-[#C59C58] bg-[#C59C58]/10 px-2.5 py-0.5 rounded-full border border-[#C59C58]/20">
+                      {item.standards}
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 text-xs sm:text-sm">
+                    <div>
+                      <span className="text-white/50 font-mono text-[10px] uppercase block">CAPABILITIES & MATERIALS</span>
+                      <p className="text-white/85 font-light leading-relaxed">{item.capabilities}</p>
+                    </div>
+                    <div className="pt-1">
+                      <span className="text-white/50 font-mono text-[10px] uppercase block">QUALITY & VERIFICATION</span>
+                      <p className="text-[#C59C58]/90 font-light leading-relaxed flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#C59C58] shrink-0" />
+                        <span>{item.verification}</span>
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          {/* 7. Deep-Dive Trade Specializations (6 Cards) */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
@@ -777,11 +510,11 @@ export default function ServiceDetailPage({
                 Specialized Technical Disciplines
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
-                Every trade is independently verified against European operational standards before departure.
+                Specialized trade certifications and verified craftsmanship ready for deployment.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {data.tradeSpecialties.map((item, idx) => (
                 <motion.div
                   key={idx}
@@ -789,19 +522,21 @@ export default function ServiceDetailPage({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.08, duration: 0.4 }}
-                  className="p-6 rounded-2xl bg-[#0B1522]/80 border border-white/10 hover:border-[#C59C58]/50 transition-all space-y-3 group"
+                  className="p-6 rounded-2xl bg-[#0B1522]/80 border border-white/10 hover:border-[#C59C58]/50 transition-all space-y-3 group flex flex-col justify-between"
                 >
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base sm:text-lg font-medium text-white group-hover:text-[#C59C58] transition-colors">
-                      {item.title}
-                    </h4>
-                    <span className="w-2 h-2 rounded-full bg-[#C59C58]/60 group-hover:bg-[#C59C58] transition-colors" />
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-base sm:text-lg font-medium text-white group-hover:text-[#C59C58] transition-colors">
+                        {item.title}
+                      </h4>
+                      <span className="w-2 h-2 rounded-full bg-[#C59C58]/60 group-hover:bg-[#C59C58] transition-colors" />
+                    </div>
+                    <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed">
-                    {item.desc}
-                  </p>
-                  <div className="pt-2 border-t border-white/5 flex items-center gap-2 text-[10px] sm:text-xs font-mono text-[#C59C58]">
-                    <ShieldCheck className="w-3.5 h-3.5" />
+                  <div className="pt-3 border-t border-white/5 flex items-center gap-2 text-[10px] sm:text-xs font-mono text-[#C59C58]">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#C59C58] shrink-0" />
                     <span>{item.certs}</span>
                   </div>
                 </motion.div>
@@ -809,7 +544,7 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 7. Turnkey 4-Step Recruitment & Mobilization Process */}
+          {/* 8. Turnkey 4-Step Recruitment & Mobilization Process */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
             <div className="space-y-2 mb-10 text-center max-w-2xl mx-auto">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
@@ -847,40 +582,140 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 8. Verified Case Study Spotlight */}
-          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-6 sm:py-8">
+          {/* 9. Turnkey Employer Governance & Assurance Package (NEW) */}
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
+            <div className="space-y-2 mb-8">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
+                ZERO COMPROMISE COMPLIANCE
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
+                Full Employer Governance Package
+              </h2>
+              <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
+                We handle the complete administrative, legal, and logistical lifecycle so your management can focus purely on production.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {data.employerAssurances.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.08, duration: 0.35 }}
+                  className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/10 hover:border-[#C59C58]/40 transition-all space-y-3"
+                >
+                  <span className="text-[9.5px] font-mono uppercase tracking-wider text-[#C59C58] block">
+                    {item.tag}
+                  </span>
+                  <h4 className="text-base font-medium text-white leading-snug">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed">
+                    {item.desc}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          {/* 10. Verified Case Studies (2 Spotlights) */}
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
+            <div className="space-y-2 mb-8">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
+                PROVEN RESULTS & TRACK RECORD
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
+                Featured Deployment Case Studies
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {data.caseStudies.map((study, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: idx * 0.1 }}
+                  className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0B1522] to-[#070D16] border border-white/15 shadow-xl space-y-4 flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58]">
+                      <Briefcase className="w-3.5 h-3.5" />
+                      <span>CASE STUDY 0{idx + 1}</span>
+                    </div>
+                    <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
+                      {study.project}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-white/80 font-light leading-relaxed">
+                      {study.impact}
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 pt-3 border-t border-white/10">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-white/50 font-mono">CLIENT TYPE:</span>
+                      <span className="text-white font-medium">{study.clientType}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-white/50 font-mono">TIMELINE:</span>
+                      <span className="text-[#C59C58] font-semibold">{study.timeline}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {study.metrics.map((m, mIdx) => (
+                        <span
+                          key={mIdx}
+                          className="text-[10px] font-mono text-[#C59C58] bg-[#C59C58]/10 px-2.5 py-1 rounded-md border border-[#C59C58]/20"
+                        >
+                          {m}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          {/* 11. Client Testimonial Reference (NEW) */}
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45 }}
-              className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#0B1522] to-[#070D16] border border-white/15 shadow-xl space-y-4"
+              className="relative p-6 sm:p-10 lg:p-12 rounded-3xl bg-gradient-to-r from-[#0C1523] via-[#0A121E] to-[#070D16] border border-[#C59C58]/35 shadow-2xl overflow-hidden"
             >
-              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58]">
-                <Briefcase className="w-3.5 h-3.5" />
-                <span>PROJECT HIGHLIGHT & OPERATIONAL SUCCESS</span>
+              <div className="absolute top-6 right-8 text-[#C59C58]/15 pointer-events-none">
+                <Quote className="w-24 h-24" />
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-                {data.caseStudy.project}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-white/10">
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 block">PARTNER</span>
-                  <span className="text-sm text-white font-light">{data.caseStudy.clientType}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 block">TIMELINE</span>
-                  <span className="text-sm text-[#C59C58] font-medium">{data.caseStudy.timeline}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 block">IMPACT</span>
-                  <span className="text-sm text-white/90 font-light">{data.caseStudy.impact}</span>
+              <div className="relative z-10 max-w-4xl space-y-6">
+                <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#C59C58] font-semibold">
+                  EXECUTIVE CLIENT ENDORSEMENT
+                </span>
+                <p className="font-serif text-lg sm:text-2xl text-white/95 font-light leading-relaxed italic">
+                  &ldquo;{data.testimonial.quote}&rdquo;
+                </p>
+                <div className="flex items-center gap-4 pt-2 border-t border-white/10">
+                  <div className="w-10 h-10 rounded-full bg-[#C59C58]/20 border border-[#C59C58]/40 flex items-center justify-center text-[#C59C58] font-bold text-sm">
+                    {data.testimonial.author[0]}
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white">
+                      {data.testimonial.author}
+                    </div>
+                    <div className="text-xs text-white/60 font-light">
+                      {data.testimonial.role} • {data.testimonial.company} ({data.testimonial.country})
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </section>
 
-          {/* 9. Frequently Asked Questions (FAQ) */}
+          {/* 12. Frequently Asked Questions (6 Accordion Items) */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
@@ -937,7 +772,7 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 10. Regulatory & Mobilization Compliance Strip */}
+          {/* 13. Regulatory & Mobilization Compliance Strip */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-4">
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0B1522]/80 border border-white/10 flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
@@ -961,7 +796,7 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 11. Closing Full-Width Call-to-Action Banner */}
+          {/* 14. Closing Full-Width Call-to-Action Banner */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-12 sm:py-16">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -1007,7 +842,7 @@ export default function ServiceDetailPage({
             </motion.div>
           </section>
 
-          {/* 12. Other Services Switcher Footer */}
+          {/* 15. Other Services Switcher Footer */}
           <footer className="border-t border-white/10 bg-[#05090F] py-10 px-4 sm:px-8 lg:px-12">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
               
