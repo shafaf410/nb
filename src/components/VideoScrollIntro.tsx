@@ -191,8 +191,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const clamped = Math.max(0, Math.min(1, scrollY / totalScrollable));
       stateRef.current.targetProgress = clamped;
 
-      // Hide the fixed canvas stage completely when scrolled to the 2nd page
-      const isCovered = scrollY >= totalScrollable - 5;
+      // Hide the fixed canvas stage only after the 2nd page curtain has 100% covered the viewport
+      const isCovered = scrollY >= container.offsetHeight;
       if (stageRef.current) {
         stageRef.current.style.display = isCovered ? "none" : "block";
         stageRef.current.style.visibility = isCovered ? "hidden" : "visible";

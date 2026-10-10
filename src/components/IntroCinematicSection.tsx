@@ -26,117 +26,14 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
     const section = sectionRef.current;
     if (!section) return;
 
-    const mm = gsap.matchMedia();
-
-    // Only apply desktop-specific staggered opacity animations on large screens
-    // On mobile devices, elements are rendered immediately at opacity: 1 so they are always visible!
-    mm.add("(min-width: 1024px)", () => {
-      // 1. Category Badge Reveal
-      if (badgeRef.current) {
-        gsap.fromTo(
-          badgeRef.current,
-          { opacity: 0, x: -20 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 78%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // 2. Headline Words Staggered Reveal
-      const words = section.querySelectorAll(".word-item");
-      if (words.length > 0) {
-        gsap.fromTo(
-          words,
-          { yPercent: 105, opacity: 0 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.95,
-            stagger: 0.08,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headlineLine1Ref.current,
-              start: "top 82%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // 3. Subtitle Editorial Fade
-      if (subtitleRef.current) {
-        gsap.fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: subtitleRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // 4. Trust Credentials Line
-      if (statsLineRef.current) {
-        gsap.fromTo(
-          statsLineRef.current,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: statsLineRef.current,
-              start: "top 88%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // 5. Image Wrapper Smooth Inset Reveal
-      if (imageWrapperRef.current) {
-        gsap.fromTo(
-          imageWrapperRef.current,
-          { opacity: 0, scale: 0.96, y: 30 },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 1.05,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: imageWrapperRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // 6. Gentle parallax on the inner photography as user scrolls
+    const ctx = gsap.context(() => {
+      // Gentle parallax on the inner photography as user scrolls through the manifesto section
       if (imageInnerRef.current) {
         gsap.fromTo(
           imageInnerRef.current,
-          { yPercent: -4, scale: 1.05 },
+          { yPercent: -4 },
           {
             yPercent: 4,
-            scale: 1.0,
             ease: "none",
             scrollTrigger: {
               trigger: section,
@@ -147,9 +44,9 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
           }
         );
       }
-    });
+    }, section);
 
-    return () => mm.revert();
+    return () => ctx.revert();
   }, []);
 
   return (
