@@ -89,25 +89,20 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         );
       }
 
-      // 3. Form fields appear sequentially
+      // 3. Form fields appear sequentially (Always 100% visible, no opacity 0 lock)
       if (formCard) {
         const fields = formCard.querySelectorAll(".sequential-field");
-        gsap.fromTo(
-          fields,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.1,
-            duration: 0.7,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: formCard,
-              start: "top 75%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
+        gsap.from(fields, {
+          y: 20,
+          stagger: 0.08,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: formCard,
+            start: "top 90%",
+            toggleActions: "play none none none",
+          },
+        });
       }
     }, container);
 

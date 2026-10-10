@@ -46,69 +46,47 @@ export default function WhyNorvianSection() {
       // 2. Editorial Masked Headline Reveal
       if (headline) {
         const lines = headline.querySelectorAll(".headline-line");
-        gsap.fromTo(
-          lines,
-          { yPercent: 100, opacity: 0, rotateX: 10 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            rotateX: 0,
-            stagger: 0.1,
-            duration: 0.85,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headline,
-              start: "top 82%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
+        gsap.from(lines, {
+          yPercent: 35,
+          stagger: 0.08,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: headline,
+            start: "top 92%",
+            toggleActions: "play none none none",
+          },
+        });
       }
 
-      // 3. Staggered Hardware-Accelerated Rise Reveal for the 4 Cards
+      // 3. Rise Reveal for the 4 Cards (Always 100% visible, no opacity 0 lock)
       const cards = cardsContainer.querySelectorAll(".pillar-card");
-      
-      const tl = gsap.timeline({
+      gsap.from(cards, {
+        y: 35,
+        scale: 0.97,
+        stagger: 0.08,
+        duration: 0.8,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: cardsContainer,
-          start: "top 78%",
+          start: "top 92%",
           toggleActions: "play none none none",
         },
       });
 
-      tl.fromTo(
-        cards,
-        {
-          opacity: 0,
-          y: 50,
-          scale: 0.95,
-          rotateX: 6,
-          transformOrigin: "bottom center",
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1.0,
-          rotateX: 0,
-          stagger: 0.1,
-          duration: 0.9,
-          ease: "power3.out",
-        }
-      );
-
       // 4. Subtle internal line draw for each card's bottom border
       const bottomLines = cardsContainer.querySelectorAll(".card-bottom-line");
-      tl.fromTo(
-        bottomLines,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          stagger: 0.1,
-          duration: 0.7,
-          ease: "power2.out",
+      gsap.from(bottomLines, {
+        scaleX: 0,
+        stagger: 0.08,
+        duration: 0.7,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: cardsContainer,
+          start: "top 90%",
+          toggleActions: "play none none none",
         },
-        "-=0.6"
-      );
+      });
 
       // 5. Responsive parallax micro-movement on numbers as you continue scrolling
       const numbers = cardsContainer.querySelectorAll(".card-number");

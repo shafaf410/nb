@@ -168,7 +168,7 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
       {/* Pinned Desktop Viewport / Responsive Mobile Viewport */}
       <div
         ref={pinRef}
-        className="w-full min-h-[92vh] lg:h-screen overflow-hidden flex flex-col justify-between relative bg-[#070D16]"
+        className="w-full h-[92vh] sm:h-[95vh] lg:h-screen overflow-hidden flex flex-col justify-between relative bg-[#070D16]"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -189,8 +189,8 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
         </div>
 
         {/* Central Full Screen Edge-to-Edge Cards */}
-        <div className="relative w-full h-full overflow-hidden flex items-center">
-          <div className="relative w-full h-full">
+        <div className="flex-1 w-full relative overflow-hidden">
+          <div className="absolute inset-0 w-full h-full">
             {industries.map((ind, idx) => {
               const Icon = ind.icon;
               const isCurrent = idx === activeIndex;
