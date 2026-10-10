@@ -9,9 +9,10 @@ import { useLanguage } from "@/context/LanguageContext";
 
 interface IndustriesSectionProps {
   onSelectIndustry: (industryKey: "shipbuilding" | "construction" | "logistics") => void;
+  activeIndustryKey?: "shipbuilding" | "construction" | "logistics" | null;
 }
 
-export default function IndustriesSection({ onSelectIndustry }: IndustriesSectionProps) {
+export default function IndustriesSection({ onSelectIndustry, activeIndustryKey }: IndustriesSectionProps) {
   const { t } = useLanguage();
   const triggerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
@@ -64,8 +65,8 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
       category: "CONTINENTAL FLEET & BULK HAULAGE",
       subtitle: "Certified heavy freight drivers and logistics specialists keeping Scandinavian and European supply chains running at full throttle.",
       badge: "EU CODE 95 & ADR",
-      image: "/images/1.jpg",
-      buttonText: "Explore Logistics",
+      image: "/images/norvian_truck.jpg",
+      buttonText: "Explore Transport & Logistics",
       icon: Truck,
       skills: [
         "EU Code 95 Certified Articulated CE Drivers",
@@ -96,6 +97,22 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
       setActiveIndex(index);
     }
   }, []);
+
+  // Synchronize active slide when a service is selected or switched,
+  // ensuring the user returns to the EXACT originating slide on exit.
+  useEffect(() => {
+    if (!activeIndustryKey) return;
+    const targetIdx =
+      activeIndustryKey === "shipbuilding"
+        ? 0
+        : activeIndustryKey === "construction"
+        ? 1
+        : 2;
+    if (activeIdxRef.current !== targetIdx) {
+      activeIdxRef.current = targetIdx;
+      setActiveIndex(targetIdx);
+    }
+  }, [activeIndustryKey]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);

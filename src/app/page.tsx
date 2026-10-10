@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import VideoScrollIntro from "@/components/VideoScrollIntro";
 import IntroCinematicSection from "@/components/IntroCinematicSection";
@@ -15,6 +15,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 
 function MainContent() {
   const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | null>(null);
+  const [currentServiceSlide, setCurrentServiceSlide] = useState<"shipbuilding" | "construction" | "logistics">("shipbuilding");
   const [prefilledIndustry, setPrefilledIndustry] = useState<string>("");
   const [isNavVisible, setIsNavVisible] = useState(false);
 
@@ -29,10 +30,44 @@ function MainContent() {
     }
   };
 
+  const handleSelectIndustry = (key: "shipbuilding" | "construction" | "logistics") => {
+    setCurrentServiceSlide(key);
+    setActiveModal(key);
+  };
+
+  const handleCloseServicePage = () => {
+    setActiveModal(null);
+    if (typeof window !== "undefined" && window.location.hash.startsWith("#service-")) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  };
+
   const handleRequestForIndustry = (industryName: string) => {
+    setActiveModal(null);
     setPrefilledIndustry(industryName);
     scrollToRequestForm();
   };
+
+  // Optional URL Hash deep link synchronization
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === "#service-shipbuilding" || hash === "#shipbuilding") {
+        setCurrentServiceSlide("shipbuilding");
+        setActiveModal("shipbuilding");
+      } else if (hash === "#service-construction" || hash === "#construction") {
+        setCurrentServiceSlide("construction");
+        setActiveModal("construction");
+      } else if (hash === "#service-logistics" || hash === "#logistics" || hash === "#transport") {
+        setCurrentServiceSlide("logistics");
+        setActiveModal("logistics");
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   // Nav only appears after scrolling through the video intro into the website (memoized boolean flip)
   const handleIntroProgress = useCallback((progress: number) => {
@@ -54,7 +89,8 @@ function MainContent() {
 
           {/* Section 2: Specialized Industries with Pinned Horizontal Reel */}
           <IndustriesSection
-            onSelectIndustry={(key) => setActiveModal(key)}
+            onSelectIndustry={handleSelectIndustry}
+            activeIndustryKey={currentServiceSlide}
           />
 
           {/* Section 2.5: Corporate About Us — Västervik, Sweden & International Talent Network */}
@@ -66,11 +102,15 @@ function MainContent() {
           {/* 9. Section 11: Final CTA Section (BUILD YOUR NEXT TEAM.) */}
           <WorkforceFormSection initialIndustry={prefilledIndustry} />
 
-          {/* 10. Detailed Industry Disciplines Modal */}
+          {/* 10. Complete Full-Screen Service Detail Pages (MacBook-Inspired Opening/Closing Transition) */}
           <IndustryModal
             industryKey={activeModal}
-            onClose={() => setActiveModal(null)}
+            onClose={handleCloseServicePage}
             onRequestForIndustry={handleRequestForIndustry}
+            onSwitchService={(newKey) => {
+              setCurrentServiceSlide(newKey);
+              setActiveModal(newKey);
+            }}
           />
 
           {/* 11. High-Authority Corporate Footer */}
