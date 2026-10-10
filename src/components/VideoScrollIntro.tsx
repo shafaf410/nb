@@ -6,7 +6,7 @@ interface VideoScrollIntroProps {
   onProgress?: (progress: number) => void;
 }
 
-const TOTAL_FRAMES = 120;
+const TOTAL_FRAMES = 165;
 
 // Persistent module-level cache: never wiped out by React StrictMode or component re-renders
 const frameCache: HTMLImageElement[] = [];
