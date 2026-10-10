@@ -97,26 +97,79 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         canvas.height = targetH;
       }
 
-      // Responsive object-cover calculation
+      // Responsive rendering: Mobile Portrait vs Desktop/Landscape
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const canvasRatio = canvas.width / canvas.height;
 
-      let drawW = canvas.width;
-      let drawH = canvas.height;
-      let offsetX = 0;
-      let offsetY = 0;
-
-      if (canvasRatio > imgRatio) {
-        drawH = canvas.width / imgRatio;
-        offsetY = (canvas.height - drawH) / 2;
-      } else {
-        drawW = canvas.height * imgRatio;
-        offsetX = (canvas.width - drawW) / 2;
-      }
-
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "medium";
-      ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+
+      if (canvasRatio < 1.0) {
+        // --- MOBILE PORTRAIT MODE ---
+        // On tall portrait screens, instead of cropping out 75% of the video width,
+        // we present the video in a luxurious mobile cinematic theatre mode:
+        // 1. Dynamic ambient backdrop filling the portrait screen with soft atmospheric light
+        ctx.save();
+        ctx.globalAlpha = 0.32;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Moody vignette over backdrop
+        const bgGrad = ctx.createRadialGradient(
+          canvas.width / 2,
+          canvas.height / 2,
+          canvas.width * 0.25,
+          canvas.width / 2,
+          canvas.height / 2,
+          canvas.height * 0.75
+        );
+        bgGrad.addColorStop(0, "rgba(7, 13, 22, 0.45)");
+        bgGrad.addColorStop(1, "rgba(7, 13, 22, 0.98)");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+
+        // 2. Razor-sharp, 100% visible 16:9 cinematic video centered in the mobile viewport
+        // Every detail is preserved: NORVIAN AB crane, full Volvo truck, warehouse, and rotating Earth globe
+        const fitW = canvas.width;
+        const fitH = canvas.width / imgRatio;
+        const fitX = 0;
+        const fitY = (canvas.height - fitH) / 2;
+
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, fitX, fitY, fitW, fitH);
+
+        // Soft feathering at the top & bottom edges of the 16:9 frame for a seamless ambient blend
+        const edgeBlendHeight = Math.min(24 * dpr, fitH * 0.12);
+
+        const topGrad = ctx.createLinearGradient(0, fitY, 0, fitY + edgeBlendHeight);
+        topGrad.addColorStop(0, "rgba(7, 13, 22, 0.75)");
+        topGrad.addColorStop(1, "rgba(7, 13, 22, 0)");
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(0, fitY, fitW, edgeBlendHeight);
+
+        const botGrad = ctx.createLinearGradient(0, fitY + fitH - edgeBlendHeight, 0, fitY + fitH);
+        botGrad.addColorStop(0, "rgba(7, 13, 22, 0)");
+        botGrad.addColorStop(1, "rgba(7, 13, 22, 0.75)");
+        ctx.fillStyle = botGrad;
+        ctx.fillRect(0, fitY + fitH - edgeBlendHeight, fitW, edgeBlendHeight);
+      } else {
+        // --- DESKTOP & LANDSCAPE MODE ---
+        // Classic edge-to-edge cinematic cover
+        let drawW = canvas.width;
+        let drawH = canvas.height;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        if (canvasRatio > imgRatio) {
+          drawH = canvas.width / imgRatio;
+          offsetY = (canvas.height - drawH) / 2;
+        } else {
+          drawW = canvas.height * imgRatio;
+          offsetX = (canvas.width - drawW) / 2;
+        }
+
+        ctx.imageSmoothingQuality = "medium";
+        ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+      }
     };
 
     if (img.complete && img.naturalWidth > 0) {
@@ -311,11 +364,18 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
+    // 5. Responsive Resize & Orientation handler
+    const handleResize = () => {
+      drawFrame(stateRef.current.currentFrame);
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
@@ -323,6 +383,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
       if (stateRef.current.rafId) {
         cancelAnimationFrame(stateRef.current.rafId);
       }
@@ -332,13 +394,20 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-screen bg-[#070D16]"
+      className="relative w-full h-[100dvh] min-h-[100dvh] bg-[#070D16]"
     >
       {/* Static Fixed Fullscreen Stage */}
       <div
         ref={stageRef}
         onClick={startAutoScroll}
-        className="fixed top-0 left-0 h-screen w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer"
+        onTouchEnd={(e) => {
+          // Trigger immediate auto-scroll on mobile tap without click delay
+          if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
+            e.preventDefault();
+            startAutoScroll();
+          }
+        }}
+        className="fixed top-0 left-0 h-[100dvh] w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer touch-none"
       >
         <div
           className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -361,14 +430,15 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Subtle cinematic vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#070D16]/50 via-transparent to-[#070D16]/30 pointer-events-none" />
 
-          {/* Bottom subtle scroll prompt before user initiates auto-scroll */}
+          {/* Bottom subtle scroll / tap prompt before user initiates auto-scroll */}
           {showPrompt && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 opacity-80">
-              <span className="w-5 h-9 rounded-full border border-white/30 flex items-start justify-center p-1 bg-black/20 backdrop-blur-xs">
+            <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 opacity-85 z-10 px-4 text-center">
+              <span className="w-5 h-9 rounded-full border border-white/30 flex items-start justify-center p-1 bg-black/40 backdrop-blur-xs shadow-lg">
                 <span className="w-1.5 h-2.5 bg-[#C59C58] rounded-full animate-bounce" />
               </span>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-medium">
-                Scroll to Enter
+              <span className="text-[10px] uppercase tracking-[0.25em] text-white/70 font-medium whitespace-nowrap">
+                <span className="md:hidden">Swipe or Tap to Enter</span>
+                <span className="hidden md:inline">Scroll to Enter</span>
               </span>
             </div>
           )}
