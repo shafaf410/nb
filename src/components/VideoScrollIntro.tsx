@@ -237,6 +237,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         state.hasCompleted = true;
         onProgress?.(1.0);
 
+        if (stageRef.current) {
+          stageRef.current.style.pointerEvents = "none";
+        }
+
         // Ensure final scroll sits cleanly at the target
         if (typeof window !== "undefined") {
           if ((window as any).lenis) {
@@ -261,6 +265,9 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       stateRef.current.hasCompleted = true;
       setShowPrompt(false);
       onProgress?.(1.0);
+      if (stageRef.current) {
+        stageRef.current.style.pointerEvents = "none";
+      }
       return;
     }
 
@@ -281,6 +288,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           }
           if (stageRef.current) {
             stageRef.current.style.visibility = "visible";
+            stageRef.current.style.pointerEvents = "auto";
           }
         }
         return;
@@ -292,20 +300,34 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
-    // 2. Touch event for mobile: ONE swipe up or tap initiates auto-scroll reel
+    // 2. Touch event for mobile: responsive swipe and slide handling
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (stateRef.current.hasCompleted || stateRef.current.isAutoScrolling) return;
       const currentY = e.touches[0].clientY;
       const diffY = touchStartY - currentY;
-      // Reel swipe gesture (vertical movement up or down)
-      if (diffY > 8 || Math.abs(diffY) > 20) {
-        if (e.cancelable) e.preventDefault();
-        startAutoScroll();
+
+      // If user hasn't started yet: swipe up starts auto-scroll reel
+      if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
+        if (diffY > 8 || Math.abs(diffY) > 20) {
+          if (e.cancelable) e.preventDefault();
+          startAutoScroll();
+        }
+        return;
+      }
+
+      // If auto-scroll is ALREADY running and user swipes up firmly on mobile:
+      // Fast-forward directly to the curtain slide phase so the page slides up without waiting!
+      if (stateRef.current.isAutoScrolling && diffY > 20) {
+        const now = performance.now();
+        const elapsed = now - stateRef.current.startTime;
+        const currentT = elapsed / AUTO_SCROLL_DURATION;
+        if (currentT < 0.70) {
+          stateRef.current.startTime = now - (0.72 * AUTO_SCROLL_DURATION);
+        }
       }
     };
 
@@ -343,6 +365,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         }
         if (stageRef.current) {
           stageRef.current.style.visibility = "visible";
+          stageRef.current.style.pointerEvents = "auto";
         }
       } else if (scrollY > 15 && !stateRef.current.isAutoScrolling && !stateRef.current.hasCompleted) {
         startAutoScroll();
@@ -392,7 +415,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             startAutoScroll();
           }
         }}
-        className="fixed top-0 left-0 h-[100dvh] w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer touch-none"
+        className="fixed top-0 left-0 h-[100dvh] w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer"
+        style={{ touchAction: "pan-y" }}
       >
         <div
           className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -437,10 +461,16 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Vertical Vignette Gradients for True Reel Format legibility */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#070D16]/65 via-transparent to-[#070D16]/75 pointer-events-none" />
 
-          {/* Bottom Reel Prompt: Swipe Up or Tap to Play */}
+          {/* Bottom Reel Prompt: Swipe Up or Tap to Play + Quick Slide Button */}
           {showPrompt && (
-            <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2.5 pointer-events-none transition-opacity duration-500 opacity-95 z-20 px-4 text-center">
-              <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black/70 backdrop-blur-md border border-[#C59C58]/50 shadow-[0_12px_36px_rgba(0,0,0,0.85)]">
+            <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2.5 pointer-events-auto z-20 px-4 text-center">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startAutoScroll();
+                }}
+                className="flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black/70 backdrop-blur-md border border-[#C59C58]/50 shadow-[0_12px_36px_rgba(0,0,0,0.85)] active:scale-95 transition-all cursor-pointer"
+              >
                 <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-ping" />
                 <span className="text-[10.5px] sm:text-xs uppercase tracking-[0.22em] text-white font-medium whitespace-nowrap">
                   <span className="md:hidden">Swipe up or Tap to play</span>
@@ -455,10 +485,28 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
                 </svg>
-              </div>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-white/50 font-mono">
-                NORVIAN AB • SCANDIC CORRIDOR
-              </span>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Direct smooth slide down to main website
+                  stateRef.current.hasCompleted = true;
+                  setShowPrompt(false);
+                  if (stageRef.current) stageRef.current.style.pointerEvents = "none";
+                  const container = containerRef.current;
+                  const targetScrollY = container ? container.offsetHeight : window.innerHeight;
+                  if (typeof window !== "undefined") {
+                    if ((window as any).lenis) {
+                      (window as any).lenis.scrollTo(targetScrollY, { duration: 1.0 });
+                    } else {
+                      window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+                    }
+                  }
+                }}
+                className="text-[9.5px] uppercase tracking-[0.22em] text-white/60 hover:text-[#C59C58] font-mono transition-colors cursor-pointer py-1"
+              >
+                Slide to Content ↓
+              </button>
             </div>
           )}
         </div>

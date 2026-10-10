@@ -79,6 +79,10 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
 
   // Helper to swiftly scroll directly to a specific slide using Lenis if active
   const goToSlide = useCallback((index: number) => {
+    // Immediately update active index for instantaneous visual feedback on mobile
+    activeIdxRef.current = index;
+    setActiveIndex(index);
+
     const trigger = triggerRef.current;
     if (!trigger) return;
 
@@ -88,13 +92,10 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
       const targetProgress = index === 0 ? 0.15 : index === 1 ? 0.50 : 0.85;
       const targetY = st.start + targetProgress * (st.end - st.start);
       if (typeof window !== "undefined" && (window as any).lenis) {
-        (window as any).lenis.scrollTo(targetY, { duration: 1.1 });
+        (window as any).lenis.scrollTo(targetY, { duration: 0.8 });
       } else {
         window.scrollTo({ top: targetY, behavior: "smooth" });
       }
-    } else {
-      activeIdxRef.current = index;
-      setActiveIndex(index);
     }
   }, []);
 
@@ -123,21 +124,46 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
 
     const mm = gsap.matchMedia();
 
+    // Desktop Pinned Runway (1024px+)
     mm.add("(min-width: 1024px)", () => {
-      // Pinned runway: cleanly maps vertical scroll into exact discrete card states
       ScrollTrigger.create({
         id: "industries-pin",
         trigger: trigger,
         start: "top top",
         end: "+=1600",
         pin: true,
-        anticipatePin: 0,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const p = self.progress;
-          // Step 1: 0.00 to 0.33 -> Card 01
-          // Step 2: 0.33 to 0.67 -> Card 02
-          // Step 3: 0.67 to 1.00 -> Card 03
+          let nextIdx = 0;
+          if (p >= 0.66) {
+            nextIdx = 2;
+          } else if (p >= 0.33) {
+            nextIdx = 1;
+          } else {
+            nextIdx = 0;
+          }
+          if (nextIdx !== activeIdxRef.current) {
+            activeIdxRef.current = nextIdx;
+            setActiveIndex(nextIdx);
+          }
+        },
+      });
+    });
+
+    // Mobile & Tablet Pinned Runway (<1024px): Enables vertical scrolling to slide cards on mobile!
+    mm.add("(max-width: 1023px)", () => {
+      ScrollTrigger.create({
+        id: "industries-pin",
+        trigger: trigger,
+        start: "top top",
+        end: "+=1200",
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const p = self.progress;
           let nextIdx = 0;
           if (p >= 0.66) {
             nextIdx = 2;
@@ -157,23 +183,35 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
     return () => mm.revert();
   }, []);
 
-  // Touch swipe support on mobile devices
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  // Robust touch swipe support on mobile devices
+  const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
+    const t = e.touches[0];
+    touchStartRef.current = { x: t.clientX, y: t.clientY, time: Date.now() };
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const deltaX = touchStartX - touchEndX;
-    if (deltaX > 40 && activeIndex < industries.length - 1) {
-      goToSlide(activeIndex + 1);
-    } else if (deltaX < -40 && activeIndex > 0) {
-      goToSlide(activeIndex - 1);
+    if (!touchStartRef.current) return;
+    const t = e.changedTouches[0];
+    const deltaX = touchStartRef.current.x - t.clientX;
+    const deltaY = touchStartRef.current.y - t.clientY;
+    const elapsed = Date.now() - touchStartRef.current.time;
+
+    // Detect horizontal swipe gesture:
+    // deltaX dominates deltaY and is at least 30px
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30 && elapsed < 800) {
+      if (deltaX > 0 && activeIndex < industries.length - 1) {
+        goToSlide(activeIndex + 1);
+      } else if (deltaX < 0 && activeIndex > 0) {
+        goToSlide(activeIndex - 1);
+      }
     }
-    setTouchStartX(null);
+    touchStartRef.current = null;
+  };
+
+  const handleTouchCancel = () => {
+    touchStartRef.current = null;
   };
 
   return (
@@ -188,16 +226,35 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         className="w-full h-[92vh] sm:h-[95vh] lg:h-screen overflow-hidden flex flex-col justify-between relative bg-[#070D16]"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
+        style={{ touchAction: "pan-y" }}
       >
-        {/* Top Pinned Cinematic HUD */}
-        <div className="absolute top-0 inset-x-0 z-30 pt-4 sm:pt-8 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-end">
+        {/* Top Pinned Cinematic HUD with Direct Discipline Tabs */}
+        <div className="absolute top-0 inset-x-0 z-30 pt-3 sm:pt-8 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-between pointer-events-auto">
+          {/* Direct Discipline Tabs on Mobile & Tablet */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {industries.map((ind, i) => (
+              <button
+                key={ind.id}
+                onClick={() => goToSlide(i)}
+                className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-wider transition-all duration-300 cursor-pointer ${
+                  activeIndex === i
+                    ? "bg-[#C59C58] text-[#070D16] font-bold shadow-[0_0_12px_rgba(197,156,88,0.5)]"
+                    : "bg-black/50 text-white/60 hover:text-white border border-white/10"
+                }`}
+              >
+                {ind.number} {ind.id === "shipbuilding" ? "MARITIME" : ind.id === "construction" ? "CIVIL" : "FLEET"}
+              </button>
+            ))}
+          </div>
+
           {/* Guaranteed Correct Discipline Number: 01, 02, 03 */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <span className="text-[9px] sm:text-[10px] uppercase font-mono tracking-widest text-white/40">
+            <span className="hidden sm:inline text-[9px] sm:text-[10px] uppercase font-mono tracking-widest text-white/40">
               DISCIPLINE
             </span>
-            <div className="h-7 w-10 sm:h-8 sm:w-12 border border-[#C59C58]/40 rounded-lg bg-black/60 backdrop-blur-md flex items-center justify-center overflow-hidden shadow-inner">
-              <span className="font-serif text-base sm:text-lg font-normal text-[#C59C58] transition-all duration-300">
+            <div className="h-7 w-9 sm:h-8 sm:w-12 border border-[#C59C58]/40 rounded-lg bg-black/60 backdrop-blur-md flex items-center justify-center overflow-hidden shadow-inner">
+              <span className="font-serif text-sm sm:text-lg font-normal text-[#C59C58] transition-all duration-300">
                 {industries[activeIndex].number}
               </span>
             </div>
@@ -206,7 +263,12 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         </div>
 
         {/* Central Full Screen Edge-to-Edge Cards */}
-        <div className="flex-1 w-full relative overflow-hidden">
+        <div 
+          className="flex-1 w-full relative overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchCancel}
+        >
           <div className="absolute inset-0 w-full h-full">
             {industries.map((ind, idx) => {
               const Icon = ind.icon;
@@ -322,19 +384,32 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
           </div>
         </div>
 
-        {/* Bottom Pinned HUD: Clean step status and swift controls */}
-        <div className="absolute bottom-0 inset-x-0 z-30 py-3 sm:py-4 px-6 sm:px-12 lg:px-16 w-full flex items-center justify-between text-white/50 text-[10px] font-mono tracking-widest uppercase">
+        {/* Bottom Pinned HUD: Clean step status, dots, and swift controls */}
+        <div className="absolute bottom-0 inset-x-0 z-30 py-3 sm:py-4 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-between text-white/50 text-[10px] font-mono tracking-widest uppercase bg-gradient-to-t from-[#070D16] via-[#070D16]/80 to-transparent">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
-            <span>DISCIPLINE 0{activeIndex + 1} OF 03 ACTIVE</span>
+            <span className="hidden sm:inline">DISCIPLINE 0{activeIndex + 1} OF 03 ACTIVE</span>
+            {/* Mobile Slide Dots */}
+            <div className="flex items-center gap-1.5 sm:hidden">
+              {industries.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToSlide(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    activeIndex === i ? "w-6 bg-[#C59C58]" : "w-2 bg-white/20"
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Swift Next / Prev Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pointer-events-auto">
             <button
               onClick={() => goToSlide(Math.max(0, activeIndex - 1))}
               disabled={activeIndex === 0}
-              className="px-3 py-1.5 rounded-lg border border-white/10 hover:border-[#C59C58] text-white/60 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-all flex items-center gap-1 cursor-pointer"
+              className="px-3 py-1.5 rounded-lg border border-white/10 hover:border-[#C59C58] bg-black/40 backdrop-blur-sm text-white/70 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-all flex items-center gap-1 cursor-pointer active:scale-95"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>PREV</span>
@@ -342,7 +417,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
             <button
               onClick={() => goToSlide(Math.min(industries.length - 1, activeIndex + 1))}
               disabled={activeIndex === industries.length - 1}
-              className="px-3 py-1.5 rounded-lg border border-white/10 hover:border-[#C59C58] text-white/60 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-all flex items-center gap-1 cursor-pointer"
+              className="px-3 py-1.5 rounded-lg border border-white/10 hover:border-[#C59C58] bg-black/40 backdrop-blur-sm text-white/70 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-all flex items-center gap-1 cursor-pointer active:scale-95"
             >
               <span>NEXT</span>
               <ChevronRight className="w-3.5 h-3.5" />
