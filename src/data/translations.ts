@@ -12,6 +12,7 @@ export const translations = {
     // Navbar
     nav: {
       brandSub: "Nordic & European Workforce",
+      aboutUs: "About Us",
       industries: "Key Industries",
       industriesBadge: "3 Sectors",
       globalCorridor: "Global Corridor",
@@ -248,6 +249,7 @@ export const translations = {
     // Navbar
     nav: {
       brandSub: "Nordisk & Europeisk Arbetskraft",
+      aboutUs: "Om oss",
       industries: "Branscher",
       industriesBadge: "3 Sektorer",
       globalCorridor: "Global Korridor",

@@ -36,6 +36,7 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
   }, []);
 
   const navLinks = [
+    { label: t.nav.aboutUs, href: "#about-us" },
     { label: t.nav.industries, href: "#industries", badge: t.nav.industriesBadge, hasDropdown: true },
     { label: t.nav.globalCorridor, href: "#global-network", badge: t.nav.globalBadge },
     { label: t.nav.whyNorvian, href: "#why-norvian" },
