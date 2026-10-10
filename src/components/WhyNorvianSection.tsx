@@ -32,7 +32,7 @@ export default function WhyNorvianSection() {
           { scaleX: 0 },
           {
             scaleX: 1,
-            duration: 1.2,
+            duration: 1.1,
             ease: "power3.inOut",
             scrollTrigger: {
               trigger: section,
@@ -48,14 +48,14 @@ export default function WhyNorvianSection() {
         const lines = headline.querySelectorAll(".headline-line");
         gsap.fromTo(
           lines,
-          { yPercent: 120, opacity: 0, rotateX: 15 },
+          { yPercent: 100, opacity: 0, rotateX: 10 },
           {
             yPercent: 0,
             opacity: 1,
             rotateX: 0,
-            stagger: 0.12,
-            duration: 0.9,
-            ease: "expo.out",
+            stagger: 0.1,
+            duration: 0.85,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: headline,
               start: "top 82%",
@@ -65,7 +65,7 @@ export default function WhyNorvianSection() {
         );
       }
 
-      // 3. Staggered 3D Camera Shutter & Architectural Rise Reveal for the 4 Cards
+      // 3. Staggered Hardware-Accelerated Rise Reveal for the 4 Cards
       const cards = cardsContainer.querySelectorAll(".pillar-card");
       
       const tl = gsap.timeline({
@@ -80,10 +80,9 @@ export default function WhyNorvianSection() {
         cards,
         {
           opacity: 0,
-          y: 90,
-          scale: 0.90,
-          rotateX: 16,
-          clipPath: "inset(18% 0% 0% 0% round 1.5rem)",
+          y: 50,
+          scale: 0.95,
+          rotateX: 6,
           transformOrigin: "bottom center",
         },
         {
@@ -91,10 +90,9 @@ export default function WhyNorvianSection() {
           y: 0,
           scale: 1.0,
           rotateX: 0,
-          clipPath: "inset(0% 0% 0% 0% round 1.5rem)",
-          stagger: 0.14,
-          duration: 1.1,
-          ease: "expo.out",
+          stagger: 0.1,
+          duration: 0.9,
+          ease: "power3.out",
         }
       );
 
@@ -105,27 +103,27 @@ export default function WhyNorvianSection() {
         { scaleX: 0 },
         {
           scaleX: 1,
-          stagger: 0.12,
-          duration: 0.8,
+          stagger: 0.1,
+          duration: 0.7,
           ease: "power2.out",
         },
-        "-=0.7"
+        "-=0.6"
       );
 
-      // 5. Parallax micro-movement on numbers as you continue scrolling
+      // 5. Responsive parallax micro-movement on numbers as you continue scrolling
       const numbers = cardsContainer.querySelectorAll(".card-number");
       numbers.forEach((num) => {
         gsap.fromTo(
           num,
-          { y: 20 },
+          { y: 15 },
           {
-            y: -20,
+            y: -15,
             ease: "none",
             scrollTrigger: {
               trigger: num,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.4,
+              scrub: 0.8,
             },
           }
         );

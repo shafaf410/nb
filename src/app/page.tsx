@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import Navbar from "@/components/Navbar";
 import VideoScrollIntro from "@/components/VideoScrollIntro";
 import IntroCinematicSection from "@/components/IntroCinematicSection";
 import IndustriesSection from "@/components/IndustriesSection";
@@ -12,14 +13,18 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 function MainContent() {
-  const [introProgress, setIntroProgress] = useState(0);
   const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | null>(null);
   const [prefilledIndustry, setPrefilledIndustry] = useState<string>("");
+  const [isNavVisible, setIsNavVisible] = useState(false);
 
   const scrollToRequestForm = () => {
     const el = document.getElementById("request-form");
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        (window as any).lenis.scrollTo(el, { duration: 1.3, offset: -20 });
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -28,14 +33,18 @@ function MainContent() {
     scrollToRequestForm();
   };
 
-  // Nav only appears after scrolling through the video intro into the website
-  const isNavVisible = introProgress >= 0.90;
+  // Nav only appears after scrolling through the video intro into the website (memoized boolean flip)
+  const handleIntroProgress = useCallback((progress: number) => {
+    const shouldShow = progress >= 0.88;
+    setIsNavVisible((prev) => (prev !== shouldShow ? shouldShow : prev));
+  }, []);
 
   return (
     <SmoothScroll>
+      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={isNavVisible} />
       <main className="min-h-screen flex flex-col bg-[#070D16]">
         {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro - Unchanged) */}
-        <VideoScrollIntro onProgress={setIntroProgress} />
+        <VideoScrollIntro onProgress={handleIntroProgress} />
 
         {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
         <div className="relative z-10 bg-[#FAF7F2] shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">

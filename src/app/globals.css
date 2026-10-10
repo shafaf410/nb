@@ -67,11 +67,15 @@ body {
   animation: pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+html, body {
+  scroll-behavior: auto !important;
+}
+
 html {
   scroll-padding-top: 100px;
 }
 
-/* Lenis smooth scrolling rules */
+/* Lenis smooth scrolling rules & hardware acceleration */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -82,9 +86,9 @@ html.lenis, html.lenis body {
   overscroll-behavior: contain;
 }
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow: clip;
 }
-.lenis.lenis-scrolling iframe {
+.lenis.lenis-smooth iframe {
   pointer-events: none;
 }
 

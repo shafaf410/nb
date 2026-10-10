@@ -46,25 +46,25 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
     if (!container) return;
 
     const ctx = gsap.context(() => {
-      // 1. Headline initially oversized and slightly clipped, settles into final scale during scroll
+      // 1. Headline settles into final scale during scroll with hardware-accelerated transform
       if (headline) {
         gsap.fromTo(
           headline,
           {
-            scale: 1.22,
-            yPercent: 8,
-            clipPath: "inset(0 0 15% 0)",
+            scale: 1.12,
+            yPercent: 12,
+            opacity: 0.85,
           },
           {
             scale: 1.0,
             yPercent: 0,
-            clipPath: "inset(0 0 0% 0)",
-            ease: "power3.out",
+            opacity: 1,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: container,
               start: "top 80%",
               end: "top 25%",
-              scrub: 1.2,
+              scrub: 1.0,
             },
           }
         );
@@ -74,7 +74,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
       if (bgMedia) {
         gsap.fromTo(
           bgMedia,
-          { opacity: 0.15, scale: 1.1 },
+          { opacity: 0.2, scale: 1.08 },
           {
             opacity: 0.55,
             scale: 1.0,
@@ -83,7 +83,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               trigger: container,
               start: "top 85%",
               end: "bottom bottom",
-              scrub: 1.5,
+              scrub: 1.0,
             },
           }
         );
@@ -94,12 +94,13 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         const fields = formCard.querySelectorAll(".sequential-field");
         gsap.fromTo(
           fields,
-          { y: 25, opacity: 0 },
+          { y: 20, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.14,
-            ease: "power2.out",
+            stagger: 0.1,
+            duration: 0.7,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: formCard,
               start: "top 75%",

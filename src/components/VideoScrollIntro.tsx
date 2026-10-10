@@ -38,7 +38,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
+  // Only track prompt visibility as boolean state — eliminates 120 FPS root re-renders
+  const [showPrompt, setShowPrompt] = useState(true);
 
   const stateRef = useRef({
     targetProgress: 0,
@@ -122,9 +123,9 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const state = stateRef.current;
       const delta = state.targetProgress - state.currentProgress;
 
-      // 0.22 LERP damping: responsive, silky, stops cleanly without runaway video auto-play
-      if (Math.abs(delta) > 0.0005) {
-        state.currentProgress += delta * 0.22;
+      // 0.20 LERP damping: responsive, silky, stops cleanly without runaway video auto-play
+      if (Math.abs(delta) > 0.0004) {
+        state.currentProgress += delta * 0.20;
         animId = requestAnimationFrame(render);
       } else {
         state.currentProgress = state.targetProgress;
@@ -132,7 +133,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
 
       const progress = state.currentProgress;
-      setScrollProgress(progress);
+
+      // Only update prompt visibility when crossing the 5% threshold
+      const shouldPrompt = progress < 0.05;
+      setShowPrompt((prev) => (prev !== shouldPrompt ? shouldPrompt : prev));
+
+      // Notify parent callback
       onProgress?.(progress);
 
       if (canvasRef.current) {
@@ -163,9 +169,14 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       stateRef.current.targetProgress = clamped;
 
       // Hide the fixed canvas stage when completely scrolled past by the 2nd page
+      const isCovered = scrollY > totalScrollable + window.innerHeight * 1.15;
       if (stageRef.current) {
-        const isCovered = scrollY > totalScrollable + window.innerHeight * 1.15;
         stageRef.current.style.visibility = isCovered ? "hidden" : "visible";
+      }
+
+      // When fully covered and animation reached completion, avoid scheduling idle RAFs
+      if (isCovered && stateRef.current.currentProgress >= 0.999 && clamped >= 0.999) {
+        return;
       }
 
       if (!animId) {
@@ -193,9 +204,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     };
   }, [drawFrame, onProgress]);
 
-  // Subtle 3D camera forward glide
-  const cameraScale = 1 + scrollProgress * 0.04;
-
   return (
     <div
       ref={containerRef}
@@ -218,7 +226,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             ref={canvasRef}
             className="w-full h-full select-none pointer-events-none"
             style={{
-              transform: `scale(${cameraScale}) translateZ(0)`,
+              transform: "scale(1) translateZ(0)",
               willChange: "transform",
               filter: "contrast(1.02) saturate(1.04)",
             }}
@@ -228,7 +236,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           <div className="absolute inset-0 bg-gradient-to-t from-[#070D16]/50 via-transparent to-[#070D16]/30 pointer-events-none" />
 
           {/* Bottom subtle scroll prompt before user begins scrolling */}
-          {scrollProgress < 0.05 && (
+          {showPrompt && (
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 opacity-70">
               <span className="w-5 h-9 rounded-full border border-white/30 flex items-start justify-center p-1 bg-black/20 backdrop-blur-xs">
                 <span className="w-1.5 h-2.5 bg-[#C59C58] rounded-full animate-bounce" />

@@ -17,6 +17,7 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
   const pinRef = useRef<HTMLDivElement>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIdxRef = useRef(0);
 
   const industries = [
     {
@@ -75,7 +76,7 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
     },
   ];
 
-  // Helper to swiftly scroll directly to a specific slide
+  // Helper to swiftly scroll directly to a specific slide using Lenis if active
   const goToSlide = useCallback((index: number) => {
     const trigger = triggerRef.current;
     if (!trigger) return;
@@ -85,8 +86,13 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
       // 3 distinct rest positions: 0.15, 0.50, 0.85
       const targetProgress = index === 0 ? 0.15 : index === 1 ? 0.50 : 0.85;
       const targetY = st.start + targetProgress * (st.end - st.start);
-      window.scrollTo({ top: targetY, behavior: "smooth" });
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        (window as any).lenis.scrollTo(targetY, { duration: 1.1 });
+      } else {
+        window.scrollTo({ top: targetY, behavior: "smooth" });
+      }
     } else {
+      activeIdxRef.current = index;
       setActiveIndex(index);
     }
   }, []);
@@ -123,7 +129,10 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
           } else {
             nextIdx = 0;
           }
-          setActiveIndex(nextIdx);
+          if (nextIdx !== activeIdxRef.current) {
+            activeIdxRef.current = nextIdx;
+            setActiveIndex(nextIdx);
+          }
         },
       });
     });

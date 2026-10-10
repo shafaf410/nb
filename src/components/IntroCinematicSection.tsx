@@ -27,7 +27,105 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Gentle parallax on the inner photography as user scrolls
+      // 1. Category Badge Reveal
+      if (badgeRef.current) {
+        gsap.fromTo(
+          badgeRef.current,
+          { opacity: 0, x: -20 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 78%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 2. Headline Words Staggered Reveal
+      const words = section.querySelectorAll(".word-item");
+      if (words.length > 0) {
+        gsap.fromTo(
+          words,
+          { yPercent: 105, opacity: 0 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.95,
+            stagger: 0.08,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: headlineLine1Ref.current,
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 3. Subtitle Editorial Fade
+      if (subtitleRef.current) {
+        gsap.fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: subtitleRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 4. Trust Credentials Line
+      if (statsLineRef.current) {
+        gsap.fromTo(
+          statsLineRef.current,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: statsLineRef.current,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 5. Image Wrapper Smooth Inset Reveal
+      if (imageWrapperRef.current) {
+        gsap.fromTo(
+          imageWrapperRef.current,
+          { opacity: 0, scale: 0.96, y: 30 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 1.05,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: imageWrapperRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // 6. Gentle parallax on the inner photography as user scrolls
       if (imageInnerRef.current) {
         gsap.fromTo(
           imageInnerRef.current,
@@ -40,7 +138,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
               trigger: section,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.2,
+              scrub: 1.0,
             },
           }
         );
@@ -114,7 +212,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             </p>
 
             {/* Micro Details & Editorial Credentials */}
-            <div className="pt-4 border-t border-[#0B1522]/10 flex flex-wrap items-center gap-6 sm:gap-10 text-xs sm:text-sm text-[#0B1522]/70 font-light">
+            <div ref={statsLineRef} className="pt-4 border-t border-[#0B1522]/10 flex flex-wrap items-center gap-6 sm:gap-10 text-xs sm:text-sm text-[#0B1522]/70 font-light">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58]" />
                 <span className="font-medium text-[#0B1522]">DNV & ISO 9001</span> Verified
