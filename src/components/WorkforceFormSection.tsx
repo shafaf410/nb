@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, ChevronDown, CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Send } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import MagneticButton from "@/components/MagneticButton";
 
@@ -16,15 +16,16 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
   const { t } = useLanguage();
 
   const [formData, setFormData] = useState({
-    name: "",
-    company: "",
-    industry: initialIndustry || "",
-    requirement: "",
+    companyName: "",
+    phone: "",
+    officialEmail: "",
+    serviceNeeded: initialIndustry || "",
+    projectDetails: "",
   });
 
   useEffect(() => {
     if (initialIndustry) {
-      setFormData((prev) => ({ ...prev, industry: initialIndustry }));
+      setFormData((prev) => ({ ...prev, serviceNeeded: initialIndustry }));
     }
   }, [initialIndustry]);
 
@@ -51,8 +52,8 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         gsap.fromTo(
           headline,
           {
-            scale: 1.12,
-            yPercent: 12,
+            scale: 1.08,
+            yPercent: 8,
             opacity: 0.85,
           },
           {
@@ -74,9 +75,9 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
       if (bgMedia) {
         gsap.fromTo(
           bgMedia,
-          { opacity: 0.2, scale: 1.08 },
+          { opacity: 0.15, scale: 1.06 },
           {
-            opacity: 0.55,
+            opacity: 0.45,
             scale: 1.0,
             ease: "none",
             scrollTrigger: {
@@ -89,9 +90,9 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         );
       }
 
-      // 3. Form fields appear sequentially (Always 100% visible, no opacity 0 lock)
+      // 3. Form fields appear sequentially
       if (formCard) {
-        const fields = formCard.querySelectorAll(".sequential-field");
+        const fields = formCard.querySelectorAll(".form-input-card");
         gsap.from(fields, {
           y: 20,
           stagger: 0.08,
@@ -122,7 +123,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
     <section
       id="request-form"
       ref={containerRef}
-      className="py-24 sm:py-36 lg:py-48 bg-[#070D16] relative overflow-hidden text-white"
+      className="py-24 sm:py-36 lg:py-44 bg-[#070D16] relative overflow-hidden text-white"
     >
       {/* Background Architectural Ambient Image & Grid */}
       <div
@@ -136,38 +137,41 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
           sizes="100vw"
           className="object-cover object-center filter grayscale contrast-125"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-[#070D16]/85 to-[#070D16]/90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-[#070D16]/88 to-[#070D16]/92" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
+      <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
         
-        {/* Top Tag */}
-        <div className="flex items-center gap-3 mb-6">
+        {/* Top Eyebrow Tag */}
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
           <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase">
-            {t.form.tag} // 05 FINAL CALL
+            CONTACT // MANPOWER INQUIRY
           </span>
-          <span className="h-[1px] w-12 sm:w-16 bg-[#C59C58]/60" />
+          <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
         </div>
 
-        {/* Requirement 11: Oversized Headline Settling into Final Scale */}
-        <div className="overflow-hidden pb-8 sm:pb-12">
-          <div ref={headlineRef} className="origin-top-left will-change-transform">
-            <h2 className="font-serif text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-normal text-white tracking-[-0.03em] leading-[0.95] sm:leading-[0.92]">
-              BUILD YOUR <br />
-              <span className="italic font-serif text-[#C59C58]">NEXT TEAM.</span>
+        {/* Section Headline */}
+        <div className="text-center overflow-hidden pb-4 sm:pb-6">
+          <div ref={headlineRef} className="origin-top will-change-transform">
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-[-0.02em] leading-tight">
+              Get in Touch with <br className="hidden sm:inline" />
+              <span className="italic font-serif text-[#C59C58]">Norvian AB</span>
             </h2>
           </div>
         </div>
 
-        {/* Editorial Subtitle */}
-        <p className="text-sm sm:text-base lg:text-lg text-white/70 font-light leading-relaxed max-w-2xl mb-12 sm:mb-16">
-          Direct recruitment corridors for specialized European shipbuilding, industrial construction, and continental fleet operations. Fully audited for immigration, tax, and social compliance under Scandinavian directives.
-        </p>
+        {/* Header Message matching reference image verbatim */}
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <p className="text-base sm:text-lg lg:text-xl text-white/80 font-light leading-relaxed">
+            We&apos;re always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from Asia.
+          </p>
+        </div>
 
-        {/* Sequential 4-Field Form Container */}
+        {/* Form Container */}
         <div
           ref={formCardRef}
-          className="max-w-4xl bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-10 lg:p-14 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)]"
+          className="bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-10 lg:p-12 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)]"
         >
           {submitted ? (
             <div className="py-12 text-center space-y-6 animate-fadeIn">
@@ -176,122 +180,104 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               </div>
               <div className="space-y-2">
                 <h3 className="font-serif text-3xl sm:text-4xl font-normal text-white">
-                  Deployment Corridor Activated
+                  Message Sent Successfully
                 </h3>
                 <p className="text-sm text-white/70 max-w-md mx-auto font-light leading-relaxed">
-                  Your workforce request has been routed to our European logistics directors. You will receive certified candidate portfolios within 48 hours.
+                  Thank you for reaching out. Our team will review your project details and get back to you promptly.
                 </p>
               </div>
               <button
                 onClick={() => setSubmitted(false)}
                 className="inline-flex items-center justify-center bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer border border-white/20 hover:border-[#C59C58]"
               >
-                Submit Additional Brief
+                Send Another Message
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
               
-              {/* Sequential Field 01: NAME */}
-              <div className="sequential-field group relative space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono tracking-widest uppercase">
-                  <span className="text-[#C59C58] font-bold">01 NAME</span>
-                  <span className="text-white/40">DIRECT CONTACT & TITLE</span>
-                </div>
+              {/* Field 1: Company Name */}
+              <div className="form-input-card">
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Henrik Lindqvist, Head of Marine Operations (+47 ...)"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-transparent border-b border-white/20 py-3 text-base sm:text-lg text-white placeholder-white/30 focus:outline-none transition-colors"
+                  placeholder="Company Name"
+                  value={formData.companyName}
+                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                  className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
                 />
-                {/* Micro-interaction line-draw on focus */}
-                <div className="h-[2px] w-full bg-[#C59C58] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
               </div>
 
-              {/* Sequential Field 02: COMPANY */}
-              <div className="sequential-field group relative space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono tracking-widest uppercase">
-                  <span className="text-[#C59C58] font-bold">02 COMPANY</span>
-                  <span className="text-white/40">ORGANIZATION & COUNTRY</span>
-                </div>
+              {/* Field 2: Phone */}
+              <div className="form-input-card">
+                <input
+                  type="tel"
+                  required
+                  placeholder="Phone"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
+                />
+              </div>
+
+              {/* Field 3: Official Email */}
+              <div className="form-input-card">
+                <input
+                  type="email"
+                  required
+                  placeholder="Official Email"
+                  value={formData.officialEmail}
+                  onChange={(e) => setFormData({ ...formData, officialEmail: e.target.value })}
+                  className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
+                />
+              </div>
+
+              {/* Field 4: Which Service Do You Need? */}
+              <div className="form-input-card">
                 <input
                   type="text"
-                  required
-                  placeholder="e.g. Nordic Yards ASA, Norway / Germany"
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full bg-transparent border-b border-white/20 py-3 text-base sm:text-lg text-white placeholder-white/30 focus:outline-none transition-colors"
+                  placeholder="Which Service Do You Need? (e.g. Shipbuilding Workers, Welders, Drivers...)"
+                  value={formData.serviceNeeded}
+                  onChange={(e) => setFormData({ ...formData, serviceNeeded: e.target.value })}
+                  className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
                 />
-                <div className="h-[2px] w-full bg-[#C59C58] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
               </div>
 
-              {/* Sequential Field 03: INDUSTRY */}
-              <div className="sequential-field group relative space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono tracking-widest uppercase">
-                  <span className="text-[#C59C58] font-bold">03 INDUSTRY</span>
-                  <span className="text-white/40">SPECIALIZED DISCIPLINE</span>
-                </div>
-                <div className="relative">
-                  <select
-                    required
-                    value={formData.industry}
-                    onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                    className="w-full bg-transparent border-b border-white/20 py-3 text-base sm:text-lg text-white focus:outline-none transition-colors appearance-none cursor-pointer"
-                  >
-                    <option value="" className="bg-[#0B1522] text-white">Select Primary Discipline</option>
-                    <option value="Shipbuilding & Marine Engineering" className="bg-[#0B1522] text-white">01 Shipbuilding & Marine Engineering (ISO 9001 / DNV)</option>
-                    <option value="Industrial Construction & Civil" className="bg-[#0B1522] text-white">02 Industrial Construction & Heavy Civil (EN 1090)</option>
-                    <option value="Transport & Continental Fleet" className="bg-[#0B1522] text-white">03 Transport, Fleet & Continental Logistics (Code 95 / ADR)</option>
-                    <option value="Energy & Infrastructure" className="bg-[#0B1522] text-white">04 Renewable Energy & Grid Infrastructure</option>
-                  </select>
-                  <ChevronDown className="w-5 h-5 text-white/50 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
-                </div>
-                <div className="h-[2px] w-full bg-[#C59C58] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
-              </div>
-
-              {/* Sequential Field 04: REQUIREMENT */}
-              <div className="sequential-field group relative space-y-2">
-                <div className="flex items-center justify-between text-[11px] font-mono tracking-widest uppercase">
-                  <span className="text-[#C59C58] font-bold">04 REQUIREMENT</span>
-                  <span className="text-white/40">CREW SIZE & TIMELINE BRIEF</span>
-                </div>
+              {/* Field 5: Tell us about your project */}
+              <div className="form-input-card">
                 <textarea
-                  rows={2}
+                  rows={4}
                   required
-                  placeholder="e.g. 15 TIG welders (6G DNV) and 4 Hull Fabricators needed in Bergen yard by Q3."
-                  value={formData.requirement}
-                  onChange={(e) => setFormData({ ...formData, requirement: e.target.value })}
-                  className="w-full bg-transparent border-b border-white/20 py-3 text-base sm:text-lg text-white placeholder-white/30 focus:outline-none transition-colors resize-none"
+                  placeholder="Tell us about your project (number of workers needed, specific trades/roles, project duration, location in Europe, etc.)"
+                  value={formData.projectDetails}
+                  onChange={(e) => setFormData({ ...formData, projectDetails: e.target.value })}
+                  className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all resize-none leading-relaxed"
                 />
-                <div className="h-[2px] w-full bg-[#C59C58] origin-left scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out" />
               </div>
 
-              {/* Compliance Trust Note */}
-              <div className="flex items-center gap-3 pt-2 text-xs text-white/60">
+              {/* Trust/Compliance badge */}
+              <div className="flex items-center gap-2.5 pt-1 text-xs text-white/60">
                 <ShieldCheck className="w-4 h-4 text-[#C59C58] shrink-0" />
-                <span>Zero immigration risk. Full tax, social security, and housing logistics managed by Norvian AB.</span>
+                <span>Norvian AB manages candidate screening, compliance, and deployment logistics.</span>
               </div>
 
-              {/* Requirement 11: SEND REQUEST Button with Refined Magnetic Hover & Arrow Movement without Bouncing */}
-              <div className="pt-4 flex justify-end">
+              {/* Submit Button: Send Message */}
+              <div className="pt-3 flex justify-start sm:justify-start">
                 <MagneticButton
                   type="submit"
                   disabled={loading}
                   strength={16}
-                  className="group inline-flex items-center gap-4 bg-[#C59C58] hover:bg-[#D4AF37] text-[#070D16] px-8 sm:px-12 py-4 sm:py-5 rounded-full text-xs font-semibold uppercase tracking-[0.2em] shadow-[0_12px_35px_-8px_rgba(197,156,88,0.5)] border border-[#C59C58] active:scale-95 overflow-hidden"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#0088FF] hover:bg-[#0077EE] text-white px-9 py-4 rounded-xl sm:rounded-2xl text-sm font-semibold tracking-wide shadow-[0_10px_25px_-5px_rgba(0,136,255,0.4)] active:scale-95 transition-all cursor-pointer"
                 >
                   {loading ? (
                     <span className="inline-flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-[#070D16]/30 border-t-[#070D16] rounded-full animate-spin" />
-                      <span>INITIALIZING BRIEF...</span>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Sending Message...</span>
                     </span>
                   ) : (
                     <>
-                      <span>SEND REQUEST</span>
-                      {/* Arrow moves 6px on hover without bouncing */}
-                      <ArrowRight className="w-4 h-4 text-[#070D16] transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+                      <span>Send Message</span>
+                      <Send className="w-4 h-4 text-white" />
                     </>
                   )}
                 </MagneticButton>
