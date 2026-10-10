@@ -6,9 +6,9 @@ interface VideoScrollIntroProps {
   onProgress?: (progress: number) => void;
 }
 
-const TOTAL_FRAMES = 118;
-// Full cinematic playback duration for ship2_1 video sequence
-const AUTO_SCROLL_DURATION = 5000;
+const TOTAL_FRAMES = 165;
+// Full 10-second cinematic presentation pace
+const AUTO_SCROLL_DURATION = 10000;
 
 // Persistent module-level frame cache
 const frameCache: HTMLImageElement[] = [];
@@ -22,8 +22,8 @@ function preloadAllFrames(onFirstFrame?: () => void) {
   if (isPreloading) return;
   isPreloading = true;
 
-  // 1. Immediately load first batch for instant response
-  const initialBatch = 24;
+  // 1. Immediately load first batch (all ship frames + truck start) for instant response
+  const initialBatch = 35;
   for (let i = 1; i <= Math.min(initialBatch, TOTAL_FRAMES); i++) {
     const img = new Image();
     const padded = String(i).padStart(3, "0");
@@ -152,16 +152,24 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const elapsed = now - state.startTime;
       const t = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
 
-      // 1. Video frame progression across all 118 frames of ship2_1:
-      // Plays through the cruise ship indoor hall and the dramatic zoom into the NORVIAN AB crane
-      const frameT = Math.min(1, t / 0.84);
-      const frameProgress =
-        frameT < 0.5 ? 2 * frameT * frameT : -1 + (4 - 2 * frameT) * frameT;
-
-      const frameIndex = Math.min(
-        TOTAL_FRAMES - 1,
-        Math.floor(frameProgress * (TOTAL_FRAMES - 1))
-      );
+      // 1. Video frame progression across both scenes:
+      // Part A: Frames 0-31 (new ship2_1 indoor cruise ship zoom into NORVIAN AB crane)
+      // takes the initial 2.5s (t: 0 -> 0.25)
+      // Part B: Frames 32-164 (NORVIAN AB Volvo truck, warehouse/forklift, illuminated Earth globe)
+      // takes a generous 6.3s (t: 0.25 -> 0.88), making the rest of the video unhurried, rich, and cinematic!
+      let frameIndex = 0;
+      if (t <= 0.25) {
+        const p1 = t / 0.25;
+        frameIndex = Math.min(31, Math.floor(p1 * 32));
+      } else if (t <= 0.88) {
+        const p2 = (t - 0.25) / 0.63;
+        frameIndex = Math.min(
+          TOTAL_FRAMES - 1,
+          32 + Math.floor(p2 * (TOTAL_FRAMES - 1 - 32))
+        );
+      } else {
+        frameIndex = TOTAL_FRAMES - 1;
+      }
 
       if (frameIndex !== state.currentFrame) {
         state.currentFrame = frameIndex;
@@ -169,11 +177,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
 
       // 2. Viewport Scroll progression (Curtain Slide):
-      // Smoothly glides up as the camera finishes its zoom-in,
-      // seamlessly unveiling the manifesto section with ZERO dark blue gap!
+      // Smoothly glides up at t > 0.68 as the glowing globe illuminates,
+      // seamlessly unveiling the manifesto section with ZERO dark blue empty gap!
       let scrollProgress = 0;
-      if (t > 0.60) {
-        const scrollT = (t - 0.60) / 0.40;
+      if (t > 0.68) {
+        const scrollT = (t - 0.68) / 0.32;
         scrollProgress =
           scrollT < 0.5
             ? 2 * scrollT * scrollT
