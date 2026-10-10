@@ -7,8 +7,10 @@ interface VideoScrollIntroProps {
 }
 
 const TOTAL_FRAMES = 165;
+// Duration in ms to play through the 165 frames and scroll into the website
+const AUTO_SCROLL_DURATION = 3200; 
 
-// Persistent module-level cache: never wiped out by React StrictMode or component re-renders
+// Persistent module-level frame cache
 const frameCache: HTMLImageElement[] = [];
 let isPreloading = false;
 
@@ -20,7 +22,7 @@ function preloadAllFrames(onFirstFrame?: () => void) {
   if (isPreloading) return;
   isPreloading = true;
 
-  // 1. Immediately load the first 24 frames for instant interactive response
+  // 1. Immediately load first batch for instant response
   const initialBatch = 24;
   for (let i = 1; i <= Math.min(initialBatch, TOTAL_FRAMES); i++) {
     const img = new Image();
@@ -34,10 +36,10 @@ function preloadAllFrames(onFirstFrame?: () => void) {
     frameCache.push(img);
   }
 
-  // 2. Stream the remaining frames in non-blocking background batches
+  // 2. Stream remaining frames in background
   const loadRemaining = (startIdx: number) => {
     if (startIdx > TOTAL_FRAMES) return;
-    const endIdx = Math.min(startIdx + 20, TOTAL_FRAMES);
+    const endIdx = Math.min(startIdx + 25, TOTAL_FRAMES);
     for (let i = startIdx; i <= endIdx; i++) {
       const img = new Image();
       const padded = String(i).padStart(3, "0");
@@ -48,12 +50,12 @@ function preloadAllFrames(onFirstFrame?: () => void) {
       if (typeof window !== "undefined" && "requestIdleCallback" in window) {
         (window as any).requestIdleCallback(() => loadRemaining(endIdx + 1));
       } else {
-        setTimeout(() => loadRemaining(endIdx + 1), 60);
+        setTimeout(() => loadRemaining(endIdx + 1), 50);
       }
     }
   };
 
-  setTimeout(() => loadRemaining(initialBatch + 1), 100);
+  setTimeout(() => loadRemaining(initialBatch + 1), 60);
 }
 
 export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) {
@@ -61,14 +63,14 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Only track prompt visibility as boolean state — eliminates 120 FPS root re-renders
   const [showPrompt, setShowPrompt] = useState(true);
 
   const stateRef = useRef({
-    targetProgress: 0,
-    currentProgress: 0,
-    renderedIndex: -1,
-    animId: 0,
+    isAutoScrolling: false,
+    hasCompleted: false,
+    currentFrame: 0,
+    startTime: 0,
+    rafId: 0,
   });
 
   const drawFrame = useCallback((index: number) => {
@@ -95,7 +97,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         canvas.height = targetH;
       }
 
-      // Responsive object-cover calculation directly in canvas
+      // Responsive object-cover calculation
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const canvasRatio = canvas.width / canvas.height;
 
@@ -120,15 +122,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     if (img.complete && img.naturalWidth > 0) {
       render();
     } else {
-      img.onload = () => {
-        if (stateRef.current.renderedIndex === index) {
-          render();
-        }
-      };
+      img.onload = () => render();
     }
   }, []);
 
-  // Preload frames once and paint frame 0 immediately
+  // Preload frames once and paint frame 0
   useEffect(() => {
     preloadAllFrames(() => {
       drawFrame(0);
@@ -138,106 +136,195 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     }
   }, [drawFrame]);
 
-  // Smooth, continuous 120 FPS scroll tracking with responsive damping
-  useEffect(() => {
-    let animId = 0;
+  // Main Auto-Scroll Routine: triggered by a single scroll gesture
+  const startAutoScroll = useCallback(() => {
+    const state = stateRef.current;
+    if (state.isAutoScrolling || state.hasCompleted) return;
 
-    const render = () => {
-      const state = stateRef.current;
-      const delta = state.targetProgress - state.currentProgress;
+    state.isAutoScrolling = true;
+    state.startTime = performance.now();
+    setShowPrompt(false);
 
-      // 0.20 LERP damping: responsive, silky, stops cleanly without runaway video auto-play
-      if (Math.abs(delta) > 0.0004) {
-        state.currentProgress += delta * 0.20;
-        animId = requestAnimationFrame(render);
-      } else {
-        state.currentProgress = state.targetProgress;
-        animId = 0;
+    const container = containerRef.current;
+    const targetScrollY = container ? container.offsetHeight : window.innerHeight;
+
+    // Trigger smooth scroll via Lenis or fallback window scrollTo
+    if (typeof window !== "undefined" && (window as any).lenis) {
+      (window as any).lenis.scrollTo(targetScrollY, {
+        duration: AUTO_SCROLL_DURATION / 1000,
+        easing: (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
+        lock: false,
+      });
+    }
+
+    const step = (now: number) => {
+      const elapsed = now - state.startTime;
+      const rawProgress = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
+
+      // Smooth cinematic easeInOut curve
+      const progress =
+        rawProgress < 0.5
+          ? 2 * rawProgress * rawProgress
+          : -1 + (4 - 2 * rawProgress) * rawProgress;
+
+      // Render corresponding frame
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.floor(progress * TOTAL_FRAMES)
+      );
+
+      if (frameIndex !== state.currentFrame) {
+        state.currentFrame = frameIndex;
+        drawFrame(frameIndex);
       }
-
-      const progress = state.currentProgress;
-
-      // Only update prompt visibility when crossing the 5% threshold
-      const shouldPrompt = progress < 0.05;
-      setShowPrompt((prev) => (prev !== shouldPrompt ? shouldPrompt : prev));
-
-      // Notify parent callback
-      onProgress?.(progress);
 
       if (canvasRef.current) {
         canvasRef.current.style.transform = `scale(${1 + progress * 0.04}) translateZ(0)`;
       }
 
-      // Map progress evenly across all 120 frames (0 to 119) with no dead zones or freezing
-      const frameIndex = Math.min(
-        TOTAL_FRAMES - 1,
-        Math.max(0, Math.round(progress * (TOTAL_FRAMES - 1)))
-      );
+      // If Lenis is not active, advance native scroll smoothly
+      if (typeof window !== "undefined" && !(window as any).lenis) {
+        window.scrollTo(0, progress * targetScrollY);
+      }
 
-      if (frameIndex !== state.renderedIndex) {
-        state.renderedIndex = frameIndex;
-        drawFrame(frameIndex);
+      onProgress?.(progress);
+
+      if (rawProgress < 1) {
+        state.rafId = requestAnimationFrame(step);
+      } else {
+        // Complete auto-scroll sequence
+        state.isAutoScrolling = false;
+        state.hasCompleted = true;
+        onProgress?.(1.0);
+
+        if (stageRef.current) {
+          stageRef.current.style.display = "none";
+          stageRef.current.style.visibility = "hidden";
+        }
       }
     };
 
-    const handleScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
+    state.rafId = requestAnimationFrame(step);
+  }, [drawFrame, onProgress]);
 
-      const totalScrollable = container.offsetHeight - window.innerHeight;
-      if (totalScrollable <= 0) return;
+  // Single-Scroll Event Detection
+  useEffect(() => {
+    const container = containerRef.current;
 
-      const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-      const clamped = Math.max(0, Math.min(1, scrollY / totalScrollable));
-      stateRef.current.targetProgress = clamped;
-
-      // Hide the fixed canvas stage only after the 2nd page curtain has 100% covered the viewport
-      const isCovered = scrollY >= container.offsetHeight;
+    // Check if initial load is already below intro (e.g. anchor link)
+    const initialY = window.scrollY || window.pageYOffset || 0;
+    if (container && initialY >= container.offsetHeight - 50) {
+      stateRef.current.hasCompleted = true;
+      setShowPrompt(false);
+      onProgress?.(1.0);
       if (stageRef.current) {
-        stageRef.current.style.display = isCovered ? "none" : "block";
-        stageRef.current.style.visibility = isCovered ? "hidden" : "visible";
-        stageRef.current.style.pointerEvents = isCovered ? "none" : "auto";
+        stageRef.current.style.display = "none";
+        stageRef.current.style.visibility = "hidden";
       }
+      return;
+    }
 
-      // When fully covered and animation reached completion, avoid scheduling idle RAFs
-      if (isCovered && stateRef.current.currentProgress >= 0.999 && clamped >= 0.999) {
+    // 1. Wheel event: ONE scroll down initiates auto-scroll
+    const handleWheel = (e: WheelEvent) => {
+      if (stateRef.current.hasCompleted) {
+        // Reset if user scrolled back up to the very top
+        if (window.scrollY <= 10 && e.deltaY < 0) {
+          stateRef.current.hasCompleted = false;
+          setShowPrompt(true);
+          drawFrame(0);
+          onProgress?.(0);
+          if (stageRef.current) {
+            stageRef.current.style.display = "block";
+            stageRef.current.style.visibility = "visible";
+          }
+        }
         return;
       }
 
-      if (!animId) {
-        animId = requestAnimationFrame(render);
+      if (e.deltaY > 0) {
+        e.preventDefault();
+        startAutoScroll();
       }
     };
 
-    const handleResize = () => {
-      handleScroll();
-      if (stateRef.current.renderedIndex >= 0) {
-        drawFrame(stateRef.current.renderedIndex);
+    // 2. Touch event for mobile: ONE swipe down initiates auto-scroll
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (stateRef.current.hasCompleted) return;
+      const currentY = e.touches[0].clientY;
+      const diffY = touchStartY - currentY;
+      if (diffY > 10) {
+        if (e.cancelable) e.preventDefault();
+        startAutoScroll();
       }
     };
 
+    // 3. Keyboard navigation (ArrowDown, PageDown, Space)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (stateRef.current.hasCompleted) return;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        startAutoScroll();
+      }
+    };
+
+    // 4. Scroll position watcher for reset when returning to the very top
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      if (container) {
+        const isCovered = scrollY >= container.offsetHeight;
+        if (isCovered && stageRef.current) {
+          stageRef.current.style.display = "none";
+          stageRef.current.style.visibility = "hidden";
+        }
+      }
+
+      if (scrollY <= 5 && stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
+        stateRef.current.hasCompleted = false;
+        setShowPrompt(true);
+        drawFrame(0);
+        onProgress?.(0);
+        if (stageRef.current) {
+          stageRef.current.style.display = "block";
+          stageRef.current.style.visibility = "visible";
+        }
+      } else if (scrollY > 15 && !stateRef.current.isAutoScrolling && !stateRef.current.hasCompleted) {
+        startAutoScroll();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize, { passive: true });
-
-    // Initial sync
-    handleScroll();
 
     return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-      if (animId) cancelAnimationFrame(animId);
+      if (stateRef.current.rafId) {
+        cancelAnimationFrame(stateRef.current.rafId);
+      }
     };
-  }, [drawFrame, onProgress]);
+  }, [drawFrame, onProgress, startAutoScroll]);
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[220vh] md:h-[260vh] bg-[#070D16]"
+      className="relative w-full h-[150vh] md:h-[180vh] bg-[#070D16]"
     >
-      {/* Static Fixed Fullscreen Stage: Stays static at top: 0 while 2nd page scrolls above it */}
+      {/* Static Fixed Fullscreen Stage */}
       <div
         ref={stageRef}
-        className="fixed top-0 left-0 h-screen w-full overflow-hidden z-0 bg-[#070D16]"
+        onClick={startAutoScroll}
+        className="fixed top-0 left-0 h-screen w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer"
       >
         <div
           className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -246,7 +333,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             transformStyle: "preserve-3d",
           }}
         >
-          {/* Hardware-Accelerated 120 FPS Canvas */}
+          {/* Hardware-Accelerated Canvas */}
           <canvas
             ref={canvasRef}
             className="w-full h-full select-none pointer-events-none"
@@ -257,16 +344,18 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             }}
           />
 
-          {/* Ultra-subtle cinematic vignette */}
+          {/* Subtle cinematic vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#070D16]/50 via-transparent to-[#070D16]/30 pointer-events-none" />
 
-          {/* Bottom subtle scroll prompt before user begins scrolling */}
+          {/* Bottom subtle scroll prompt before user initiates auto-scroll */}
           {showPrompt && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 opacity-70">
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none transition-opacity duration-500 opacity-80">
               <span className="w-5 h-9 rounded-full border border-white/30 flex items-start justify-center p-1 bg-black/20 backdrop-blur-xs">
                 <span className="w-1.5 h-2.5 bg-[#C59C58] rounded-full animate-bounce" />
               </span>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-white/50 font-medium">Scroll</span>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-medium">
+                Scroll to Enter
+              </span>
             </div>
           )}
         </div>
