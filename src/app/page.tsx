@@ -47,7 +47,10 @@ function MainContent() {
         <VideoScrollIntro onProgress={handleIntroProgress} />
 
         {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
-        <div className="relative z-10 bg-[#FAF7F2] shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">
+        <div
+          className="relative z-30 bg-[#FAF7F2] shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35"
+          style={{ transform: "translate3d(0,0,0)" }}
+        >
           {/* Section 1: Intro Section — Cinematic Manifesto (WE MOVE WHAT MATTERS.) */}
           <IntroCinematicSection onRequestWorkforce={scrollToRequestForm} />
 

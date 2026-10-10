@@ -191,10 +191,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       const clamped = Math.max(0, Math.min(1, scrollY / totalScrollable));
       stateRef.current.targetProgress = clamped;
 
-      // Hide the fixed canvas stage when completely scrolled past by the 2nd page
-      const isCovered = scrollY > totalScrollable + window.innerHeight * 1.15;
+      // Hide the fixed canvas stage completely when scrolled to the 2nd page
+      const isCovered = scrollY >= totalScrollable - 5;
       if (stageRef.current) {
+        stageRef.current.style.display = isCovered ? "none" : "block";
         stageRef.current.style.visibility = isCovered ? "hidden" : "visible";
+        stageRef.current.style.pointerEvents = isCovered ? "none" : "auto";
       }
 
       // When fully covered and animation reached completion, avoid scheduling idle RAFs
