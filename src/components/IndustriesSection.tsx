@@ -114,7 +114,7 @@ export default function IndustriesSection({ onSelectIndustry }: IndustriesSectio
         start: "top top",
         end: "+=1600",
         pin: true,
-        anticipatePin: 1,
+        anticipatePin: 0,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const p = self.progress;

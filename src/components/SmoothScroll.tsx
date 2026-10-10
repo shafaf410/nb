@@ -14,14 +14,20 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       return;
     }
 
+    // Ensure browser does not remember and restore midway scroll on refresh/load
+    if (typeof window !== "undefined" && "scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
-      duration: 1.25,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 1.0,
       infinite: false,
     });
 
@@ -36,8 +42,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     };
 
     gsap.ticker.add(updateTicker);
-    // Smooth over brief frame drops without sudden jumps
-    gsap.ticker.lagSmoothing(500, 33);
+    // CRITICAL: Disable GSAP lag smoothing.
+    // If enabled (>0), any minor initial frame lag artificially advances the ticker clock,
+    // which Lenis interprets as an enormous delta time, launching the scroll all the way down on the first try!
+    gsap.ticker.lagSmoothing(0);
 
     // Smooth anchor navigation handling
     const handleAnchorClick = (e: MouseEvent) => {

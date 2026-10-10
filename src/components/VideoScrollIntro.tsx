@@ -20,7 +20,9 @@ function preloadAllFrames(onFirstFrame?: () => void) {
   if (isPreloading) return;
   isPreloading = true;
 
-  for (let i = 1; i <= TOTAL_FRAMES; i++) {
+  // 1. Immediately load the first 24 frames for instant interactive response
+  const initialBatch = 24;
+  for (let i = 1; i <= Math.min(initialBatch, TOTAL_FRAMES); i++) {
     const img = new Image();
     const padded = String(i).padStart(3, "0");
     img.src = `/frames/frame_${padded}.webp`;
@@ -31,6 +33,27 @@ function preloadAllFrames(onFirstFrame?: () => void) {
     }
     frameCache.push(img);
   }
+
+  // 2. Stream the remaining frames in non-blocking background batches
+  const loadRemaining = (startIdx: number) => {
+    if (startIdx > TOTAL_FRAMES) return;
+    const endIdx = Math.min(startIdx + 20, TOTAL_FRAMES);
+    for (let i = startIdx; i <= endIdx; i++) {
+      const img = new Image();
+      const padded = String(i).padStart(3, "0");
+      img.src = `/frames/frame_${padded}.webp`;
+      frameCache.push(img);
+    }
+    if (endIdx < TOTAL_FRAMES) {
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        (window as any).requestIdleCallback(() => loadRemaining(endIdx + 1));
+      } else {
+        setTimeout(() => loadRemaining(endIdx + 1), 60);
+      }
+    }
+  };
+
+  setTimeout(() => loadRemaining(initialBatch + 1), 100);
 }
 
 export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) {
@@ -207,7 +230,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[300vh] md:h-[400vh] bg-[#070D16]"
+      className="relative w-full h-[220vh] md:h-[260vh] bg-[#070D16]"
     >
       {/* Static Fixed Fullscreen Stage: Stays static at top: 0 while 2nd page scrolls above it */}
       <div
