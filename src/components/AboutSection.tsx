@@ -105,9 +105,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
   return (
     <section
       ref={sectionRef}
-      id="about-us"
+      id="about"
       className="relative bg-[#080E18] text-white py-24 sm:py-32 lg:py-36 border-t border-[#C59C58]/20 overflow-hidden"
     >
+      <div id="about-us" className="sr-only" />
       {/* Background Architectural Grid Lines */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="max-w-7xl mx-auto h-full grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-12 divide-x divide-white">

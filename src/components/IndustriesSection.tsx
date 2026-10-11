@@ -203,9 +203,10 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
   return (
     <div
       ref={triggerRef}
-      id="industries"
+      id="services"
       className="relative z-10 bg-[#070D16] text-white w-full overflow-hidden shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35"
     >
+      <div id="industries" className="sr-only" />
       {/* Pinned Desktop Viewport / Responsive Mobile Viewport */}
       <div
         ref={pinRef}

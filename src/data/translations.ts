@@ -12,6 +12,9 @@ export const translations = {
     // Navbar
     nav: {
       brandSub: "Nordic & European Workforce",
+      services: "Services",
+      about: "About",
+      contactUs: "Contact Us",
       aboutUs: "About Us",
       industries: "Key Industries",
       industriesBadge: "3 Sectors",
@@ -249,6 +252,9 @@ export const translations = {
     // Navbar
     nav: {
       brandSub: "Nordisk & Europeisk Arbetskraft",
+      services: "Tjänster",
+      about: "Om oss",
+      contactUs: "Kontakta oss",
       aboutUs: "Om oss",
       industries: "Branscher",
       industriesBadge: "3 Sektorer",
