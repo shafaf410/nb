@@ -1,6 +1,6 @@
-import { Anchor, Building2, Truck } from "lucide-react";
+import { Anchor, Building2, Truck, Factory } from "lucide-react";
 
-export type ServiceKey = "shipbuilding" | "construction" | "logistics";
+export type ServiceKey = "shipbuilding" | "construction" | "logistics" | "industrial";
 
 export interface TechnicalMatrixItem {
   discipline: string;
@@ -822,6 +822,278 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
     ],
   },
+  industrial: {
+    id: "industrial",
+    number: "04",
+    code: "INDUSTRIAL MANPOWER SUPPLY",
+    title: "Industrial & Manufacturing",
+    heading: "Looking for Experienced Industrial Workers?",
+    badge: "SKILLED & EXPERIENCED PROFESSIONALS",
+    complianceBadges: [
+      "CNC & Machining Specialists",
+      "European & International Pool",
+      "Direct International Recruitment",
+      "India • Philippines • Vietnam • Brazil • Zimbabwe",
+      "Technical Skills Verified",
+      "Flexible Manpower Supply",
+    ],
+    shortDescription:
+      "Norvian AB supplies skilled and experienced industrial workers to factories, manufacturing companies, engineering workshops, and production facilities across Europe. We help companies find qualified professionals for CNC machining, metal fabrication, welding, mechanical assembly, industrial production, and factory operations.",
+    detailedDescription:
+      "Our focus is on providing workers with practical industry experience, technical skills, and knowledge of workplace safety.\n\nWe supply experienced European workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also offer direct international recruitment from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other countries, helping industrial companies find skilled workers for their production and manufacturing needs.\n\nWe support companies looking for workers for short-term projects, long-term employment, and ongoing industrial operations.",
+    specializationCategories: [
+      {
+        category: "CNC Machining & Programming",
+        roles: [
+          "CNC Programmers",
+          "CNC Machine Operators",
+          "CNC Milling Operators",
+          "CNC Turning Operators",
+          "CNC Lathe Operators",
+          "CNC Machinists",
+          "CNC Setup Technicians",
+          "CAD/CAM Programmers",
+        ],
+      },
+      {
+        category: "Welding & Metal Fabrication",
+        roles: [
+          "TIG Welders",
+          "MIG/MAG Welders",
+          "MMA Welders",
+          "Industrial Pipe Welders",
+          "Steel Fabricators",
+          "Metal Fabricators",
+          "Sheet Metal Workers",
+          "Industrial Locksmiths",
+        ],
+      },
+      {
+        category: "Mechanical & Industrial Assembly",
+        roles: [
+          "Mechanical Fitters",
+          "Industrial Mechanics",
+          "Machine Assemblers",
+          "Maintenance Technicians",
+          "Industrial Electricians",
+          "Hydraulic Technicians",
+          "Pneumatic Technicians",
+        ],
+      },
+      {
+        category: "Factory & Production Workers",
+        roles: [
+          "Production Line Operators",
+          "Machine Operators",
+          "Factory Workers",
+          "Assembly Line Workers",
+          "Packaging Workers",
+          "Quality Control Inspectors",
+          "Production Technicians",
+        ],
+      },
+      {
+        category: "Warehouse & Material Handling",
+        roles: [
+          "Forklift Operators",
+          "Warehouse Workers",
+          "Material Handlers",
+          "Logistics Workers",
+          "Loading & Unloading Workers",
+        ],
+      },
+    ],
+    workforce: [
+      "CNC Programmers & Machinists",
+      "CNC Milling & Turning Operators",
+      "TIG, MIG/MAG & MMA Welders",
+      "Industrial Pipe Welders",
+      "Steel & Metal Fabricators",
+      "Sheet Metal Workers & Locksmiths",
+      "Mechanical Fitters & Assemblers",
+      "Industrial Mechanics & Maintenance Techs",
+      "Industrial Electricians",
+      "Hydraulic & Pneumatic Technicians",
+      "Production Line & Machine Operators",
+      "Quality Control Inspectors",
+      "Forklift Operators & Material Handlers",
+    ],
+    expertise: [
+      "Precision CNC machining, turning, and multi-axis milling",
+      "CAD/CAM programming and tooling setup optimization",
+      "Structural steel and high-spec sheet metal fabrication",
+      "Multi-process industrial welding (TIG, MIG/MAG, MMA)",
+      "Mechanical assembly of heavy machinery & production lines",
+      "Preventive factory maintenance and hydraulic/pneumatic troubleshooting",
+      "In-line assembly operations and quality assurance inspection",
+      "Warehouse logistics, inventory handling, and certified forklift operation",
+    ],
+    ctaText: "Request Industrial Workers",
+    image: "/images/industrial_real.jpg",
+    icon: Factory,
+    stats: [
+      { value: "Precision", label: "CNC Specialists", sub: "Turning, milling & setup technicians" },
+      { value: "EU & Global", label: "Recruitment Reach", sub: "Europe, India, Philippines, Vietnam, Brazil, Zimbabwe" },
+      { value: "100%", label: "Verified Skills", sub: "Practical trade assessments & video demos" },
+      { value: "Flexible", label: "Deployment Model", sub: "Short-term, long-term & project-based" },
+    ],
+    technicalMatrix: [
+      {
+        discipline: "CNC Machining & Precision Engineering",
+        standards: "ISO 2768 / DIN Precision Standards",
+        capabilities: "Programming, setting, and operating 3-axis to 5-axis CNC machining centers (Fanuc, Heidenhain, Siemens Sinumerik).",
+        verification: "Live G-code programming tests, tolerance measurement verification, and work sample review.",
+      },
+      {
+        discipline: "Welding & Metal Fabrication",
+        standards: "ISO 9606-1 / EN 1090-2 / ASME IX",
+        capabilities: "Precision TIG/MIG welding on carbon steel, stainless steel, and aluminum alloys with full penetration integrity.",
+        verification: "Welder qualification test certificates (WQT) and NDT inspection records.",
+      },
+      {
+        discipline: "Mechanical Assembly & Maintenance",
+        standards: "EU Machinery Directive & OSHA / CE",
+        capabilities: "Sub-assembly fitting, mechanical alignment, pneumatic & hydraulic system commissioning, preventive maintenance.",
+        verification: "Technical credentials, mechanical schematics reading evaluation, and trade background checks.",
+      },
+      {
+        discipline: "Factory Production & Quality Control",
+        standards: "ISO 9001 / Lean 5S Principles",
+        capabilities: "High-cadence assembly line operations, robotic cell assistance, dimensional inspection, and defect documentation.",
+        verification: "Production floor background checks and technical aptitude interviews.",
+      },
+    ],
+    tradeSpecialties: [
+      {
+        title: "CNC Programmers & Machinists",
+        desc: "Experienced specialists in setup, offsetting, and operating turning and milling centers with Fanuc, Siemens, and Heidenhain controls.",
+        certs: "Technical Diploma / CAD-CAM Certification",
+      },
+      {
+        title: "Certified Industrial Welders",
+        desc: "Expertise in TIG, MIG/MAG, and orbital welding for precision fabrications, pressure piping, and structural assemblies.",
+        certs: "ISO 9606-1 / ASME IX Certified",
+      },
+      {
+        title: "Industrial Mechanics & Fitters",
+        desc: "Skilled technicians for production equipment installation, mechanical maintenance, bearing replacements, and gearbox overhauls.",
+        certs: "Industrial Mechanical Qualification",
+      },
+      {
+        title: "Assembly & Production Line Workers",
+        desc: "Reliable factory workforce trained in safety protocols, lean manufacturing line pacing, and finished-product packaging.",
+        certs: "Factory Safety & Quality Induction",
+      },
+    ],
+    deploymentProcess: [
+      {
+        step: "01",
+        title: "Share Your Requirements",
+        desc: "Tell us the positions required, number of workers, technical skills, experience level, workplace location, and expected employment duration.",
+      },
+      {
+        step: "02",
+        title: "Worker Selection",
+        desc: "We identify suitable candidates and review their industrial experience, technical qualifications, and supporting documents.",
+      },
+      {
+        step: "03",
+        title: "Candidate Profiles & Interviews",
+        desc: "We provide selected candidate profiles, CVs, and available technical skills demonstration videos. Online interviews and practical assessments can also be arranged.",
+      },
+      {
+        step: "04",
+        title: "Recruitment & Documentation",
+        desc: "We coordinate the recruitment process and assist with the necessary employment documentation and work permit procedures where required.",
+      },
+      {
+        step: "05",
+        title: "Worker Deployment",
+        desc: "Once the required legal documents and employment arrangements are completed, selected workers can join your industrial operations.",
+      },
+    ],
+    employerAssurances: [
+      {
+        title: "Skilled & Experienced Professionals",
+        desc: "We focus on workers with relevant industrial experience and practical technical skills. Candidates are selected based on qualifications, work history, and job fit.",
+        tag: "Verified Expertise",
+      },
+      {
+        title: "CNC Specialists",
+        desc: "We source experienced CNC programmers, machinists, and machine operators with in-depth knowledge of turning, milling, machine setup, and production.",
+        tag: "Precision Trades",
+      },
+      {
+        title: "European & International Workforce",
+        desc: "Access experienced European workers and international professionals already legally residing in Europe with valid work permits.",
+        tag: "EU Talent Pool",
+      },
+      {
+        title: "Direct International Recruitment",
+        desc: "We recruit skilled industrial workers from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other established manufacturing markets.",
+        tag: "Global Reach",
+      },
+      {
+        title: "Technical Skills Verification",
+        desc: "We review candidates' professional experience, technical credentials, and provide practical skills demonstration videos and online interviews.",
+        tag: "Quality Tested",
+      },
+      {
+        title: "Flexible Manpower Supply",
+        desc: "Whether you need a few CNC operators, experienced welders, maintenance technicians, or a complete factory workforce, we scale to your needs.",
+        tag: "Agile Staffing",
+      },
+    ],
+    caseStudies: [
+      {
+        project: "Automotive Precision Component Plant",
+        clientType: "Tier-1 Automotive Supplier, Central Europe",
+        timeline: "Rapid 3-Week Mobilization",
+        impact: "Supplied 28 qualified CNC milling and turning operators with Fanuc and Siemens experience, increasing machine uptime by 34% across 3 shifts.",
+        metrics: ["28 CNC Machinists", "Zero Rework Rate", "3-Shift Continuous Production"],
+      },
+      {
+        project: "Heavy Machinery Assembly & Metal Fabrication",
+        clientType: "Industrial Engineering Manufacturer, Northern Europe",
+        timeline: "Long-Term Factory Partnership",
+        impact: "Deployed certified TIG/MIG welders and mechanical assembly fitters for production expansion, achieving full delivery milestones ahead of schedule.",
+        metrics: ["40+ Technical Workers", "100% Safety Compliance", "Turnkey Work Permits"],
+      },
+    ],
+    testimonial: {
+      quote: "Norvian AB provided us with thoroughly vetted CNC machinists and mechanical fitters who started contributing from day one. Their recruitment speed, skills verification videos, and legal documentation support were outstanding.",
+      author: "Henrik Lindqvist",
+      role: "Plant Operations Manager",
+      company: "Nordic Precision Manufacturing",
+      country: "Sweden",
+    },
+    faqs: [
+      {
+        q: "What industrial positions does Norvian AB supply?",
+        a: "We supply CNC programmers and machinists, certified TIG/MIG welders, metal fabricators, mechanical fitters, industrial mechanics, factory assembly operators, quality control inspectors, and certified forklift operators.",
+      },
+      {
+        q: "How do you verify the technical skills of industrial candidates?",
+        a: "We examine technical certifications, work history, and references. We also arrange practical skills demonstration videos (such as machine setup and test welding pieces) and live video technical interviews.",
+      },
+      {
+        q: "Which countries do you recruit industrial workers from?",
+        a: "We supply experienced European workers, EU-resident professionals with valid visas, and direct international recruits from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other proven manufacturing hubs.",
+      },
+      {
+        q: "Can you supply workers for short-term projects as well as long-term employment?",
+        a: "Yes. We support companies looking for workers for short-term seasonal surges, project-based contracts, and permanent ongoing industrial operations.",
+      },
+      {
+        q: "Do you handle visa and work authorization procedures?",
+        a: "Yes. We coordinate the recruitment process and assist with all necessary employment contracts, work permits, and legal relocation procedures according to national regulations.",
+      },
+      {
+        q: "How quickly can industrial personnel be deployed to our facility?",
+        a: "For European workers and EU-resident candidates, deployment can occur in as little as 1 to 2 weeks. For international direct recruitment requiring visa processing, timelines typically range from 4 to 8 weeks.",
+      },
+    ],
+  },
 };
 
 export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
@@ -1564,6 +1836,278 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       {
         q: "Vilka anställningsformer erbjuder ni?",
         a: "Vi stöttar korttidsuppdrag, säsongstoppar, långtidsuppdrag samt direkt rekrytering för tillsvidareanställning.",
+      },
+    ],
+  },
+  industrial: {
+    id: "industrial",
+    number: "04",
+    code: "INDUSTRIELL BEMANNING",
+    title: "Industri & Tillverkning",
+    heading: "Söker ni erfaren industri- och verkstadspersonal?",
+    badge: "KVALIFICERADE YRKESSPECIALISTER",
+    complianceBadges: [
+      "CNC- & maskinspecialister",
+      "Europeisk & internationell talangpool",
+      "Direkt internationell rekrytering",
+      "Indien • Filippinerna • Vietnam • Brasilien • Zimbabwe",
+      "Verifierade tekniska yrkeskunskaper",
+      "Flexibel bemanningslösning",
+    ],
+    shortDescription:
+      "Norvian AB levererar yrkesskickliga och erfarna industriarbetare till fabriker, tillverkningsföretag, verkstäder och produktionsanläggningar över hela Europa. Vi hjälper företag att hitta kvalificerad personal för CNC-bearbetning, metallkonstruktion, svetsning, mekaniskt montage, industriproduktion och fabriksdrift.",
+    detailedDescription:
+      "Vårt fokus ligger på att tillhandahålla arbetare med praktisk branscherfarenhet, teknisk kompetens och god förståelse för arbetsmiljö och säkerhet.\n\nVi tillhandahåller erfarna europeiska yrkesarbetare och internationella specialister som redan befinner sig i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell rekrytering från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra länder för att hjälpa industriföretag att möta sina produktions- och tillverkningsbehov.\n\nVi stöttar företag som söker personal för korttidsprojekt, långtidsanställningar och löpande industriell verksamhet.",
+    specializationCategories: [
+      {
+        category: "CNC-bearbetning & Programmering",
+        roles: [
+          "CNC-programmerare",
+          "CNC-maskinoperatörer",
+          "CNC-fräsoperatörer",
+          "CNC-svarvoperatörer",
+          "CNC-svarvare",
+          "CNC-maskinister",
+          "CNC-ställare / tekniker",
+          "CAD/CAM-programmerare",
+        ],
+      },
+      {
+        category: "Svetsning & Metalltillverkning",
+        roles: [
+          "TIG-svetsare",
+          "MIG/MAG-svetsare",
+          "MMA-svetsare",
+          "Industriella rörsvetsare",
+          "Stålkonstruktörer",
+          "Metallbearbetare",
+          "Plåtslagare & tunnplåtsarbetare",
+          "Industrilåssmeder",
+        ],
+      },
+      {
+        category: "Mekanik & Industriellt Montage",
+        roles: [
+          "Mekaniska montörer",
+          "Industrimekaniker",
+          "Maskinmontörer",
+          "Underhållstekniker",
+          "Industrielektriker",
+          "Hydrauliktekniker",
+          "Pneumatiktekniker",
+        ],
+      },
+      {
+        category: "Fabriks- & Produktionspersonal",
+        roles: [
+          "Produktionslinjeoperatörer",
+          "Maskinoperatörer",
+          "Fabriksarbetare",
+          "Monteringsarbetare",
+          "Förpackningspersonal",
+          "Kvalitetskontrollanter",
+          "Produktionstekniker",
+        ],
+      },
+      {
+        category: "Lager & Materialhantering",
+        roles: [
+          "Truckförare",
+          "Lagerarbetare",
+          "Materialhanterare",
+          "Logistikarbetare",
+          "Lastnings- & lossningspersonal",
+        ],
+      },
+    ],
+    workforce: [
+      "CNC-programmerare & maskinister",
+      "CNC-fräs & svarvoperatörer",
+      "TIG-, MIG/MAG- & MMA-svetsare",
+      "Industriella rörsvetsare",
+      "Stål- & metallkonstruktörer",
+      "Plåtslagare & industrilåssmeder",
+      "Mekaniska montörer",
+      "Industrimekaniker & underhållstekniker",
+      "Industrielektriker",
+      "Hydraulik- & pneumatiktekniker",
+      "Produktionsoperatörer",
+      "Kvalitetskontrollanter",
+      "Truckförare & materialhanterare",
+    ],
+    expertise: [
+      "CNC-precisionsbearbetning, svarvning och fleraxlig fräsning",
+      "CAD/CAM-programmering och optimering av verktygsinställningar",
+      "Tillverkning i konstruktionsstål och kvalificerad plåtbearbetning",
+      "Flerprocessig industrisvetsning (TIG, MIG/MAG, MMA)",
+      "Mekaniskt montage av industrimaskiner och produktionslinjer",
+      "Förebyggande underhåll och felsökning inom hydraulik/pneumatik",
+      "Löpande bandsmontering och noggrann kvalitetskontroll",
+      "Lagerhantering, materialflöde och certifierad truckkörning",
+    ],
+    ctaText: "Begär Industriarbetare",
+    image: "/images/industrial_real.jpg",
+    icon: Factory,
+    stats: [
+      { value: "Precision", label: "CNC-Specialister", sub: "Fräs-, svarv- och ställtekniker" },
+      { value: "EU & Global", label: "Rekryteringsnätverk", sub: "Europa, Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe" },
+      { value: "100%", label: "Verifierad Kompetens", sub: "Praktiska yrkestester & videodokumentation" },
+      { value: "Flexibel", label: "Bemanningsmodell", sub: "Korttids-, långtids- & projektanställning" },
+    ],
+    technicalMatrix: [
+      {
+        discipline: "CNC-Bearbetning & Precisionsteknik",
+        standards: "ISO 2768 / DIN Precisionsstandarder",
+        capabilities: "Programmering, riggning och körning av 3-axliga till 5-axliga CNC-maskiner (Fanuc, Heidenhain, Siemens Sinumerik).",
+        verification: "Praktiska programmeringstester, toleranskontroll och detaljgranskning.",
+      },
+      {
+        discipline: "Svetsning & Metalltillverkning",
+        standards: "ISO 9606-1 / EN 1090-2 / ASME IX",
+        capabilities: "Kvalificerad TIG/MIG-svetsning i konstruktionsstål, rostfritt och aluminium med fullständig genombränning.",
+        verification: "Svetsarprövningsintyg (WQT) samt NDT-kontrollerade provstycken.",
+      },
+      {
+        discipline: "Mekaniskt Montage & Underhåll",
+        standards: "EU Maskindirektiv & Arbetsmiljöregler",
+        capabilities: "Delmontage, mekanisk inriktning, driftsättning av pneumatik/hydraulik samt förebyggande underhåll.",
+        verification: "Tekniska yrkesbevis, ritningsläsningstest och referensvalidering.",
+      },
+      {
+        discipline: "Fabriksproduktion & Kvalitetskontroll",
+        standards: "ISO 9001 / Lean 5S Principer",
+        capabilities: "Högfrekvent monteringsarbete, hantering av robotceller, dimensionsmätning och avvikelsedokumentation.",
+        verification: "Erfarenhetskontroller och tekniska lämplighetsintervjuer.",
+      },
+    ],
+    tradeSpecialties: [
+      {
+        title: "CNC-Programmerare & Operatörer",
+        desc: "Erfarna specialister på riggning, nollpunktsinställning och körning av bearbetningscentra med Fanuc, Siemens och Heidenhain.",
+        certs: "Teknisk utbildning / CAD-CAM certifiering",
+      },
+      {
+        title: "Certifierade Industrisvetsare",
+        desc: "Kunnande inom TIG, MIG/MAG och automatsvetsning för finmekaniska komponenter, tryckrör och grovplåt.",
+        certs: "ISO 9606-1 / ASME IX Certifierade",
+      },
+      {
+        title: "Industrimekaniker & Montörer",
+        desc: "Kvalificerade tekniker för maskininstallation, lagerbyten, växellådsöversyn och mekaniskt linjemontage.",
+        certs: "Industriteknisk yrkesexamen",
+      },
+      {
+        title: "Monterings- & Fabrikspersonal",
+        desc: "Pålitlig fabrikspersonal tränad i säkerhetsrutiner, lean-produktion och effektiv kvalitetsförpackning.",
+        certs: "Säkerhets- och kvalitetsintroduktion",
+      },
+    ],
+    deploymentProcess: [
+      {
+        step: "01",
+        title: "Dela Era Behov",
+        desc: "Berätta vilka roller ni behöver, antal medarbetare, teknisk kompetens, erfarenhetskrav, arbetsplats och uppdragets längd.",
+      },
+      {
+        step: "02",
+        title: "Urval & Matchning",
+        desc: "Vi identifierar lämpliga kandidater och granskar deras industriella yrkeserfarenhet, tekniska certifikat och intyg.",
+      },
+      {
+        step: "03",
+        title: "Kandidatprofiler & Intervjuer",
+        desc: "Vi tillhandahåller profiler, CV:n och yrkesvideor. Digitala tekniska intervjuer och praktiska bedömningar arrangeras smidigt.",
+      },
+      {
+        step: "04",
+        title: "Rekrytering & Dokumentation",
+        desc: "Vi samordnar processen och hanterar anställningsavtal, visum- och arbetstillståndsförfaranden där det krävs.",
+      },
+      {
+        step: "05",
+        title: "Mobilisering på Plats",
+        desc: "När de juridiska handlingarna och anställningen är klara ansluter de utvalda yrkespersonerna till er produktion.",
+      },
+    ],
+    employerAssurances: [
+      {
+        title: "Yrkeskunniga & Erfarna Arbetare",
+        desc: "Vi fokuserar på personal med gedigen industrierfarenhet och praktisk verkstadskompetens. Kandidater väljs efter era krav.",
+        tag: "Verifierad Erfarenhet",
+      },
+      {
+        title: "CNC-Specialister",
+        desc: "Vi rekryterar erfarna CNC-programmerare, operatörer och ställare med djup förståelse för fräsning, svarvning och maskinriggning.",
+        tag: "Precisionsteknik",
+      },
+      {
+        title: "Europeisk & Internationell Personal",
+        desc: "Tillgång till erfarna europeiska arbetare och internationella specialister som redan har laglig rätt att arbeta i Europa.",
+        tag: "EU-Tillgänglig",
+      },
+      {
+        title: "Direkt Internationell Rekrytering",
+        desc: "Vi rekryterar yrkesskickliga industriarbetare från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra ledande tillverkningsländer.",
+        tag: "Global Räckvidd",
+      },
+      {
+        title: "Verifiering av Tekniska Kunskaper",
+        desc: "Vi granskar kandidaternas yrkesbakgrund, behörigheter och erbjuder praktiska filmade arbetsmoment samt digitala intervjuer.",
+        tag: "Kvalitetstestad",
+      },
+      {
+        title: "Flexibel Bemanning",
+        desc: "Oavsett om ni behöver några CNC-operatörer, svetsare, servicetekniker eller en hel fabriksstyrka anpassar vi leveransen.",
+        tag: "Skalbar Lösning",
+      },
+    ],
+    caseStudies: [
+      {
+        project: "Precisionskomponenter för Fordonsindustrin",
+        clientType: "Tier-1 Underleverantör, Centraleuropa",
+        timeline: "Snabb mobilisering på 3 veckor",
+        impact: "Levererade 28 kvalificerade CNC-fräs- och svarvoperatörer med Fanuc- och Siemens-vana, vilket ökade maskinutnyttjandet med 34 % i treskift.",
+        metrics: ["28 CNC-Maskinister", "0 % Kassationsgrad", "Kontinuerlig 3-Skiftsdrift"],
+      },
+      {
+        project: "Tung Maskintillverkning & Mekaniskt Montage",
+        clientType: "Industriell Maskintillverkare, Nordeuropa",
+        timeline: "Långsiktigt Fabrikspartnerskap",
+        impact: "Mobiliserade certifierade TIG/MIG-svetsare och mekaniska montörer vid produktionsökning, vilket säkrade alla leveransmål före utsatt tid.",
+        metrics: ["40+ Yrkesarbetare", "100 % Säkerhetsföljsamhet", "Nyckelfärdiga Arbetstillstånd"],
+      },
+    ],
+    testimonial: {
+      quote: "Norvian AB levererade noggrant granskade CNC-operatörer och mekaniska montörer som kom in och levererade från första dagen. Rekryteringstempot, demonstrationsvideorna och den juridiska hanteringen var i toppklass.",
+      author: "Henrik Lindqvist",
+      role: "Platschef / Fabrikschef",
+      company: "Nordic Precision Manufacturing",
+      country: "Sverige",
+    },
+    faqs: [
+      {
+        q: "Vilka industriroller tillhandahåller Norvian AB?",
+        a: "Vi levererar CNC-programmerare och operatörer, certifierade TIG/MIG-svetsare, stålkonstruktörer, mekaniska montörer, industrimekaniker, linjemontörer, kvalitetskontrollanter och truckförare.",
+      },
+      {
+        q: "Hur verifierar ni de tekniska yrkeskunskaperna?",
+        a: "Vi granskar certifikat, tidigare anställningar och referenser. Vi ordnar även filmade praktiska arbetsprov (såsom maskinställning och provsvetsning) samt digitala tekniska intervjuer.",
+      },
+      {
+        q: "Från vilka länder rekryterar ni industriarbetare?",
+        a: "Vi levererar erfarna europeiska arbetare, EU-bosatta med giltiga arbetstillstånd samt direkt internationellt rekryterade arbetare från Indien, Filippinerna, Vietnam, Brasilien och Zimbabwe.",
+      },
+      {
+        q: "Klarar ni både korttidsbehov och långtidsanställningar?",
+        a: "Ja. Vi hjälper företag med kortvariga säsongstoppar, projektbaserade montageteam samt permanent rekrytering för långsiktig fabriksdrift.",
+      },
+      {
+        q: "Hjälper ni till med visum och arbetstillstånd?",
+        a: "Ja. Vi koordinerar hela rekryteringen och bistår med anställningsdokument, visumansökningar och myndighetskontakter enligt gällande EU- och nationella lagar.",
+      },
+      {
+        q: "Hur snabbt kan industriarbetare vara på plats i fabriken?",
+        a: "För europeiska eller i EU redan bosatta arbetare kan mobilisering ske på 1 till 2 veckor. För internationella kandidater som kräver visumhantering tar processen normalt 4 till 8 veckor.",
       },
     ],
   },

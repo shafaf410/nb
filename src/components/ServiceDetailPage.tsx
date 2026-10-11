@@ -7,6 +7,8 @@ import {
   X, 
   Check, 
   ArrowRight, 
+  ArrowLeft,
+  ChevronLeft,
   ShieldCheck, 
   Anchor, 
   Building2, 
@@ -111,6 +113,7 @@ export default function ServiceDetailPage({
   const isShipbuilding = serviceKey === "shipbuilding";
   const isTransport = serviceKey === "logistics";
   const isConstruction = serviceKey === "construction";
+  const isIndustrial = serviceKey === "industrial";
 
   // MacBook Opening Animation:
   // Smoothly fades in and scales gently without breaking CSS scroll container mechanics
@@ -164,8 +167,12 @@ export default function ServiceDetailPage({
     }
   };
 
-  const serviceKeys: ServiceKey[] = ["shipbuilding", "construction", "logistics"];
+  const serviceKeys: ServiceKey[] = ["shipbuilding", "construction", "logistics", "industrial"];
   const otherServices = serviceKeys.filter((k) => k !== serviceKey);
+
+  const currentServiceIndex = serviceKeys.indexOf(serviceKey || "shipbuilding");
+  const prevKey = currentServiceIndex > 0 ? serviceKeys[currentServiceIndex - 1] : null;
+  const nextKey = currentServiceIndex < serviceKeys.length - 1 ? serviceKeys[currentServiceIndex + 1] : null;
 
   return (
     <AnimatePresence mode="wait">
@@ -185,31 +192,32 @@ export default function ServiceDetailPage({
         onWheel={(e) => e.stopPropagation()}
         onTouchMove={(e) => e.stopPropagation()}
       >
-        {/* 1. Fixed Persistent Header with Norvian AB Branding and Accessible Exit Button */}
-        <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-8 lg:px-12 py-2.5 sm:py-3.5 bg-[#070D16]/95 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-          {/* Left: Norvian AB Crest & Identifier */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+        {/* 1. Fixed Persistent Header with Prominent Back Button and Interactive Service Switcher */}
+        <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-3 sm:px-8 lg:px-12 py-2 sm:py-3.5 bg-[#070D16]/95 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+          {/* Left: Prominent Back Button & Norvian AB Branding */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <button
+              onClick={onClose}
+              aria-label={isSv ? "Tillbaka till huvudsidan" : "Back to main website"}
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#C59C58] hover:bg-[#D4AF37] text-[#070D16] font-bold text-xs uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-[0_2px_14px_rgba(197,156,88,0.35)] active:scale-95 group"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+              <span>{isSv ? "TILLBAKA" : "BACK"}</span>
+            </button>
+
             <Image
               src="/logo.png"
               alt="NORVIAN AB"
-              width={140}
-              height={34}
-              className="h-6 sm:h-8 w-auto object-contain"
+              width={130}
+              height={32}
+              className="h-6 sm:h-7 w-auto object-contain hidden md:block"
               priority
             />
-            <div className="hidden sm:flex flex-col border-l border-white/15 pl-3">
-              <span className="text-[10px] font-bold tracking-[0.22em] text-white/90 uppercase">
-                NORVIAN AB
-              </span>
-              <span className="text-[8px] font-mono tracking-wider text-[#C59C58] uppercase">
-                {isSv ? "Specialiserad Arbetskraftslösning" : "Specialized Workforce Solutions"}
-              </span>
-            </div>
           </div>
 
           {/* Center: Interactive Service Tabs Switcher */}
           {onSwitchService && (
-            <div className="flex items-center gap-1 sm:gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10">
+            <div className="flex items-center gap-1 sm:gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10 overflow-x-auto max-w-[50vw] sm:max-w-none">
               {serviceKeys.map((key) => {
                 const item = servicesDataMap[key];
                 const isCurrent = key === serviceKey;
@@ -217,7 +225,7 @@ export default function ServiceDetailPage({
                   <button
                     key={key}
                     onClick={() => handleSwitchService(key)}
-                    className={`px-2.5 sm:px-3.5 py-1 rounded-full text-[9px] sm:text-[11px] font-mono tracking-wider transition-all duration-200 cursor-pointer ${
+                    className={`px-2.5 sm:px-3.5 py-1 rounded-full text-[9px] sm:text-[11px] font-mono tracking-wider transition-all duration-200 cursor-pointer whitespace-nowrap ${
                       isCurrent
                         ? "bg-[#C59C58] text-[#070D16] font-bold shadow-md"
                         : "text-white/60 hover:text-white hover:bg-white/5"
@@ -227,8 +235,10 @@ export default function ServiceDetailPage({
                     {key === "shipbuilding" 
                       ? (isSv ? "SKEPPSBYGGNAD" : "SHIPBUILDING") 
                       : key === "construction" 
-                      ? (isSv ? "BYGG & ANLÄGGNING" : "CONSTRUCTION") 
-                      : (isSv ? "LOGISTIK" : "LOGISTICS")}
+                      ? (isSv ? "BYGG" : "CONSTRUCTION") 
+                      : key === "logistics"
+                      ? (isSv ? "LOGISTIK" : "LOGISTICS")
+                      : (isSv ? "INDUSTRI" : "INDUSTRIAL")}
                   </button>
                 );
               })}
@@ -239,9 +249,9 @@ export default function ServiceDetailPage({
           <button
             onClick={onClose}
             aria-label={`Exit ${data.title} page and return to slide`}
-            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/20 hover:border-[#C59C58] backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95"
+            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 shrink-0"
           >
-            <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase">
+            <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase hidden sm:inline">
               {isSv ? "STÄNG" : "EXIT"}
             </span>
             <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-90" />
@@ -260,8 +270,46 @@ export default function ServiceDetailPage({
           {/* Subtle Ambient Top Accent Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-96 bg-[#C59C58]/10 blur-[130px] rounded-full pointer-events-none" />
 
+          {/* Top Page-by-Page Breadcrumb & Navigation Bar */}
+          <div className="pt-4 sm:pt-6 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto w-full">
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-white/10">
+              <button
+                onClick={onClose}
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-[#C59C58] hover:text-white transition-colors cursor-pointer group py-1"
+              >
+                <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+                <span>{isSv ? "← Tillbaka till Branscher & Översikt" : "← Back to Industries & Overview"}</span>
+              </button>
+
+              {onSwitchService && (
+                <div className="flex items-center gap-2">
+                  {prevKey && (
+                    <button
+                      onClick={() => handleSwitchService(prevKey)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white border border-white/10 text-xs font-mono transition-all cursor-pointer"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5 text-[#C59C58]" />
+                      <span className="hidden sm:inline">{isSv ? "Föregående:" : "Prev:"}</span>
+                      <span className="text-[#C59C58] font-bold">{servicesDataMap[prevKey].title}</span>
+                    </button>
+                  )}
+                  {nextKey && (
+                    <button
+                      onClick={() => handleSwitchService(nextKey)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white border border-white/10 text-xs font-mono transition-all cursor-pointer"
+                    >
+                      <span className="hidden sm:inline">{isSv ? "Nästa:" : "Next:"}</span>
+                      <span className="text-[#C59C58] font-bold">{servicesDataMap[nextKey].title}</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#C59C58]" />
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* 2. Hero Section */}
-          <section className="relative pt-6 sm:pt-12 pb-8 sm:pb-14 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto">
+          <section className="relative pt-4 sm:pt-8 pb-8 sm:pb-14 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
               {/* Left Column: Heading, Short Description, and Primary CTA */}
@@ -1021,6 +1069,8 @@ export default function ServiceDetailPage({
                     ? (isSv ? "Behöver ni erfarna lastbils- och trailerchaufförer?" : "Need Experienced Truck & Trailer Drivers?")
                     : isConstruction
                     ? (isSv ? "Behöver ni Yrkeskunnig Byggpersonal?" : "Need Skilled Construction Workers?")
+                    : isIndustrial
+                    ? (isSv ? "Behöver ni erfaren industri- och verkstadspersonal?" : "Need Skilled Industrial Workers?")
                     : (isSv 
                         ? `Redo att Mobilisera Yrkeslag inom ${data.title}?`
                         : `Ready to Mobilize ${data.title} Talent?`)}
@@ -1039,6 +1089,10 @@ export default function ServiceDetailPage({
                     ? (isSv
                         ? "Oavsett om ni söker formbyggare, armerare, murare, elektriker, VVS-montörer eller en komplett byggarbetsstyrka kan Norvian AB hjälpa er att hitta lämpliga yrkespersoner för ert projekt."
                         : "Whether you are looking for shuttering carpenters, steel fixers, bricklayers, electricians, plumbers, or a complete construction workforce, Norvian AB can help you find suitable professionals for your project.")
+                    : isIndustrial
+                    ? (isSv
+                        ? "Oavsett om ni söker CNC-programmerare, maskinoperatörer, svetsare, metallkonstruktörer, industrimekaniker eller en komplett produktionspersonal kan Norvian AB hjälpa er att hitta lämpliga yrkespersoner för ert företag."
+                        : "Whether you are looking for CNC programmers, CNC machine operators, welders, metal fabricators, industrial mechanics, or a complete production workforce, Norvian AB can help you find suitable professionals for your company.")
                     : (isSv
                         ? "Kontakta vårt rekryteringsteam för att gå igenom projektplaner, kompetenskrav och tillgänglig personal över hela Skandinavien och Europa."
                         : "Connect with our recruitment team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe.")}
@@ -1050,7 +1104,7 @@ export default function ServiceDetailPage({
                     className="group inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 rounded-full bg-[#C59C58] hover:bg-[#D4AF37] text-[#070D16] font-semibold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_12px_36px_-6px_rgba(197,156,88,0.5)] cursor-pointer active:scale-95"
                   >
                     <span>
-                      {isShipbuilding || isTransport || isConstruction
+                      {isShipbuilding || isTransport || isConstruction || isIndustrial
                         ? (isSv ? "Kontakta oss idag och dela era bemanningsbehov" : "Contact us today and share your workforce requirements")
                         : data.ctaText}
                     </span>
@@ -1059,11 +1113,53 @@ export default function ServiceDetailPage({
 
                   <button
                     onClick={onClose}
-                    className="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs font-semibold uppercase tracking-wider transition-all border border-white/15 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] text-xs font-semibold uppercase tracking-wider transition-all border border-white/15 hover:border-[#C59C58] cursor-pointer"
                   >
-                    <span>{isSv ? "Återgå till Presentation (✕)" : "Return to Slide (✕)"}</span>
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>{isSv ? "Tillbaka till Översikt (✕)" : "Back to Overview (✕)"}</span>
                   </button>
                 </div>
+
+                {/* Page-by-Page Next / Previous Service Switcher */}
+                {onSwitchService && (
+                  <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 max-w-xl mx-auto w-full">
+                    {prevKey ? (
+                      <button
+                        onClick={() => handleSwitchService(prevKey)}
+                        className="inline-flex items-center gap-2 text-xs font-mono text-white/80 hover:text-white px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 transition-all cursor-pointer"
+                      >
+                        <ChevronLeft className="w-4 h-4 text-[#C59C58]" />
+                        <span>{isSv ? "Föregående:" : "Previous:"} <strong className="text-white">{servicesDataMap[prevKey].title}</strong></span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={onClose}
+                        className="inline-flex items-center gap-2 text-xs font-mono text-white/60 hover:text-white px-3 py-2 rounded-lg transition-all cursor-pointer"
+                      >
+                        <ArrowLeft className="w-3.5 h-3.5 text-[#C59C58]" />
+                        <span>{isSv ? "Tillbaka till Start" : "Back to Overview"}</span>
+                      </button>
+                    )}
+
+                    {nextKey ? (
+                      <button
+                        onClick={() => handleSwitchService(nextKey)}
+                        className="inline-flex items-center gap-2 text-xs font-mono text-white/80 hover:text-white px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 transition-all cursor-pointer"
+                      >
+                        <span>{isSv ? "Nästa:" : "Next:"} <strong className="text-white">{servicesDataMap[nextKey].title}</strong></span>
+                        <ChevronRight className="w-4 h-4 text-[#C59C58]" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={onClose}
+                        className="inline-flex items-center gap-2 text-xs font-mono text-white/60 hover:text-white px-3 py-2 rounded-lg transition-all cursor-pointer"
+                      >
+                        <span>{isSv ? "Tillbaka till Start" : "Back to Overview"}</span>
+                        <ArrowLeft className="w-3.5 h-3.5 text-[#C59C58]" />
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.div>
           </section>
@@ -1073,6 +1169,13 @@ export default function ServiceDetailPage({
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
               
               <div className="flex items-center gap-3">
+                <button
+                  onClick={onClose}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] text-xs font-semibold uppercase tracking-wider transition-all border border-white/15 cursor-pointer mr-2 active:scale-95"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>{isSv ? "TILLBAKA" : "BACK"}</span>
+                </button>
                 <Image
                   src="/logo.png"
                   alt="NORVIAN AB"

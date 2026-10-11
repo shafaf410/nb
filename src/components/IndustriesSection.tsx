@@ -4,12 +4,12 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, ShieldCheck, Check, Anchor, Building2, Truck, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ShieldCheck, Check, Anchor, Building2, Truck, Factory, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface IndustriesSectionProps {
-  onSelectIndustry: (industryKey: "shipbuilding" | "construction" | "logistics") => void;
-  activeIndustryKey?: "shipbuilding" | "construction" | "logistics" | null;
+  onSelectIndustry: (industryKey: "shipbuilding" | "construction" | "logistics" | "industrial") => void;
+  activeIndustryKey?: "shipbuilding" | "construction" | "logistics" | "industrial" | null;
 }
 
 export default function IndustriesSection({ onSelectIndustry, activeIndustryKey }: IndustriesSectionProps) {
@@ -61,6 +61,19 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
       icon: Truck,
       skills: t.industries.logistics.skills,
     },
+    {
+      id: "industrial" as const,
+      number: t.industries.industrial.number,
+      code: isSv ? "IND-04 / INDUSTRI" : "IND-04 / INDUSTRIAL",
+      title: t.industries.industrial.title,
+      category: t.industries.industrial.category.toUpperCase(),
+      subtitle: t.industries.industrial.subtitle,
+      badge: t.industries.industrial.badge,
+      image: "/images/industrial_real.jpg",
+      buttonText: t.industries.buttonTextIndustrial,
+      icon: Factory,
+      skills: t.industries.industrial.skills,
+    },
   ];
 
   // Helper to swiftly scroll directly to a specific slide using Lenis if active
@@ -74,8 +87,8 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
 
     const st = ScrollTrigger.getById("industries-pin");
     if (st) {
-      // 3 distinct rest positions: 0.15, 0.50, 0.85
-      const targetProgress = index === 0 ? 0.15 : index === 1 ? 0.50 : 0.85;
+      // 4 distinct rest positions: 0.12, 0.38, 0.63, 0.88
+      const targetProgress = index === 0 ? 0.12 : index === 1 ? 0.38 : index === 2 ? 0.63 : 0.88;
       const targetY = st.start + targetProgress * (st.end - st.start);
       if (typeof window !== "undefined" && (window as any).lenis) {
         (window as any).lenis.scrollTo(targetY, { duration: 0.8 });
@@ -94,7 +107,9 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         ? 0
         : activeIndustryKey === "construction"
         ? 1
-        : 2;
+        : activeIndustryKey === "logistics"
+        ? 2
+        : 3;
     if (activeIdxRef.current !== targetIdx) {
       activeIdxRef.current = targetIdx;
       setActiveIndex(targetIdx);
@@ -116,16 +131,18 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         id: "industries-pin",
         trigger: trigger,
         start: "top top",
-        end: "+=1600",
+        end: "+=2200",
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const p = self.progress;
           let nextIdx = 0;
-          if (p >= 0.66) {
+          if (p >= 0.75) {
+            nextIdx = 3;
+          } else if (p >= 0.50) {
             nextIdx = 2;
-          } else if (p >= 0.33) {
+          } else if (p >= 0.25) {
             nextIdx = 1;
           } else {
             nextIdx = 0;
@@ -144,16 +161,18 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         id: "industries-pin",
         trigger: trigger,
         start: "top top",
-        end: "+=1200",
+        end: "+=1600",
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const p = self.progress;
           let nextIdx = 0;
-          if (p >= 0.66) {
+          if (p >= 0.75) {
+            nextIdx = 3;
+          } else if (p >= 0.50) {
             nextIdx = 2;
-          } else if (p >= 0.33) {
+          } else if (p >= 0.25) {
             nextIdx = 1;
           } else {
             nextIdx = 0;
@@ -230,12 +249,12 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
                     : "bg-black/50 text-white/60 hover:text-white border border-white/10"
                 }`}
               >
-                {ind.number} {ind.id === "shipbuilding" ? (isSv ? "MARINT" : "MARITIME") : ind.id === "construction" ? (isSv ? "BYGG" : "CIVIL") : (isSv ? "LOGISTIK" : "FLEET")}
+                {ind.number} {ind.id === "shipbuilding" ? (isSv ? "MARINT" : "MARITIME") : ind.id === "construction" ? (isSv ? "BYGG" : "CIVIL") : ind.id === "logistics" ? (isSv ? "LOGISTIK" : "FLEET") : (isSv ? "INDUSTRI" : "INDUSTRIAL")}
               </button>
             ))}
           </div>
 
-          {/* Guaranteed Correct Discipline Number: 01, 02, 03 */}
+          {/* Guaranteed Correct Discipline Number: 01, 02, 03, 04 */}
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden sm:inline text-[9px] sm:text-[10px] uppercase font-mono tracking-widest text-white/40">
               {isSv ? "BRANSCH" : "DISCIPLINE"}
@@ -245,7 +264,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
                 {industries[activeIndex].number}
               </span>
             </div>
-            <span className="text-xs text-white/40 font-mono">/ 03</span>
+            <span className="text-xs text-white/40 font-mono">/ 04</span>
           </div>
         </div>
 
@@ -376,7 +395,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
             <span className="hidden sm:inline">
-              {isSv ? `BRANSCH 0${activeIndex + 1} AV 03 AKTIV` : `DISCIPLINE 0${activeIndex + 1} OF 03 ACTIVE`}
+              {isSv ? `BRANSCH 0${activeIndex + 1} AV 04 AKTIV` : `DISCIPLINE 0${activeIndex + 1} OF 04 ACTIVE`}
             </span>
             {/* Mobile Slide Dots */}
             <div className="flex items-center gap-1.5 sm:hidden">

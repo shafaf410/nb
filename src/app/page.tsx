@@ -14,8 +14,8 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 function MainContent() {
-  const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | null>(null);
-  const [currentServiceSlide, setCurrentServiceSlide] = useState<"shipbuilding" | "construction" | "logistics">("shipbuilding");
+  const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | "industrial" | null>(null);
+  const [currentServiceSlide, setCurrentServiceSlide] = useState<"shipbuilding" | "construction" | "logistics" | "industrial">("shipbuilding");
   const [prefilledIndustry, setPrefilledIndustry] = useState<string>("");
   const [isNavVisible, setIsNavVisible] = useState(true);
 
@@ -30,15 +30,24 @@ function MainContent() {
     }
   };
 
-  const handleSelectIndustry = (key: "shipbuilding" | "construction" | "logistics") => {
+  const handleSelectIndustry = (key: "shipbuilding" | "construction" | "logistics" | "industrial") => {
     setCurrentServiceSlide(key);
     setActiveModal(key);
+    if (typeof window !== "undefined") {
+      window.history.pushState({ modal: key }, "", `#service-${key}`);
+    }
   };
 
   const handleCloseServicePage = () => {
     setActiveModal(null);
-    if (typeof window !== "undefined" && window.location.hash.startsWith("#service-")) {
-      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    if (typeof window !== "undefined") {
+      if (window.location.hash.startsWith("#service-")) {
+        if (window.history.state && window.history.state.modal) {
+          window.history.back();
+        } else {
+          window.history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+      }
     }
   };
 
@@ -48,9 +57,10 @@ function MainContent() {
     scrollToRequestForm();
   };
 
-  // Optional URL Hash deep link synchronization
+  // URL Hash & Browser History Synchronization:
+  // Intercepts browser Back button so user returns to the main page without exiting the website!
   useEffect(() => {
-    const handleHashChange = () => {
+    const syncModalWithHash = () => {
       const hash = window.location.hash.toLowerCase();
       if (hash === "#service-shipbuilding" || hash === "#shipbuilding") {
         setCurrentServiceSlide("shipbuilding");
@@ -61,12 +71,22 @@ function MainContent() {
       } else if (hash === "#service-logistics" || hash === "#logistics" || hash === "#transport") {
         setCurrentServiceSlide("logistics");
         setActiveModal("logistics");
+      } else if (hash === "#service-industrial" || hash === "#industrial" || hash === "#manufacturing") {
+        setCurrentServiceSlide("industrial");
+        setActiveModal("industrial");
+      } else {
+        // When hash no longer contains a service (e.g. user pressed browser Back button), close modal!
+        setActiveModal(null);
       }
     };
 
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    syncModalWithHash();
+    window.addEventListener("hashchange", syncModalWithHash);
+    window.addEventListener("popstate", syncModalWithHash);
+    return () => {
+      window.removeEventListener("hashchange", syncModalWithHash);
+      window.removeEventListener("popstate", syncModalWithHash);
+    };
   }, []);
 
   // Keep Nav visible throughout intro and main content
@@ -109,6 +129,9 @@ function MainContent() {
             onSwitchService={(newKey) => {
               setCurrentServiceSlide(newKey);
               setActiveModal(newKey);
+              if (typeof window !== "undefined") {
+                window.history.pushState({ modal: newKey }, "", `#service-${newKey}`);
+              }
             }}
           />
 
