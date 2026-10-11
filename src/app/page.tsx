@@ -17,7 +17,7 @@ function MainContent() {
   const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | null>(null);
   const [currentServiceSlide, setCurrentServiceSlide] = useState<"shipbuilding" | "construction" | "logistics">("shipbuilding");
   const [prefilledIndustry, setPrefilledIndustry] = useState<string>("");
-  const [isNavVisible, setIsNavVisible] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true);
 
   const scrollToRequestForm = () => {
     const el = document.getElementById("request-form");
@@ -69,10 +69,9 @@ function MainContent() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // Nav only appears after scrolling through the video intro into the website (memoized boolean flip)
-  const handleIntroProgress = useCallback((progress: number) => {
-    const shouldShow = progress >= 0.88;
-    setIsNavVisible((prev) => (prev !== shouldShow ? shouldShow : prev));
+  // Keep Nav visible throughout intro and main content
+  const handleIntroProgress = useCallback((_progress: number) => {
+    setIsNavVisible(true);
   }, []);
 
   return (
