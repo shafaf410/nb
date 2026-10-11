@@ -17,7 +17,8 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
   const sectionRef = useRef<HTMLElement>(null);
   const headlineLine1Ref = useRef<HTMLDivElement>(null);
   const headlineLine2Ref = useRef<HTMLDivElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const headlineLine3Ref = useRef<HTMLDivElement>(null);
+  const subtitleRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const imageInnerRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
@@ -56,7 +57,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
     <section
       ref={sectionRef}
       id="intro-manifesto"
-      className="relative min-h-[90vh] lg:h-screen lg:min-h-[680px] lg:max-h-[920px] flex items-center pt-16 sm:pt-24 lg:pt-0 pb-16 sm:pb-20 lg:pb-0 px-4 sm:px-8 lg:px-14 xl:px-16 overflow-hidden bg-[#FAF7F2] text-[#0B1522]"
+      className="relative min-h-[90vh] lg:min-h-screen flex items-center pt-20 sm:pt-28 lg:pt-20 pb-16 sm:pb-20 lg:pb-16 px-4 sm:px-8 lg:px-14 xl:px-16 overflow-hidden bg-[#FAF7F2] text-[#0B1522]"
     >
       {/* Background Architectural Accent Lines (Clean & Serene Guidelines) */}
       <div className="absolute inset-0 pointer-events-none select-none z-10 opacity-60">
@@ -111,7 +112,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
 
       {/* Main Content Area: Fully responsive on mobile, tablet, and desktop */}
       <div className="max-w-7xl mx-auto w-full relative z-20 pl-2 sm:pl-6 lg:pl-10">
-        <div className="max-w-lg lg:max-w-[490px] xl:max-w-[510px]">
+        <div className="max-w-lg lg:max-w-[530px] xl:max-w-[580px]">
           
           {/* 1. Top Category Badge */}
           <div ref={badgeRef} className="flex items-center gap-2.5 sm:gap-4 mb-2.5 sm:mb-4">
@@ -119,45 +120,70 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
               <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-[#C59C58] text-[7px] leading-none text-[#C59C58]">
                 ☉
               </span>
-              {isSv ? "NORVIANS MANIFEST" : "THE NORVIAN MANIFESTO"}
+              {isSv ? "NORVIAN AB • SVERIGE" : "NORVIAN AB • SWEDEN"}
             </span>
             <span className="h-[1px] w-8 sm:w-16 bg-[#C59C58]/55" />
             <span className="text-[9.5px] sm:text-[10.5px] uppercase tracking-[0.18em] text-[#0B1522]/50 font-medium">
-              {isSv ? "01 / KORRIDOR" : "01 / CORRIDOR"}
+              {isSv ? "VÄSTERVIK // HELA EUROPA" : "VÄSTERVIK // ACROSS EUROPE"}
             </span>
           </div>
 
-          {/* 2. Headline: WE MOVE WHAT MATTERS. */}
-          <div className="space-y-0 leading-[0.98]">
+          {/* 2. Headline: YOUR INDUSTRY / OUR PEOPLE / ONE GOAL. */}
+          <div className="space-y-0.5 sm:space-y-1 leading-[1.02]">
             <div
               ref={headlineLine1Ref}
-              className="overflow-hidden py-0.5 leading-[0.98]"
+              className="overflow-hidden py-0.5 leading-[1.02]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="font-serif text-3xl sm:text-5xl lg:text-[66px] xl:text-[74px] font-normal tracking-[-0.03em] text-[#0B1522]">
-                <span className="inline-block mr-2 sm:mr-4 word-item">
-                  {isSv ? "VI" : "WE"}
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-[-0.03em] text-[#0B1522]">
+                <span className="inline-block mr-2 sm:mr-3.5 word-item">
+                  {isSv ? "ER" : "YOUR"}
                 </span>
                 <span className="inline-block word-item">
-                  {isSv ? "FLYTTAR" : "MOVE"}
+                  {isSv ? "INDUSTRI" : "INDUSTRY"}
                 </span>
               </h1>
             </div>
 
             <div
               ref={headlineLine2Ref}
-              className="overflow-hidden py-0.5 leading-[0.98]"
+              className="overflow-hidden py-0.5 leading-[1.02]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h2 className="font-serif text-3xl sm:text-5xl lg:text-[66px] xl:text-[74px] font-normal tracking-[-0.03em] text-[#0B1522]">
-                <span className="inline-block mr-2 sm:mr-4 word-item italic font-serif text-[#C59C58]">
-                  {isSv ? "DET SOM" : "WHAT"}
+              <div className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-[-0.03em] text-[#0B1522]">
+                <span className="inline-block mr-2 sm:mr-3.5 word-item">
+                  {isSv ? "VÅRT" : "OUR"}
                 </span>
                 <span className="inline-block word-item">
-                  {isSv ? "RÄKNAS." : "MATTERS."}
+                  {isSv ? "FOLK" : "PEOPLE"}
+                </span>
+              </div>
+            </div>
+
+            <div
+              ref={headlineLine3Ref}
+              className="overflow-hidden py-0.5 leading-[1.02]"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-[-0.03em] text-[#0B1522]">
+                <span className="inline-block mr-2 sm:mr-3.5 word-item italic font-serif text-[#C59C58]">
+                  {isSv ? "ETT" : "ONE"}
+                </span>
+                <span className="inline-block word-item italic font-serif text-[#C59C58]">
+                  {isSv ? "MÅL." : "GOAL."}
                 </span>
               </h2>
             </div>
+          </div>
+
+          {/* Subheading: Delivering Skilled Professionals Across Europe. */}
+          <div className="mt-3.5 sm:mt-4 flex items-center gap-2.5 sm:gap-3">
+            <span className="h-[1.5px] w-6 sm:w-8 bg-[#C59C58] shrink-0" />
+            <p className="text-[14.5px] sm:text-[16.5px] lg:text-[17.5px] font-serif font-medium text-[#0B1522] tracking-[-0.01em] leading-snug">
+              {isSv
+                ? "Levererar kvalificerade yrkespersoner över hela Europa."
+                : "Delivering Skilled Professionals Across Europe."}
+            </p>
           </div>
 
           {/* Mobile Scenic Photography Card: Visible on mobile devices */}
@@ -178,21 +204,39 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             </div>
           </div>
 
-          {/* 3. Supporting Description Paragraph */}
-          <p
+          {/* 3. Supporting Description Paragraphs */}
+          <div
             ref={subtitleRef}
-            className="mt-3 sm:mt-5 text-[13.5px] sm:text-[15px] lg:text-[15.5px] text-[#0B1522]/80 font-light leading-[1.65] max-w-[460px]"
+            className="mt-3 sm:mt-3.5 space-y-2.5 text-[13px] sm:text-[14px] lg:text-[14px] text-[#0B1522]/85 font-light leading-[1.62] max-w-[510px]"
           >
-            {isSv 
-              ? "Industrin rör sig i samma takt som mänsklig skicklighet. Vi bygger trygga och heltäckande kompetenskorridorer som förenar kvalificerade specialister med Europas mest krävande varv, anläggningsprojekt och strategiska transportnätverk."
-              : "Industry moves at the speed of human mastery. We engineer compliant, end-to-end workforce corridors connecting qualified specialists with Europe’s most demanding maritime shipyards, infrastructure projects, and strategic transport networks."}
-          </p>
+            <p>
+              {isSv ? (
+                <>
+                  <strong className="font-semibold text-[#0B1522]">Norvian AB</strong> är ett erfaret svenskt bemanningsföretag baserat i Västervik, Sverige. Med över 1 000 framgångsrikt placerade arbetare tillhandahåller vi skickliga, erfarna och pålitliga yrkespersoner till industrier över hela Europa.
+                </>
+              ) : (
+                <>
+                  <strong className="font-semibold text-[#0B1522]">Norvian AB</strong> is an experienced Swedish manpower supply company based in Västervik, Sweden. With over 1,000 workers successfully placed, we provide skilled, experienced, and reliable professionals to industries across Europe.
+                </>
+              )}
+            </p>
+            <p>
+              {isSv
+                ? "Vi är specialiserade på bemanningslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik, och hjälper företag att möta sina kompetensbehov med trygghet."
+                : "We specialize in manpower solutions for shipbuilding, construction, manufacturing, and transport & logistics, helping companies meet their workforce needs with confidence."}
+            </p>
+          </div>
 
-          {/* 4. The 3 Verified Credential Pills (Responsive flow on mobile) */}
+          {/* 4. Verified Credential Pills */}
           <div
             ref={statsLineRef}
-            className="mt-4 sm:mt-6 flex flex-wrap items-center gap-2 sm:gap-2.5"
+            className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-2.5"
           >
+            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-[#C59C58]/40 shadow-[0_2px_8px_rgba(11,21,34,0.04)] text-[11px] sm:text-[11.5px] text-[#0B1522] font-medium transition-all backdrop-blur-xs">
+              <span className="text-[#C59C58] text-[11px]">☉</span>
+              <span><strong className="font-semibold text-[#0B1522]">1,000+</strong> {isSv ? "Placerade yrkesarbetare" : "Workers Placed"}</span>
+            </div>
+
             <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
               <span className="text-[#C59C58] text-[11px]">☉</span>
               <span><strong className="font-semibold text-[#0B1522]">DNV & ISO 9001</strong> {isSv ? "Verifierad" : "Verified"}</span>
@@ -205,13 +249,13 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
 
             <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
               <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">{isSv ? "21 Dagars" : "21-Day"}</strong> {isSv ? "Mobiliseringsfönster" : "Deployment Window"}</span>
+              <span><strong className="font-semibold text-[#0B1522]">{isSv ? "21 Dagars" : "21-Day"}</strong> {isSv ? "Mobilisering" : "Deployment Window"}</span>
             </div>
           </div>
 
           {/* 5. Request Workforce Action Button (Mobile Touch-Optimized) */}
           {onRequestWorkforce && (
-            <div className="mt-5 sm:mt-7">
+            <div className="mt-5 sm:mt-6">
               <button
                 onClick={onRequestWorkforce}
                 className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-[#0B1522] hover:bg-[#142337] text-white px-7 py-3.5 rounded-full text-[11.5px] font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_12px_24px_-6px_rgba(11,21,34,0.2)] border border-[#C59C58]/35 hover:border-[#C59C58] active:scale-95 cursor-pointer overflow-hidden"

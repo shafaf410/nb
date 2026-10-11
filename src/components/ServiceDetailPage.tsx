@@ -108,6 +108,9 @@ export default function ServiceDetailPage({
   const servicesDataMap = getServicesData(language);
   const data = servicesDataMap[serviceKey];
   const Icon = data.icon;
+  const isShipbuilding = serviceKey === "shipbuilding";
+  const isTransport = serviceKey === "logistics";
+  const isConstruction = serviceKey === "construction";
 
   // MacBook Opening Animation:
   // Smoothly fades in and scales gently without breaking CSS scroll container mechanics
@@ -184,7 +187,7 @@ export default function ServiceDetailPage({
       >
         {/* 1. Fixed Persistent Header with Norvian AB Branding and Accessible Exit Button */}
         <header className="sticky top-0 inset-x-0 z-50 flex items-center justify-between px-3.5 sm:px-8 lg:px-12 py-2.5 sm:py-3.5 bg-[#070D16]/95 backdrop-blur-2xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-          {/* Left: Norvian AB Crest & Scandic Roots Identifier */}
+          {/* Left: Norvian AB Crest & Identifier */}
           <div className="flex items-center gap-2.5 sm:gap-3">
             <Image
               src="/logo.png"
@@ -196,10 +199,10 @@ export default function ServiceDetailPage({
             />
             <div className="hidden sm:flex flex-col border-l border-white/15 pl-3">
               <span className="text-[10px] font-bold tracking-[0.22em] text-white/90 uppercase">
-                SCANDIC ROOTS
+                NORVIAN AB
               </span>
               <span className="text-[8px] font-mono tracking-wider text-[#C59C58] uppercase">
-                {isSv ? "Specialiserad Arbetskraftsallians" : "Specialized Workforce Alliance"}
+                {isSv ? "Specialiserad Arbetskraftslösning" : "Specialized Workforce Solutions"}
               </span>
             </div>
           </div>
@@ -388,7 +391,7 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 4. Detailed Description Editorial Card */}
+          {/* 4. Detailed Description Editorial Card (OUR WORKFORCE) */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-5 sm:py-7">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -399,102 +402,191 @@ export default function ServiceDetailPage({
             >
               <div className="flex items-start gap-4 sm:gap-6">
                 <div className="w-1.5 h-16 sm:h-20 rounded-full bg-[#C59C58] shrink-0 mt-1" />
-                <div className="space-y-2 sm:space-y-3">
+                <div className="space-y-3">
                   <div className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                    {isSv ? "NORVIAN & SCANDIC ROOTS-METODEN" : "THE SCANDIC ROOTS APPROACH"}
+                    {isShipbuilding || isTransport || isConstruction
+                      ? (isSv ? "VÅR ARBETSKRAFT" : "OUR WORKFORCE")
+                      : (isSv ? "NORVIAN AB-METODEN" : "THE NORVIAN AB APPROACH")}
                   </div>
-                  <p className="text-base sm:text-xl lg:text-2xl font-light text-white leading-relaxed">
-                    {data.detailedDescription}
-                  </p>
+                  {isShipbuilding && (
+                    <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
+                      {isSv ? "Kvalificerad Arbetskraft Tillgänglig Över Hela Europa" : "Skilled Workers Available Across Europe"}
+                    </h3>
+                  )}
+                  {isTransport && (
+                    <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
+                      {isSv ? "Erfarna Chaufförer för Europeiska Transportföretag" : "Experienced Drivers for European Transport Companies"}
+                    </h3>
+                  )}
+                  {isConstruction && (
+                    <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
+                      {isSv ? "Yrkeskunnig Byggpersonal för Europeiska Projekt" : "Skilled Construction Workers for European Projects"}
+                    </h3>
+                  )}
+                  <div className="space-y-2.5 text-base sm:text-lg lg:text-xl font-light text-white leading-relaxed">
+                    {data.detailedDescription.split("\n\n").map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
           </section>
 
-          {/* 5. Dual Pillars: "Our Workforce Includes" & "Our Expertise" */}
-          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-6 sm:py-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-              
-              {/* Column 1: Our Workforce Includes */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: 0.05 }}
-                className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all shadow-xl space-y-5"
-              >
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#C59C58]">
-                      {isSv ? "KVALIFICERADE YRKESMÄN" : "SOURCED & VETTED TALENT"}
-                    </span>
-                    <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-                      {isSv ? "Vår Arbetskraft Omfattar" : "Our Workforce Includes"}
-                    </h3>
-                  </div>
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C59C58]">
-                    <Award className="w-5 h-5" />
-                  </div>
-                </div>
+          {/* 5. Specialization Categories or Dual Pillars */}
+          {data.specializationCategories && data.specializationCategories.length > 0 ? (
+            <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
+              <div className="space-y-2 mb-8">
+                <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
+                  {isSv ? "VÅRA SPECIALISERINGAR" : "OUR SPECIALIZATIONS"}
+                </span>
+                <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
+                  {isShipbuilding
+                    ? (isSv ? "Varvsroller Vi Levererar" : "Shipbuilding Positions We Supply")
+                    : isTransport
+                    ? (isSv ? "Förarroller Vi Levererar" : "Driver Positions We Supply")
+                    : isConstruction
+                    ? (isSv ? "Byggroller Vi Levererar" : "Construction Positions We Supply")
+                    : (isSv ? "Roller Vi Levererar" : "Positions We Supply")}
+                </h2>
+                <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
+                  {isShipbuilding
+                    ? (isSv
+                        ? "Vi tillhandahåller kvalificerade yrkespersoner för olika områden inom skeppsbyggnad, marin konstruktion och varvsdrift."
+                        : "We provide skilled professionals for different areas of shipbuilding, marine construction, and shipyard operations.")
+                    : isTransport
+                    ? (isSv
+                        ? "Vi tillhandahåller erfarna yrkesförare för olika typer av vägtransporter och logistikverksamhet."
+                        : "We provide experienced professional drivers for different types of road transport and logistics operations.")
+                    : isConstruction
+                    ? (isSv
+                        ? "Vi tillhandahåller erfarna yrkesarbetare för olika områden inom husbyggnad, anläggning och industriellt byggande."
+                        : "We provide experienced workers for different areas of building construction, civil engineering, and industrial construction.")
+                    : (isSv
+                        ? "Vi levererar erfarna yrkeslag för krävande projekt."
+                        : "We provide experienced teams for demanding industrial projects.")}
+                </p>
+              </div>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
-                  {data.workforce.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
-                    >
-                      <div className="w-5 h-5 rounded-md bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
-                        <Check className="w-3 h-3" />
+              <div className={`grid grid-cols-1 ${data.specializationCategories.length === 3 ? "md:grid-cols-3" : data.specializationCategories.length === 5 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"} gap-4 sm:gap-6`}>
+                {data.specializationCategories.map((cat, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.08, duration: 0.4 }}
+                    className="p-6 rounded-2xl bg-gradient-to-b from-[#0B1522] to-[#070D16] border border-white/10 hover:border-[#C59C58]/50 transition-all space-y-4 group flex flex-col justify-between shadow-xl"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-mono text-[#C59C58] tracking-widest uppercase">
+                          0{idx + 1}
+                        </span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58]" />
                       </div>
-                      <span className="text-xs sm:text-sm text-white/90 font-light group-hover:text-white transition-colors leading-tight">
-                        {item}
+                      <h3 className="font-serif text-lg sm:text-xl text-white font-medium group-hover:text-[#C59C58] transition-colors leading-snug">
+                        {cat.category}
+                      </h3>
+                    </div>
+
+                    <ul className="space-y-2.5 pt-3 border-t border-white/10">
+                      {cat.roles.map((role, rIdx) => (
+                        <li key={rIdx} className="flex items-center gap-2.5 text-xs sm:text-sm text-white/85 font-light">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58] shrink-0" />
+                          <span>{role}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          ) : (
+            <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-6 sm:py-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                
+                {/* Column 1: Our Workforce Includes */}
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.05 }}
+                  className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all shadow-xl space-y-5"
+                >
+                  <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#C59C58]">
+                        {isSv ? "KVALIFICERADE YRKESMÄN" : "SOURCED & VETTED TALENT"}
                       </span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-
-              {/* Column 2: Our Expertise */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: 0.1 }}
-                className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all shadow-xl space-y-5"
-              >
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#C59C58]">
-                      {isSv ? "KAPACITETER & OMFATTNING" : "CAPABILITIES & SCOPE"}
-                    </span>
-                    <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-                      {isSv ? "Vår Teknisk Expertis" : "Our Expertise"}
-                    </h3>
+                      <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
+                        {isSv ? "Vår Arbetskraft Omfattar" : "Our Workforce Includes"}
+                      </h3>
+                    </div>
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C59C58]">
+                      <Award className="w-5 h-5" />
+                    </div>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C59C58]">
-                    <Globe2 className="w-5 h-5" />
-                  </div>
-                </div>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
-                  {data.expertise.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
-                    >
-                      <div className="w-5 h-5 rounded-md bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
-                        <Check className="w-3 h-3" />
-                      </div>
-                      <span className="text-xs sm:text-sm text-white/90 font-light group-hover:text-white transition-colors leading-tight">
-                        {item}
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
+                    {data.workforce.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
+                      >
+                        <div className="w-5 h-5 rounded-md bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
+                          <Check className="w-3 h-3" />
+                        </div>
+                        <span className="text-xs sm:text-sm text-white/90 font-light group-hover:text-white transition-colors leading-tight">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                {/* Column 2: Our Expertise */}
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.1 }}
+                  className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all shadow-xl space-y-5"
+                >
+                  <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#C59C58]">
+                        {isSv ? "KAPACITETER & OMFATTNING" : "CAPABILITIES & SCOPE"}
                       </span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+                      <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
+                        {isSv ? "Vår Teknisk Expertis" : "Our Expertise"}
+                      </h3>
+                    </div>
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C59C58]">
+                      <Globe2 className="w-5 h-5" />
+                    </div>
+                  </div>
 
-            </div>
-          </section>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
+                    {data.expertise.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[#C59C58]/40 hover:bg-white/[0.05] transition-all group"
+                      >
+                        <div className="w-5 h-5 rounded-md bg-[#C59C58]/15 text-[#C59C58] flex items-center justify-center shrink-0 group-hover:bg-[#C59C58] group-hover:text-[#070D16] transition-colors">
+                          <Check className="w-3 h-3" />
+                        </div>
+                        <span className="text-xs sm:text-sm text-white/90 font-light group-hover:text-white transition-colors leading-tight">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+              </div>
+            </section>
+          )}
 
           {/* 6. Technical Standards & Competence Matrix (NEW) */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
@@ -598,63 +690,43 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 8. Turnkey 4-Step Recruitment & Mobilization Process */}
-          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
-            <div className="space-y-2 mb-10 text-center max-w-2xl mx-auto">
-              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                {isSv ? "STRÖMLINJEFORMAD MOBILISERING" : "STREAMLINED DEPLOYMENT"}
-              </span>
-              <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                {isSv ? "Hur Vi Mobiliserar Ert Yrkeslag" : "How We Deploy Your Workforce"}
-              </h2>
-              <p className="text-sm sm:text-base text-white/70 font-light">
-                {isSv
-                  ? "Från teknisk behovsanalys till dag ett på arbetsplatsen med fullständig europeisk regelefterlevnad."
-                  : "From technical scoping to day-one on-site arrival with complete European legal compliance."}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {data.deploymentProcess.map((step, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.4 }}
-                  className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#C59C58]/40 transition-all space-y-3 relative group"
-                >
-                  <div className="font-mono text-2xl sm:text-3xl font-light text-[#C59C58]/60 group-hover:text-[#C59C58] transition-colors">
-                    {step.step}
-                  </div>
-                  <h4 className="text-base font-medium text-white leading-snug">
-                    {step.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-white/70 font-light leading-relaxed">
-                    {step.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-
-          {/* 9. Turnkey Employer Governance & Assurance Package (NEW) */}
+          {/* 8. Why Choose Norvian AB? */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                {isSv ? "TOTAL REGELEFTERLEVNAD UTAN KOMPROMISSER" : "ZERO COMPROMISE COMPLIANCE"}
+                {isShipbuilding || isTransport || isConstruction
+                  ? (isSv ? "VARFÖR VÄLJA NORVIAN AB?" : "WHY CHOOSE NORVIAN AB?")
+                  : (isSv ? "TOTAL REGELEFTERLEVNAD UTAN KOMPROMISSER" : "ZERO COMPROMISE COMPLIANCE")}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                {isSv ? "Trygghetspaket för Arbetsgivare" : "Full Employer Governance Package"}
+                {isShipbuilding
+                  ? (isSv ? "Erfarna Arbetare. Pålitlig Bemanning." : "Experienced Workers. Reliable Manpower.")
+                  : isTransport
+                  ? (isSv ? "Erfarna Chaufförer. Pålitlig Transportbemanning." : "Experienced Drivers. Reliable Transport Workforce.")
+                  : isConstruction
+                  ? (isSv ? "Erfarna Arbetare. Pålitlig Byggbemanning." : "Experienced Workers. Reliable Construction Workforce.")
+                  : (isSv ? "Trygghetspaket för Arbetsgivare" : "Full Employer Governance Package")}
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
-                {isSv
-                  ? "Vi hanterar hela den administrativa, juridiska och logistiska processen så att er ledning kan fokusera på produktionen."
-                  : "We handle the complete administrative, legal, and logistical lifecycle so your management can focus purely on production."}
+                {isShipbuilding
+                  ? (isSv
+                      ? "Vi fokuserar på yrkesarbetare med minst 5 års relevant varvserfarenhet och levererar flexibla bemanningslösningar för era projekt."
+                      : "We focus on workers with at least 5 years of relevant shipyard experience. Candidates are selected based on practical skills, qualifications, and work history.")
+                  : isTransport
+                  ? (isSv
+                      ? "Vi fokuserar på förare med relevant erfarenhet av tunga fordon och trailers, med verifierad körskicklighet och fullständigt YKB-stöd."
+                      : "We focus on drivers with relevant heavy vehicle and trailer driving experience, verified driving skills, and full Code 95 support.")
+                  : isConstruction
+                  ? (isSv
+                      ? "Vi fokuserar på yrkesarbetare med relevant byggerfarenhet och praktiska yrkeskunskaper. Kandidater väljs ut baserat på kvalifikationer, arbetshistoria och projektkrav."
+                      : "We focus on workers with relevant construction experience and practical trade skills. Candidates are selected based on their qualifications, work history, and ability to meet project requirements.")
+                  : (isSv
+                      ? "Vi hanterar hela den administrativa, juridiska och logistiska processen så att er ledning kan fokusera på produktionen."
+                      : "We handle the complete administrative, legal, and logistical lifecycle so your management can focus purely on production.")}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 ${data.employerAssurances.length > 4 ? "lg:grid-cols-3" : "lg:grid-cols-4"} gap-4 sm:gap-6`}>
               {data.employerAssurances.map((item, idx) => (
                 <motion.div
                   key={idx}
@@ -672,6 +744,66 @@ export default function ServiceDetailPage({
                   </h4>
                   <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed">
                     {item.desc}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          {/* 9. Turnkey Recruitment & Mobilization Process */}
+          <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
+            <div className="space-y-2 mb-10 text-center max-w-2xl mx-auto">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
+                {isShipbuilding || isTransport || isConstruction
+                  ? (isSv ? "VÅR REKRYTERINGSPROCESS" : "OUR RECRUITMENT PROCESS")
+                  : (isSv ? "STRÖMLINJEFORMAD MOBILISERING" : "STREAMLINED DEPLOYMENT")}
+              </span>
+              <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
+                {isShipbuilding
+                  ? (isSv ? "Enkla och Pålitliga Bemanningslösningar" : "Simple and Reliable Workforce Solutions")
+                  : isTransport
+                  ? (isSv ? "Enkel och Pålitlig Förarrekrytering" : "Simple and Reliable Driver Recruitment")
+                  : isConstruction
+                  ? (isSv ? "Enkel och Pålitlig Byggrekrytering" : "Simple and Reliable Construction Recruitment")
+                  : (isSv ? "Hur Vi Mobiliserar Ert Yrkeslag" : "How We Deploy Your Workforce")}
+              </h2>
+              <p className="text-sm sm:text-base text-white/70 font-light">
+                {isShipbuilding
+                  ? (isSv
+                      ? "Från era specifikationer till färdig mobilisering och fullständigt dokumentationsstöd."
+                      : "From sharing your requirements to candidate selection, interviews, and full deployment.")
+                  : isTransport
+                  ? (isSv
+                      ? "Från kravprofil till förarurval, intervjuer, dokumentation och driftstart."
+                      : "From sharing your requirements to driver selection, interviews, documentation, and driver deployment.")
+                  : isConstruction
+                  ? (isSv
+                      ? "Från kravprofil till kandidaturval, intervjuer, dokumentation och driftsättning på projektet."
+                      : "From sharing your requirements to worker selection, candidate profiles, documentation, and on-site deployment.")
+                  : (isSv
+                      ? "Från teknisk behovsanalys till dag ett på arbetsplatsen med fullständig europeisk regelefterlevnad."
+                      : "From technical scoping to day-one on-site arrival with complete European legal compliance.")}
+              </p>
+            </div>
+
+            <div className={`grid grid-cols-1 sm:grid-cols-2 ${data.deploymentProcess.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"} gap-4 sm:gap-6`}>
+              {data.deploymentProcess.map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.4 }}
+                  className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#C59C58]/40 transition-all space-y-3 relative group"
+                >
+                  <div className="font-mono text-2xl sm:text-3xl font-light text-[#C59C58]/60 group-hover:text-[#C59C58] transition-colors">
+                    {step.step}
+                  </div>
+                  <h4 className="text-base font-medium text-white leading-snug">
+                    {step.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-white/70 font-light leading-relaxed">
+                    {step.desc}
                   </p>
                 </motion.div>
               ))}
@@ -875,19 +1007,41 @@ export default function ServiceDetailPage({
               <div className="relative z-10 max-w-3xl mx-auto space-y-4">
                 <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#C59C58] bg-[#C59C58]/10 px-3.5 py-1 rounded-full border border-[#C59C58]/30">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>{isSv ? "STARTA ER FÖRFRÅGAN IDAG" : "START YOUR INQUIRY TODAY"}</span>
+                  <span>
+                    {isShipbuilding || isTransport || isConstruction
+                      ? (isSv ? "KONTAKTA VÅRT TEAM" : "CONTACT OUR TEAM")
+                      : (isSv ? "STARTA ER FÖRFRÅGAN IDAG" : "START YOUR INQUIRY TODAY")}
+                  </span>
                 </div>
 
                 <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white tracking-tight">
-                  {isSv 
-                    ? `Redo att Mobilisera Yrkeslag inom ${data.title}?`
-                    : `Ready to Mobilize ${data.title} Talent?`}
+                  {isShipbuilding
+                    ? (isSv ? "Behöver ni Yrkeskunnig Varvspersonal?" : "Need Skilled Shipbuilding Workers?")
+                    : isTransport
+                    ? (isSv ? "Behöver ni erfarna lastbils- och trailerchaufförer?" : "Need Experienced Truck & Trailer Drivers?")
+                    : isConstruction
+                    ? (isSv ? "Behöver ni Yrkeskunnig Byggpersonal?" : "Need Skilled Construction Workers?")
+                    : (isSv 
+                        ? `Redo att Mobilisera Yrkeslag inom ${data.title}?`
+                        : `Ready to Mobilize ${data.title} Talent?`)}
                 </h2>
 
                 <p className="text-sm sm:text-base text-white/75 font-light leading-relaxed max-w-xl mx-auto">
-                  {isSv
-                    ? "Kontakta vårt rekryteringsteam för att gå igenom projektplaner, kompetenskrav och tillgänglig personal över hela Skandinavien och Europa."
-                    : "Connect with our recruitment team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe."}
+                  {isShipbuilding
+                    ? (isSv
+                        ? "Oavsett om ni söker erfarna svetsare, skrovmontörer, rörläggare eller ett komplett varvsteam kan Norvian AB hjälpa er att hitta lämpliga specialister för ert projekt."
+                        : "Whether you are looking for experienced welders, hull fitters, pipe fitters, or a complete shipbuilding team, Norvian AB can help you find suitable professionals for your project.")
+                    : isTransport
+                    ? (isSv
+                        ? "Oavsett om ni söker CE-kategori förare, internationella trailerchaufförer eller ett komplett team för er transportflotta kan Norvian AB hjälpa er att hitta lämpliga yrkesförare."
+                        : "Whether you are looking for CE category drivers, international trailer drivers, or a complete team for your transport fleet, Norvian AB can help you find suitable professionals.")
+                    : isConstruction
+                    ? (isSv
+                        ? "Oavsett om ni söker formbyggare, armerare, murare, elektriker, VVS-montörer eller en komplett byggarbetsstyrka kan Norvian AB hjälpa er att hitta lämpliga yrkespersoner för ert projekt."
+                        : "Whether you are looking for shuttering carpenters, steel fixers, bricklayers, electricians, plumbers, or a complete construction workforce, Norvian AB can help you find suitable professionals for your project.")
+                    : (isSv
+                        ? "Kontakta vårt rekryteringsteam för att gå igenom projektplaner, kompetenskrav och tillgänglig personal över hela Skandinavien och Europa."
+                        : "Connect with our recruitment team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe.")}
                 </p>
 
                 <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
@@ -895,7 +1049,11 @@ export default function ServiceDetailPage({
                     onClick={handleCtaClick}
                     className="group inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 rounded-full bg-[#C59C58] hover:bg-[#D4AF37] text-[#070D16] font-semibold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_12px_36px_-6px_rgba(197,156,88,0.5)] cursor-pointer active:scale-95"
                   >
-                    <span>{data.ctaText}</span>
+                    <span>
+                      {isShipbuilding || isTransport || isConstruction
+                        ? (isSv ? "Kontakta oss idag och dela era bemanningsbehov" : "Contact us today and share your workforce requirements")
+                        : data.ctaText}
+                    </span>
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </button>
 
@@ -923,7 +1081,7 @@ export default function ServiceDetailPage({
                   className="h-7 w-auto object-contain"
                 />
                 <span className="text-xs text-white/50 font-light">
-                  © {new Date().getFullYear()} Norvian AB • Scandic Roots
+                  © {new Date().getFullYear()} Norvian AB
                 </span>
               </div>
 

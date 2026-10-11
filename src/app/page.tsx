@@ -83,7 +83,7 @@ function MainContent() {
 
         {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
         <div className="relative z-30 shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">
-          {/* Section 1: Intro Section — Cinematic Manifesto (WE MOVE WHAT MATTERS.) */}
+          {/* Section 1: Intro Section — Your Industry. Our People. One Goal. */}
           <IntroCinematicSection onRequestWorkforce={scrollToRequestForm} />
 
           {/* Section 2: Specialized Industries with Pinned Horizontal Reel */}

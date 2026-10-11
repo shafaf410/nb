@@ -16,8 +16,8 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "NORVIAN AB | Qualified International Workforce & Talent Placement",
-  description: "We connect skilled professionals from Asia with opportunities across Europe, supporting shipbuilding, construction, transport & logistics.",
-  keywords: ["workforce", "recruitment", "shipbuilding", "construction", "logistics", "Europe", "Asia talent", "NORVIAN", "NORVIAN AB"],
+  description: "Norvian AB is an experienced Swedish manpower supply company based in Västervik, Sweden. With over 1,000 workers successfully placed, we provide skilled professionals across Europe in shipbuilding, construction, manufacturing, and transport & logistics.",
+  keywords: ["workforce", "recruitment", "shipbuilding", "construction", "manufacturing", "transport", "logistics", "Europe", "manpower supply", "NORVIAN", "NORVIAN AB", "Västervik Sweden"],
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
