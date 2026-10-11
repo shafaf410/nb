@@ -528,29 +528,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             />
           </div>
 
-          {/* Top-Right: Premium Glassmorphic Skip Intro Floating Button */}
-          {!hasCompleted && (
-            <div className="absolute top-4 sm:top-6 right-4 sm:right-8 z-30 pointer-events-auto">
-              <button
-                type="button"
-                onClick={handleSkipIntro}
-                onTouchEnd={(e) => {
-                  e.stopPropagation();
-                  handleSkipIntro(e);
-                }}
-                className="group relative flex items-center gap-2 sm:gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#070D16]/85 hover:bg-[#070D16] border border-white/20 hover:border-[#C59C58]/80 backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.85)] text-white transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer"
-                aria-label={isSv ? "Hoppa över introduktion" : "Skip intro animation"}
-              >
-                <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase font-semibold text-white/90 group-hover:text-[#E6C687] transition-colors">
-                  {isSv ? "Hoppa över" : "Skip Intro"}
-                </span>
-                <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-white/[0.08] group-hover:bg-[#C59C58]/25 flex items-center justify-center transition-colors">
-                  <SkipForward className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#C59C58] transition-transform duration-300 group-hover:translate-x-0.5" />
-                </div>
-              </button>
-            </div>
-          )}
-
           {/* Reel Category Pill (Subtle Nordic Reel HUD below Navbar) */}
           <div className="absolute top-20 sm:top-24 left-4 sm:left-8 z-20 pointer-events-none flex items-center gap-2">
             <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white shadow-xl">
@@ -578,10 +555,34 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Vertical Vignette Gradients for True Reel Format legibility */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#070D16]/65 via-transparent to-[#070D16]/75 pointer-events-none" />
 
-          {/* Bottom Reel Prompt: Swipe Up or Tap to Play + Quick Slide Button */}
-          {showPrompt && (
-            <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2.5 pointer-events-auto z-20 px-4 text-center">
+          {/* Bottom-Left Corner: Premium Glassmorphic Skip Intro Floating Button */}
+          {!hasCompleted && (
+            <div className="absolute bottom-6 sm:bottom-8 left-4 sm:left-8 z-30 pointer-events-auto">
               <button
+                type="button"
+                onClick={handleSkipIntro}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  handleSkipIntro(e);
+                }}
+                className="group relative flex items-center gap-2 sm:gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#070D16]/85 hover:bg-[#070D16] border border-white/20 hover:border-[#C59C58]/80 backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.85)] text-white transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer"
+                aria-label={isSv ? "Hoppa över introduktion" : "Skip intro animation"}
+              >
+                <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-white/[0.08] group-hover:bg-[#C59C58]/25 flex items-center justify-center transition-colors">
+                  <SkipForward className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#C59C58] transition-transform duration-300 group-hover:translate-x-0.5" />
+                </div>
+                <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase font-semibold text-white/90 group-hover:text-[#E6C687] transition-colors">
+                  {isSv ? "Hoppa över" : "Skip Intro"}
+                </span>
+              </button>
+            </div>
+          )}
+
+          {/* Bottom Center Reel Prompt: Swipe Up or Tap to Play */}
+          {showPrompt && (
+            <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center pointer-events-auto z-20 px-4 text-center">
+              <button
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   startAutoScroll();
@@ -606,17 +607,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
                 </svg>
-              </button>
-              <button
-                type="button"
-                onClick={handleSkipIntro}
-                onTouchEnd={(e) => {
-                  e.stopPropagation();
-                  handleSkipIntro(e);
-                }}
-                className="text-[9.5px] uppercase tracking-[0.22em] text-white/60 hover:text-[#C59C58] font-mono transition-colors cursor-pointer py-1"
-              >
-                {isSv ? "Gå till Innehåll ↓" : "Slide to Content ↓"}
               </button>
             </div>
           )}
