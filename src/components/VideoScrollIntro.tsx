@@ -173,6 +173,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     state.startTime = performance.now();
     setShowPrompt(false);
 
+    // Pause Lenis during video playback so native/Lenis touch events cannot scroll or fling the page down
+    if (typeof window !== "undefined" && (window as any).lenis) {
+      (window as any).lenis.stop();
+    }
+
     const container = containerRef.current;
     const targetScrollY = container ? container.offsetHeight : window.innerHeight;
 
@@ -226,6 +231,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       // seamlessly unveiling the manifesto section with ZERO dark blue empty gap!
       let scrollProgress = 0;
       if (t > 0.68) {
+        // Resume Lenis for smooth curtain scroll
+        if (typeof window !== "undefined" && (window as any).lenis) {
+          (window as any).lenis.start();
+        }
+
         const scrollT = (t - 0.68) / 0.32;
         scrollProgress =
           scrollT < 0.5
@@ -261,9 +271,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           stageRef.current.style.pointerEvents = "none";
         }
 
-        // Ensure final scroll sits cleanly at the target
+        // Ensure Lenis is running and final scroll sits cleanly at the target
         if (typeof window !== "undefined") {
           if ((window as any).lenis) {
+            (window as any).lenis.start();
             (window as any).lenis.scrollTo(targetScrollY, { immediate: true });
           } else {
             window.scrollTo(0, targetScrollY);
@@ -320,34 +331,39 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
-    // 2. Touch event for mobile: responsive swipe and slide handling
+    // 2. Touch event for mobile: responsive swipe and tap handling without skipping
     let touchStartY = 0;
+    let touchStartX = 0;
+
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      const currentY = e.touches[0].clientY;
-      const diffY = touchStartY - currentY;
-
-      // If user hasn't started yet: swipe up starts auto-scroll reel
-      if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
-        if (diffY > 8 || Math.abs(diffY) > 20) {
-          if (e.cancelable) e.preventDefault();
-          startAutoScroll();
+      // Prevent browser native drag/flinging while intro has not completed
+      if (!stateRef.current.hasCompleted) {
+        if (e.cancelable) {
+          e.preventDefault();
         }
-        return;
+        if (!stateRef.current.isAutoScrolling) {
+          const currentY = e.touches[0].clientY;
+          const currentX = e.touches[0].clientX;
+          const diffY = touchStartY - currentY;
+          const diffX = touchStartX - currentX;
+
+          // Gentle swipe starts the auto-scroll sequence cleanly
+          if (Math.abs(diffY) > 8 || Math.abs(diffX) > 8) {
+            startAutoScroll();
+          }
+        }
       }
+    };
 
-      // If auto-scroll is ALREADY running and user swipes up firmly on mobile:
-      // Fast-forward directly to the curtain slide phase so the page slides up without waiting!
-      if (stateRef.current.isAutoScrolling && diffY > 20) {
-        const now = performance.now();
-        const elapsed = now - stateRef.current.startTime;
-        const currentT = elapsed / AUTO_SCROLL_DURATION;
-        if (currentT < 0.70) {
-          stateRef.current.startTime = now - (0.72 * AUTO_SCROLL_DURATION);
-        }
+    const handleTouchEnd = () => {
+      // If user tapped on mobile without dragging, initiate playback cleanly
+      if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
+        startAutoScroll();
       }
     };
 
@@ -400,6 +416,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
@@ -409,6 +426,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
@@ -436,7 +454,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           }
         }}
         className="fixed top-0 left-0 h-[100dvh] w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer"
-        style={{ touchAction: "pan-y" }}
+        style={{ touchAction: "none" }}
       >
         <div
           className="relative w-full h-full flex items-center justify-center overflow-hidden"
@@ -521,6 +539,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
                   const targetScrollY = container ? container.offsetHeight : window.innerHeight;
                   if (typeof window !== "undefined") {
                     if ((window as any).lenis) {
+                      (window as any).lenis.start();
                       (window as any).lenis.scrollTo(targetScrollY, { duration: 1.0 });
                     } else {
                       window.scrollTo({ top: targetScrollY, behavior: "smooth" });
