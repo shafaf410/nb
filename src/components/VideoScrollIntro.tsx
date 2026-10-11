@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { SkipForward } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface VideoScrollIntroProps {
@@ -71,6 +72,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const chapterTextRef = useRef<HTMLSpanElement>(null);
 
   const [showPrompt, setShowPrompt] = useState(true);
+  const [hasCompleted, setHasCompleted] = useState(false);
 
   const stateRef = useRef({
     isAutoScrolling: false,
@@ -163,6 +165,54 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     }
   }, [isSv]);
+
+  // Seamless Skip Intro Handler: cancels animation frame loop and smoothly scrolls to main website
+  const handleSkipIntro = useCallback(
+    (e?: React.MouseEvent | React.TouchEvent) => {
+      if (e) {
+        e.stopPropagation();
+      }
+      const state = stateRef.current;
+      if (state.hasCompleted) return;
+
+      if (state.rafId) {
+        cancelAnimationFrame(state.rafId);
+        state.rafId = 0;
+      }
+
+      state.isAutoScrolling = false;
+      state.hasCompleted = true;
+      setHasCompleted(true);
+      setShowPrompt(false);
+
+      drawFrame(TOTAL_FRAMES - 1);
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = "100%";
+      }
+      if (chapterTextRef.current) {
+        chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
+      }
+
+      onProgress?.(1.0);
+
+      if (stageRef.current) {
+        stageRef.current.style.pointerEvents = "none";
+      }
+
+      const container = containerRef.current;
+      const targetScrollY = container ? container.offsetHeight : window.innerHeight;
+
+      if (typeof window !== "undefined") {
+        if ((window as any).lenis) {
+          (window as any).lenis.start();
+          (window as any).lenis.scrollTo(targetScrollY, { duration: 1.1 });
+        } else {
+          window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+        }
+      }
+    },
+    [drawFrame, isSv, onProgress]
+  );
 
   // Main Auto-Scroll Routine: triggered by a single scroll gesture
   const startAutoScroll = useCallback(() => {
@@ -265,6 +315,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         // Complete auto-scroll cleanly
         state.isAutoScrolling = false;
         state.hasCompleted = true;
+        setHasCompleted(true);
         onProgress?.(1.0);
 
         if (stageRef.current) {
@@ -294,6 +345,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     const initialY = window.scrollY || window.pageYOffset || 0;
     if (container && initialY >= container.offsetHeight - 50) {
       stateRef.current.hasCompleted = true;
+      setHasCompleted(true);
       setShowPrompt(false);
       onProgress?.(1.0);
       if (stageRef.current) {
@@ -308,6 +360,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         // Reset if user scrolled back up to the very top
         if (window.scrollY <= 10 && e.deltaY < 0) {
           stateRef.current.hasCompleted = false;
+          setHasCompleted(false);
           setShowPrompt(true);
           drawFrame(0);
           onProgress?.(0);
@@ -390,6 +443,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       // Reset when user returns to top
       if (scrollY <= 5 && stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
         stateRef.current.hasCompleted = false;
+        setHasCompleted(false);
         setShowPrompt(true);
         drawFrame(0);
         onProgress?.(0);
@@ -447,6 +501,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         ref={stageRef}
         onClick={startAutoScroll}
         onTouchEnd={(e) => {
+          const target = e.target as HTMLElement;
+          if (target && target.closest("button")) return;
           // Immediate responsive trigger on mobile touch/tap
           if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
             e.preventDefault();
@@ -471,6 +527,29 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
               style={{ width: "0%" }}
             />
           </div>
+
+          {/* Top-Right: Premium Glassmorphic Skip Intro Floating Button */}
+          {!hasCompleted && (
+            <div className="absolute top-4 sm:top-6 right-4 sm:right-8 z-30 pointer-events-auto">
+              <button
+                type="button"
+                onClick={handleSkipIntro}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  handleSkipIntro(e);
+                }}
+                className="group relative flex items-center gap-2 sm:gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#070D16]/85 hover:bg-[#070D16] border border-white/20 hover:border-[#C59C58]/80 backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.85)] text-white transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer"
+                aria-label={isSv ? "Hoppa över introduktion" : "Skip intro animation"}
+              >
+                <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase font-semibold text-white/90 group-hover:text-[#E6C687] transition-colors">
+                  {isSv ? "Hoppa över" : "Skip Intro"}
+                </span>
+                <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-white/[0.08] group-hover:bg-[#C59C58]/25 flex items-center justify-center transition-colors">
+                  <SkipForward className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#C59C58] transition-transform duration-300 group-hover:translate-x-0.5" />
+                </div>
+              </button>
+            </div>
+          )}
 
           {/* Reel Category Pill (Subtle Nordic Reel HUD below Navbar) */}
           <div className="absolute top-20 sm:top-24 left-4 sm:left-8 z-20 pointer-events-none flex items-center gap-2">
@@ -529,22 +608,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
                 </svg>
               </button>
               <button
-                onClick={(e) => {
+                type="button"
+                onClick={handleSkipIntro}
+                onTouchEnd={(e) => {
                   e.stopPropagation();
-                  // Direct smooth slide down to main website
-                  stateRef.current.hasCompleted = true;
-                  setShowPrompt(false);
-                  if (stageRef.current) stageRef.current.style.pointerEvents = "none";
-                  const container = containerRef.current;
-                  const targetScrollY = container ? container.offsetHeight : window.innerHeight;
-                  if (typeof window !== "undefined") {
-                    if ((window as any).lenis) {
-                      (window as any).lenis.start();
-                      (window as any).lenis.scrollTo(targetScrollY, { duration: 1.0 });
-                    } else {
-                      window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-                    }
-                  }
+                  handleSkipIntro(e);
                 }}
                 className="text-[9.5px] uppercase tracking-[0.22em] text-white/60 hover:text-[#C59C58] font-mono transition-colors cursor-pointer py-1"
               >
