@@ -5,12 +5,15 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, ShieldCheck, Compass, MoveDown } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface IntroCinematicSectionProps {
   onRequestWorkforce?: () => void;
 }
 
 export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinematicSectionProps) {
+  const { language, t } = useLanguage();
+  const isSv = language === "sv";
   const sectionRef = useRef<HTMLElement>(null);
   const headlineLine1Ref = useRef<HTMLDivElement>(null);
   const headlineLine2Ref = useRef<HTMLDivElement>(null);
@@ -116,11 +119,11 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
               <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-[#C59C58] text-[7px] leading-none text-[#C59C58]">
                 ☉
               </span>
-              THE NORVIAN MANIFESTO
+              {isSv ? "NORVIANS MANIFEST" : "THE NORVIAN MANIFESTO"}
             </span>
             <span className="h-[1px] w-8 sm:w-16 bg-[#C59C58]/55" />
             <span className="text-[9.5px] sm:text-[10.5px] uppercase tracking-[0.18em] text-[#0B1522]/50 font-medium">
-              01 / CORRIDOR
+              {isSv ? "01 / KORRIDOR" : "01 / CORRIDOR"}
             </span>
           </div>
 
@@ -132,8 +135,12 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
               style={{ transformStyle: "preserve-3d" }}
             >
               <h1 className="font-serif text-3xl sm:text-5xl lg:text-[66px] xl:text-[74px] font-normal tracking-[-0.03em] text-[#0B1522]">
-                <span className="inline-block mr-2 sm:mr-4 word-item">WE</span>
-                <span className="inline-block word-item">MOVE</span>
+                <span className="inline-block mr-2 sm:mr-4 word-item">
+                  {isSv ? "VI" : "WE"}
+                </span>
+                <span className="inline-block word-item">
+                  {isSv ? "FLYTTAR" : "MOVE"}
+                </span>
               </h1>
             </div>
 
@@ -143,8 +150,12 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
               style={{ transformStyle: "preserve-3d" }}
             >
               <h2 className="font-serif text-3xl sm:text-5xl lg:text-[66px] xl:text-[74px] font-normal tracking-[-0.03em] text-[#0B1522]">
-                <span className="inline-block mr-2 sm:mr-4 word-item italic font-serif text-[#C59C58]">WHAT</span>
-                <span className="inline-block word-item">MATTERS.</span>
+                <span className="inline-block mr-2 sm:mr-4 word-item italic font-serif text-[#C59C58]">
+                  {isSv ? "DET SOM" : "WHAT"}
+                </span>
+                <span className="inline-block word-item">
+                  {isSv ? "RÄKNAS." : "MATTERS."}
+                </span>
               </h2>
             </div>
           </div>
@@ -162,7 +173,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1522]/65 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-2.5 left-3 flex items-center gap-2">
               <span className="text-[9px] font-mono uppercase tracking-widest text-white/95 bg-black/60 px-2.5 py-1 rounded backdrop-blur-xs border border-white/10">
-                NORVIAN AB • SCANDINAVIAN FLEET
+                {isSv ? "NORVIAN AB • SKANDINAVISK FLOTTA" : "NORVIAN AB • SCANDINAVIAN FLEET"}
               </span>
             </div>
           </div>
@@ -172,7 +183,9 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             ref={subtitleRef}
             className="mt-3 sm:mt-5 text-[13.5px] sm:text-[15px] lg:text-[15.5px] text-[#0B1522]/80 font-light leading-[1.65] max-w-[460px]"
           >
-            Industry moves at the speed of human mastery. We engineer compliant, end-to-end workforce corridors connecting qualified specialists with Europe’s most demanding maritime shipyards, infrastructure projects, and strategic transport networks.
+            {isSv 
+              ? "Industrin rör sig i samma takt som mänsklig skicklighet. Vi bygger trygga och heltäckande kompetenskorridorer som förenar kvalificerade specialister med Europas mest krävande varv, anläggningsprojekt och strategiska transportnätverk."
+              : "Industry moves at the speed of human mastery. We engineer compliant, end-to-end workforce corridors connecting qualified specialists with Europe’s most demanding maritime shipyards, infrastructure projects, and strategic transport networks."}
           </p>
 
           {/* 4. The 3 Verified Credential Pills (Responsive flow on mobile) */}
@@ -182,17 +195,17 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
           >
             <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
               <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">DNV & ISO 9001</strong> Verified</span>
+              <span><strong className="font-semibold text-[#0B1522]">DNV & ISO 9001</strong> {isSv ? "Verifierad" : "Verified"}</span>
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
               <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">100% Tax & Legal</strong> Compliant</span>
+              <span><strong className="font-semibold text-[#0B1522]">{isSv ? "100% Avtals- & Skatte-" : "100% Tax & Legal"}</strong> {isSv ? "enligt" : "Compliant"}</span>
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
               <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">21-Day</strong> Deployment Window</span>
+              <span><strong className="font-semibold text-[#0B1522]">{isSv ? "21 Dagars" : "21-Day"}</strong> {isSv ? "Mobiliseringsfönster" : "Deployment Window"}</span>
             </div>
           </div>
 
@@ -203,7 +216,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
                 onClick={onRequestWorkforce}
                 className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-[#0B1522] hover:bg-[#142337] text-white px-7 py-3.5 rounded-full text-[11.5px] font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_12px_24px_-6px_rgba(11,21,34,0.2)] border border-[#C59C58]/35 hover:border-[#C59C58] active:scale-95 cursor-pointer overflow-hidden"
               >
-                <span>REQUEST WORKFORCE</span>
+                <span>{t.nav.requestCta}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#C59C58] transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
               </button>
             </div>

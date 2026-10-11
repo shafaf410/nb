@@ -4,7 +4,8 @@ import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { UserCheck, Award, Shield, FileCheck, Layers } from "lucide-react";
+import { Award } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ProfessionalProfile {
   title: string;
@@ -18,6 +19,8 @@ interface ProfessionalProfile {
 }
 
 export default function PeopleSection() {
+  const { language } = useLanguage();
+  const isSv = language === "sv";
   const triggerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -27,42 +30,42 @@ export default function PeopleSection() {
 
   const profiles: ProfessionalProfile[] = [
     {
-      title: "MECHANICAL ENGINEER",
-      role: "Lead Pipe & Precision Fabrication Specialist",
-      discipline: "HIGH-PRESSURE INDUSTRIAL SYSTEMS",
+      title: isSv ? "MASKININGENJÖR" : "MECHANICAL ENGINEER",
+      role: isSv ? "Ledande Rör- & Precisionssvetspecialist" : "Lead Pipe & Precision Fabrication Specialist",
+      discipline: isSv ? "HÖGTRYCKSSYSTEM FÖR INDUSTRI" : "HIGH-PRESSURE INDUSTRIAL SYSTEMS",
       certification: "ISO 9606-1 / 6G TIG TUV CERTIFIED",
-      deployment: "NORTH SEA CONTINENTAL SHELF & BERGEN YARDS",
-      experience: "12+ YEARS VERIFIED FIELD EXP",
+      deployment: isSv ? "NORDSJÖN & BERGENS VARV" : "NORTH SEA CONTINENTAL SHELF & BERGEN YARDS",
+      experience: isSv ? "12+ ÅRS VERIFIERAD FÄLTERFARENHET" : "12+ YEARS VERIFIED FIELD EXP",
       image: "/images/worker.jpg",
       colorScheme: "#070D16",
     },
     {
-      title: "MARINE SPECIALIST",
-      role: "Senior Hull & Propulsion Integration Lead",
-      discipline: "OFFSHORE VESSEL RETROFIT & NAVAL DEFENSE",
+      title: isSv ? "MARINSPECIALIST" : "MARINE SPECIALIST",
+      role: isSv ? "Senior Skrov- & Framdrivningsledare" : "Senior Hull & Propulsion Integration Lead",
+      discipline: isSv ? "OMBYGGNAD AV FARTYG & FÖRSVARSMARINT" : "OFFSHORE VESSEL RETROFIT & NAVAL DEFENSE",
       certification: "DNV GL MARITIME CLASSIFICATION WELDING",
-      deployment: "STAVANGER & OSLO SHIPBUILDING CORRIDORS",
-      experience: "14+ YEARS OFFSHORE DIRECTIVES",
+      deployment: isSv ? "STAVANGER & OSLO VARVSKORRIDORER" : "STAVANGER & OSLO SHIPBUILDING CORRIDORS",
+      experience: isSv ? "14+ ÅRS ERFARENHET AV OFFSHORE" : "14+ YEARS OFFSHORE DIRECTIVES",
       image: "/images/2.png",
       colorScheme: "#0B1522",
     },
     {
-      title: "INFRASTRUCTURE LEAD",
-      role: "Heavy Civil & Precast Structural Supervisor",
-      discipline: "CONTINENTAL RAILWAYS & VIADUCT TUNNELING",
+      title: isSv ? "ANLÄGGNINGSLEDARE" : "INFRASTRUCTURE LEAD",
+      role: isSv ? "Tung Anläggning & Prefab-arbetsledare" : "Heavy Civil & Precast Structural Supervisor",
+      discipline: isSv ? "JÄRNVÄG & TUNNELBYGGEN" : "CONTINENTAL RAILWAYS & VIADUCT TUNNELING",
       certification: "EN 1090-2 EXECUTION CLASS EXC4",
-      deployment: "SCANDINAVIAN TUNNEL & BRIDGE PROJECTS",
-      experience: "10+ YEARS INFRASTRUCTURE",
+      deployment: isSv ? "SKANDINAVISKA TUNNEL- & BROPROJEKT" : "SCANDINAVIAN TUNNEL & BRIDGE PROJECTS",
+      experience: isSv ? "10+ ÅRS ANLÄGGNINGSERFARENHET" : "10+ YEARS INFRASTRUCTURE",
       image: "/images/4.png",
       colorScheme: "#0A1420",
     },
     {
-      title: "HEAVY INDUSTRY",
-      role: "Continental Fleet & Heavy Haulage Master",
-      discipline: "OVERSIZED MULTI-AXLE TRANSPORT & CRANE RIGGING",
+      title: isSv ? "TUNG INDUSTRI & TRANSPORT" : "HEAVY INDUSTRY",
+      role: isSv ? "Mästare inom Specialtransport & Tung Fjärrtransport" : "Continental Fleet & Heavy Haulage Master",
+      discipline: isSv ? "SPECIALTRANSPORTER MED MODULFORDON & MOBILKRAN" : "OVERSIZED MULTI-AXLE TRANSPORT & CRANE RIGGING",
       certification: "EU CODE 95 / ADR CLASS 1-9 HAZMAT",
-      deployment: "CENTRAL EUROPE & TRANS-NORDIC ROUTES",
-      experience: "16+ YEARS COMMERCIAL HAULAGE",
+      deployment: isSv ? "CENTRALEUROPA & TRANS-NORDISKA RUTTER" : "CENTRAL EUROPE & TRANS-NORDIC ROUTES",
+      experience: isSv ? "16+ ÅRS ERFARENHET AV ÅKERI" : "16+ YEARS COMMERCIAL HAULAGE",
       image: "/images/5.png",
       colorScheme: "#060B12",
     },
@@ -149,12 +152,12 @@ export default function PeopleSection() {
         <div className="relative z-30 pt-6 sm:pt-8 pb-2 px-6 sm:px-10 lg:px-16 w-full max-w-[1700px] mx-auto flex items-center justify-between border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
             <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase">
-              DOCUMENTARY CREDITS // 04 PEOPLE OF INDUSTRY
+              {isSv ? "DOKUMENTÄRA PROFILER // 04 YRKESFOLKET BAKOM INDUSTRIN" : "DOCUMENTARY CREDITS // 04 PEOPLE OF INDUSTRY"}
             </span>
           </div>
 
           <div className="flex items-center gap-3 text-xs font-mono text-white/50">
-            <span>SEQUENCE</span>
+            <span>{isSv ? "SEKVENS" : "SEQUENCE"}</span>
             <span className="text-[#C59C58] font-bold">0{activeProfileIndex + 1}</span>
             <span>/ 04</span>
           </div>
@@ -241,21 +244,21 @@ export default function PeopleSection() {
             <div className="space-y-4 pt-4 border-t border-white/10 font-mono text-xs sm:text-sm">
               <div className="space-y-1">
                 <span className="text-[10px] uppercase text-[#C59C58] tracking-widest block">
-                  ROLE & OPERATIONAL CAPACITY
+                  {isSv ? "ROLL & OPERATIV KAPACITET" : "ROLE & OPERATIONAL CAPACITY"}
                 </span>
                 <div className="text-white/90 font-light">{activeProfile.role}</div>
               </div>
 
               <div className="space-y-1">
                 <span className="text-[10px] uppercase text-[#C59C58] tracking-widest block">
-                  PRIMARY INDUSTRIAL DISCIPLINE
+                  {isSv ? "PRIMÄR INDUSTRIELL DISCIPLIN" : "PRIMARY INDUSTRIAL DISCIPLINE"}
                 </span>
                 <div className="text-white/80 font-light">{activeProfile.discipline}</div>
               </div>
 
               <div className="space-y-1">
                 <span className="text-[10px] uppercase text-[#C59C58] tracking-widest block">
-                  COMPLIANCE & EUROPEAN AUDIT
+                  {isSv ? "EFTERLEVNAD & EUROPEISK REVISION" : "COMPLIANCE & EUROPEAN AUDIT"}
                 </span>
                 <div className="text-white/80 font-light flex items-center gap-2">
                   <Award className="w-3.5 h-3.5 text-[#C59C58]" />
@@ -265,7 +268,7 @@ export default function PeopleSection() {
 
               <div className="space-y-1">
                 <span className="text-[10px] uppercase text-[#C59C58] tracking-widest block">
-                  ASSIGNED DESTINATION CORRIDORS
+                  {isSv ? "TILLDELADE DESTINATIONSKORRIDORER" : "ASSIGNED DESTINATION CORRIDORS"}
                 </span>
                 <div className="text-white/70 font-light">{activeProfile.deployment}</div>
               </div>
@@ -273,7 +276,9 @@ export default function PeopleSection() {
 
             {/* Quote / Ethos */}
             <p className="font-serif italic text-base sm:text-lg text-white/60 pt-2 border-t border-white/5">
-              &ldquo;Specialized mastery is not replaceable by volume. We deploy professionals who build Europe’s bedrock.&rdquo;
+              {isSv
+                ? "”Specialiserad yrkeskunskap kan inte ersättas av volym. Vi mobiliserar yrkesfolket som bygger Europas grund.”"
+                : "“Specialized mastery is not replaceable by volume. We deploy professionals who build Europe’s bedrock.”"}
             </p>
           </div>
 

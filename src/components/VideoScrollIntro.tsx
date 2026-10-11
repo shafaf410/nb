@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface VideoScrollIntroProps {
   onProgress?: (progress: number) => void;
@@ -59,6 +60,9 @@ function preloadAllFrames(onFirstFrame?: () => void) {
 }
 
 export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) {
+  const { language } = useLanguage();
+  const isSv = language === "sv";
+
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -144,6 +148,22 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     }
   }, [drawFrame]);
 
+  // Synchronize chapter HUD text when language changes
+  useEffect(() => {
+    if (chapterTextRef.current) {
+      const idx = stateRef.current.currentFrame;
+      if (idx <= 31) {
+        chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
+      } else if (idx <= 88) {
+        chapterTextRef.current.innerText = isSv ? "02 • KONTINENTAL LOGISTIK" : "02 • CONTINENTAL LOGISTICS";
+      } else if (idx <= 128) {
+        chapterTextRef.current.innerText = isSv ? "03 • TERMINALVERKSAMHET" : "03 • TERMINAL OPERATIONS";
+      } else {
+        chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
+      }
+    }
+  }, [isSv]);
+
   // Main Auto-Scroll Routine: triggered by a single scroll gesture
   const startAutoScroll = useCallback(() => {
     const state = stateRef.current;
@@ -191,13 +211,13 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
 
       if (chapterTextRef.current) {
         if (frameIndex <= 31) {
-          chapterTextRef.current.innerText = "01 • SHIPBUILDING & MARINE";
+          chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
         } else if (frameIndex <= 88) {
-          chapterTextRef.current.innerText = "02 • CONTINENTAL LOGISTICS";
+          chapterTextRef.current.innerText = isSv ? "02 • KONTINENTAL LOGISTIK" : "02 • CONTINENTAL LOGISTICS";
         } else if (frameIndex <= 128) {
-          chapterTextRef.current.innerText = "03 • TERMINAL OPERATIONS";
+          chapterTextRef.current.innerText = isSv ? "03 • TERMINALVERKSAMHET" : "03 • TERMINAL OPERATIONS";
         } else {
-          chapterTextRef.current.innerText = "04 • GLOBAL NETWORK";
+          chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
         }
       }
 
@@ -284,7 +304,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             progressBarRef.current.style.width = "0%";
           }
           if (chapterTextRef.current) {
-            chapterTextRef.current.innerText = "01 • SHIPBUILDING & MARINE";
+            chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
           }
           if (stageRef.current) {
             stageRef.current.style.visibility = "visible";
@@ -361,7 +381,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           progressBarRef.current.style.width = "0%";
         }
         if (chapterTextRef.current) {
-          chapterTextRef.current.innerText = "01 • SHIPBUILDING & MARINE";
+          chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
         }
         if (stageRef.current) {
           stageRef.current.style.visibility = "visible";
@@ -442,7 +462,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
                 ref={chapterTextRef}
                 className="text-[9.5px] sm:text-[10px] uppercase font-mono tracking-[0.22em] font-semibold text-white/95"
               >
-                01 • SHIPBUILDING & MARINE
+                {isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE"}
               </span>
             </div>
           </div>
@@ -473,8 +493,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
               >
                 <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-ping" />
                 <span className="text-[10.5px] sm:text-xs uppercase tracking-[0.22em] text-white font-medium whitespace-nowrap">
-                  <span className="md:hidden">Swipe up or Tap to play</span>
-                  <span className="hidden md:inline">Scroll to play Reel</span>
+                  <span className="md:hidden">
+                    {isSv ? "Svep upp eller tryck för att spela" : "Swipe up or Tap to play"}
+                  </span>
+                  <span className="hidden md:inline">
+                    {isSv ? "Skrolla för att spela Reel" : "Scroll to play Reel"}
+                  </span>
                 </span>
                 <svg
                   className="w-4 h-4 text-[#C59C58] animate-bounce"
@@ -505,7 +529,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
                 }}
                 className="text-[9.5px] uppercase tracking-[0.22em] text-white/60 hover:text-[#C59C58] font-mono transition-colors cursor-pointer py-1"
               >
-                Slide to Content ↓
+                {isSv ? "Gå till Innehåll ↓" : "Slide to Content ↓"}
               </button>
             </div>
           )}

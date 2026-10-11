@@ -13,7 +13,8 @@ interface WorkforceFormProps {
 }
 
 export default function WorkforceFormSection({ initialIndustry = "" }: WorkforceFormProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isSv = language === "sv";
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -146,7 +147,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
           <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase">
-            CONTACT // MANPOWER INQUIRY
+            {isSv ? "KONTAKT // FÖRFRÅGAN OM ARBETSKRAFT" : "CONTACT // MANPOWER INQUIRY"}
           </span>
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
         </div>
@@ -155,16 +156,19 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         <div className="text-center overflow-hidden pb-4 sm:pb-6">
           <div ref={headlineRef} className="origin-top will-change-transform">
             <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-[-0.02em] leading-tight">
-              Get in Touch with <br className="hidden sm:inline" />
+              {isSv ? "Kontakta " : "Get in Touch with "}
+              <br className="hidden sm:inline" />
               <span className="italic font-serif text-[#C59C58]">Norvian AB</span>
             </h2>
           </div>
         </div>
 
-        {/* Header Message matching reference image verbatim */}
+        {/* Header Message */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <p className="text-base sm:text-lg lg:text-xl text-white/80 font-light leading-relaxed">
-            We&apos;re always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from Asia.
+            {isSv 
+              ? "Vi är alltid redo att diskutera era projektbehov, bemanningslösningar eller besvara frågor om yrkeskunnig arbetskraft från Asien."
+              : "We're always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from Asia."}
           </p>
         </div>
 
@@ -180,17 +184,19 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               </div>
               <div className="space-y-2">
                 <h3 className="font-serif text-3xl sm:text-4xl font-normal text-white">
-                  Message Sent Successfully
+                  {isSv ? "Meddelandet Har Skickats" : "Message Sent Successfully"}
                 </h3>
                 <p className="text-sm text-white/70 max-w-md mx-auto font-light leading-relaxed">
-                  Thank you for reaching out. Our team will review your project details and get back to you promptly.
+                  {isSv
+                    ? "Tack för att du kontaktar oss. Vårt team granskar era projektuppgifter och återkommer skyndsamt."
+                    : "Thank you for reaching out. Our team will review your project details and get back to you promptly."}
                 </p>
               </div>
               <button
                 onClick={() => setSubmitted(false)}
                 className="inline-flex items-center justify-center bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer border border-white/20 hover:border-[#C59C58]"
               >
-                Send Another Message
+                {isSv ? "Skicka ett Nytt Meddelande" : "Send Another Message"}
               </button>
             </div>
           ) : (
@@ -201,7 +207,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                 <input
                   type="text"
                   required
-                  placeholder="Company Name"
+                  placeholder={isSv ? "Företagsnamn" : "Company Name"}
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                   className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
@@ -213,7 +219,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                 <input
                   type="tel"
                   required
-                  placeholder="Phone"
+                  placeholder={isSv ? "Telefonnummer" : "Phone"}
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
@@ -225,7 +231,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                 <input
                   type="email"
                   required
-                  placeholder="Official Email"
+                  placeholder={isSv ? "Officiell E-postadress" : "Official Email"}
                   value={formData.officialEmail}
                   onChange={(e) => setFormData({ ...formData, officialEmail: e.target.value })}
                   className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
@@ -236,7 +242,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               <div className="form-input-card">
                 <input
                   type="text"
-                  placeholder="Which Service Do You Need? (e.g. Shipbuilding Workers, Welders, Drivers...)"
+                  placeholder={isSv ? "Vilken tjänst behöver ni? (t.ex. Skeppsbyggare, Svetsare, Chaufförer...)" : "Which Service Do You Need? (e.g. Shipbuilding Workers, Welders, Drivers...)"}
                   value={formData.serviceNeeded}
                   onChange={(e) => setFormData({ ...formData, serviceNeeded: e.target.value })}
                   className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all"
@@ -248,7 +254,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                 <textarea
                   rows={4}
                   required
-                  placeholder="Tell us about your project (number of workers needed, specific trades/roles, project duration, location in Europe, etc.)"
+                  placeholder={isSv ? "Berätta om ert projekt (antal arbetare som behövs, specifika yrkesroller, projektets varaktighet, plats i Europa, etc.)" : "Tell us about your project (number of workers needed, specific trades/roles, project duration, location in Europe, etc.)"}
                   value={formData.projectDetails}
                   onChange={(e) => setFormData({ ...formData, projectDetails: e.target.value })}
                   className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/15 focus:border-[#C59C58] rounded-xl sm:rounded-2xl px-5 py-4 text-base text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#C59C58] transition-all resize-none leading-relaxed"
@@ -258,7 +264,11 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               {/* Trust/Compliance badge */}
               <div className="flex items-center gap-2.5 pt-1 text-xs text-white/60">
                 <ShieldCheck className="w-4 h-4 text-[#C59C58] shrink-0" />
-                <span>Norvian AB manages candidate screening, compliance, and deployment logistics.</span>
+                <span>
+                  {isSv
+                    ? "Norvian AB hanterar kandidatgranskning, regelefterlevnad och logistik vid utplacering."
+                    : "Norvian AB manages candidate screening, compliance, and deployment logistics."}
+                </span>
               </div>
 
               {/* Submit Button: Send Message */}
@@ -272,11 +282,11 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                   {loading ? (
                     <span className="inline-flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Sending Message...</span>
+                      <span>{isSv ? "Skickar Meddelande..." : "Sending Message..."}</span>
                     </span>
                   ) : (
                     <>
-                      <span>Send Message</span>
+                      <span>{isSv ? "Skicka Meddelande" : "Send Message"}</span>
                       <Send className="w-4 h-4 text-white" />
                     </>
                   )}

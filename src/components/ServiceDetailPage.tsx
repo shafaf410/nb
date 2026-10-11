@@ -27,14 +27,16 @@ import {
   Layers,
   FileText
 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 import { 
   SERVICES_DATA, 
+  getServicesData,
   type ServiceKey, 
   type ServiceDetailItem 
 } from "@/components/servicesData";
 
 export type { ServiceKey, ServiceDetailItem };
-export { SERVICES_DATA };
+export { SERVICES_DATA, getServicesData };
 
 interface ServiceDetailPageProps {
   serviceKey: ServiceKey | null;
@@ -49,6 +51,8 @@ export default function ServiceDetailPage({
   onRequestForIndustry,
   onSwitchService,
 }: ServiceDetailPageProps) {
+  const { language } = useLanguage();
+  const isSv = language === "sv";
   const shouldReduceMotion = useReducedMotion();
   const pageContainerRef = useRef<HTMLDivElement>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -101,7 +105,8 @@ export default function ServiceDetailPage({
 
   if (!serviceKey) return null;
 
-  const data = SERVICES_DATA[serviceKey];
+  const servicesDataMap = getServicesData(language);
+  const data = servicesDataMap[serviceKey];
   const Icon = data.icon;
 
   // MacBook Opening Animation:
@@ -194,7 +199,7 @@ export default function ServiceDetailPage({
                 SCANDIC ROOTS
               </span>
               <span className="text-[8px] font-mono tracking-wider text-[#C59C58] uppercase">
-                Specialized Workforce Alliance
+                {isSv ? "Specialiserad Arbetskraftsallians" : "Specialized Workforce Alliance"}
               </span>
             </div>
           </div>
@@ -203,7 +208,7 @@ export default function ServiceDetailPage({
           {onSwitchService && (
             <div className="flex items-center gap-1 sm:gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10">
               {serviceKeys.map((key) => {
-                const item = SERVICES_DATA[key];
+                const item = servicesDataMap[key];
                 const isCurrent = key === serviceKey;
                 return (
                   <button
@@ -216,7 +221,11 @@ export default function ServiceDetailPage({
                     }`}
                   >
                     <span className="hidden sm:inline">{item.number} </span>
-                    {key === "shipbuilding" ? "SHIPBUILDING" : key === "construction" ? "CONSTRUCTION" : "LOGISTICS"}
+                    {key === "shipbuilding" 
+                      ? (isSv ? "SKEPPSBYGGNAD" : "SHIPBUILDING") 
+                      : key === "construction" 
+                      ? (isSv ? "BYGG & ANLÄGGNING" : "CONSTRUCTION") 
+                      : (isSv ? "LOGISTIK" : "LOGISTICS")}
                   </button>
                 );
               })}
@@ -229,7 +238,9 @@ export default function ServiceDetailPage({
             aria-label={`Exit ${data.title} page and return to slide`}
             className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/20 hover:border-[#C59C58] backdrop-blur-md shadow-lg transition-all duration-200 cursor-pointer group active:scale-95"
           >
-            <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase">EXIT</span>
+            <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase">
+              {isSv ? "STÄNG" : "EXIT"}
+            </span>
             <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-90" />
           </button>
         </header>
@@ -311,7 +322,7 @@ export default function ServiceDetailPage({
                     onClick={onClose}
                     className="inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-xs font-semibold uppercase tracking-wider transition-all border border-white/10 cursor-pointer"
                   >
-                    <span>Back to Carousel</span>
+                    <span>{isSv ? "Återgå till Presentation" : "Back to Carousel"}</span>
                   </button>
                 </motion.div>
 
@@ -390,7 +401,7 @@ export default function ServiceDetailPage({
                 <div className="w-1.5 h-16 sm:h-20 rounded-full bg-[#C59C58] shrink-0 mt-1" />
                 <div className="space-y-2 sm:space-y-3">
                   <div className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                    THE SCANDIC ROOTS APPROACH
+                    {isSv ? "NORVIAN & SCANDIC ROOTS-METODEN" : "THE SCANDIC ROOTS APPROACH"}
                   </div>
                   <p className="text-base sm:text-xl lg:text-2xl font-light text-white leading-relaxed">
                     {data.detailedDescription}
@@ -415,10 +426,10 @@ export default function ServiceDetailPage({
                 <div className="flex items-center justify-between pb-3 border-b border-white/10">
                   <div className="space-y-1">
                     <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#C59C58]">
-                      SOURCED & VETTED TALENT
+                      {isSv ? "KVALIFICERADE YRKESMÄN" : "SOURCED & VETTED TALENT"}
                     </span>
                     <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-                      Our Workforce Includes
+                      {isSv ? "Vår Arbetskraft Omfattar" : "Our Workforce Includes"}
                     </h3>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C59C58]">
@@ -454,10 +465,10 @@ export default function ServiceDetailPage({
                 <div className="flex items-center justify-between pb-3 border-b border-white/10">
                   <div className="space-y-1">
                     <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#C59C58]">
-                      CAPABILITIES & SCOPE
+                      {isSv ? "KAPACITETER & OMFATTNING" : "CAPABILITIES & SCOPE"}
                     </span>
                     <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
-                      Our Expertise
+                      {isSv ? "Vår Teknisk Expertis" : "Our Expertise"}
                     </h3>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C59C58]">
@@ -489,13 +500,15 @@ export default function ServiceDetailPage({
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                ENGINEERING RIGOR & TOLERANCES
+                {isSv ? "INGENJÖRSMÄSSIG NOGGRANNHET & TOLERANSER" : "ENGINEERING RIGOR & TOLERANCES"}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                Technical Standards & Testing Matrix
+                {isSv ? "Teknisk Verifieringsmatris & Standarder" : "Technical Standards & Testing Matrix"}
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
-                Every trade is independently assessed and certified to European operational norms before deployment.
+                {isSv 
+                  ? "Varje yrkesroll bedöms och certifieras oberoende mot europeiska normer före ankomst på plats."
+                  : "Every trade is independently assessed and certified to European operational norms before deployment."}
               </p>
             </div>
 
@@ -519,11 +532,15 @@ export default function ServiceDetailPage({
                   </div>
                   <div className="space-y-1.5 text-xs sm:text-sm">
                     <div>
-                      <span className="text-white/50 font-mono text-[10px] uppercase block">CAPABILITIES & MATERIALS</span>
+                      <span className="text-white/50 font-mono text-[10px] uppercase block">
+                        {isSv ? "KAPACITET & MATERIAL" : "CAPABILITIES & MATERIALS"}
+                      </span>
                       <p className="text-white/85 font-light leading-relaxed">{item.capabilities}</p>
                     </div>
                     <div className="pt-1">
-                      <span className="text-white/50 font-mono text-[10px] uppercase block">QUALITY & VERIFICATION</span>
+                      <span className="text-white/50 font-mono text-[10px] uppercase block">
+                        {isSv ? "KVALITET & VERIFIERING" : "QUALITY & VERIFICATION"}
+                      </span>
                       <p className="text-[#C59C58]/90 font-light leading-relaxed flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#C59C58] shrink-0" />
                         <span>{item.verification}</span>
@@ -539,13 +556,15 @@ export default function ServiceDetailPage({
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                PRECISION CAPABILITIES
+                {isSv ? "SPECIALISERADE YRKESOMRÅDEN" : "PRECISION CAPABILITIES"}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                Specialized Technical Disciplines
+                {isSv ? "Specialiserade Tekniska Discipliner" : "Specialized Technical Disciplines"}
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
-                Specialized trade certifications and verified craftsmanship ready for deployment.
+                {isSv 
+                  ? "Verifierad yrkeskompetens och yrkescertifikat redo för direkt mobilisering."
+                  : "Specialized trade certifications and verified craftsmanship ready for deployment."}
               </p>
             </div>
 
@@ -583,13 +602,15 @@ export default function ServiceDetailPage({
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
             <div className="space-y-2 mb-10 text-center max-w-2xl mx-auto">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                STREAMLINED DEPLOYMENT
+                {isSv ? "STRÖMLINJEFORMAD MOBILISERING" : "STREAMLINED DEPLOYMENT"}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                How We Mobilize Your Workforce
+                {isSv ? "Hur Vi Mobiliserar Ert Yrkeslag" : "How We Deploy Your Workforce"}
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light">
-                From technical scoping to day-one on-site arrival with complete European legal compliance.
+                {isSv
+                  ? "Från teknisk behovsanalys till dag ett på arbetsplatsen med fullständig europeisk regelefterlevnad."
+                  : "From technical scoping to day-one on-site arrival with complete European legal compliance."}
               </p>
             </div>
 
@@ -621,13 +642,15 @@ export default function ServiceDetailPage({
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                ZERO COMPROMISE COMPLIANCE
+                {isSv ? "TOTAL REGELEFTERLEVNAD UTAN KOMPROMISSER" : "ZERO COMPROMISE COMPLIANCE"}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                Full Employer Governance Package
+                {isSv ? "Trygghetspaket för Arbetsgivare" : "Full Employer Governance Package"}
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light max-w-2xl">
-                We handle the complete administrative, legal, and logistical lifecycle so your management can focus purely on production.
+                {isSv
+                  ? "Vi hanterar hela den administrativa, juridiska och logistiska processen så att er ledning kan fokusera på produktionen."
+                  : "We handle the complete administrative, legal, and logistical lifecycle so your management can focus purely on production."}
               </p>
             </div>
 
@@ -659,10 +682,10 @@ export default function ServiceDetailPage({
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-12 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                PROVEN RESULTS & TRACK RECORD
+                {isSv ? "DOKUMENTERADE RESULTAT & ERFARENHET" : "PROVEN RESULTS & TRACK RECORD"}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                Featured Deployment Case Studies
+                {isSv ? "Utvalda Referensprojekt" : "Featured Deployment Case Studies"}
               </h2>
             </div>
 
@@ -679,7 +702,7 @@ export default function ServiceDetailPage({
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58]">
                       <Briefcase className="w-3.5 h-3.5" />
-                      <span>CASE STUDY 0{idx + 1}</span>
+                      <span>{isSv ? "REFERENSPROJEKT" : "CASE STUDY"} 0{idx + 1}</span>
                     </div>
                     <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
                       {study.project}
@@ -691,11 +714,15 @@ export default function ServiceDetailPage({
 
                   <div className="space-y-3 pt-3 border-t border-white/10">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-white/50 font-mono">CLIENT TYPE:</span>
+                      <span className="text-white/50 font-mono">
+                        {isSv ? "KUNDTYP:" : "CLIENT TYPE:"}
+                      </span>
                       <span className="text-white font-medium">{study.clientType}</span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-white/50 font-mono">TIMELINE:</span>
+                      <span className="text-white/50 font-mono">
+                        {isSv ? "TIDPLAN:" : "TIMELINE:"}
+                      </span>
                       <span className="text-[#C59C58] font-semibold">{study.timeline}</span>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-1">
@@ -728,7 +755,7 @@ export default function ServiceDetailPage({
               </div>
               <div className="relative z-10 max-w-4xl space-y-6">
                 <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#C59C58] font-semibold">
-                  EXECUTIVE CLIENT ENDORSEMENT
+                  {isSv ? "LEDNINGENS KUNDUTLÅTANDE" : "EXECUTIVE CLIENT ENDORSEMENT"}
                 </span>
                 <p className="font-serif text-lg sm:text-2xl text-white/95 font-light leading-relaxed italic">
                   &ldquo;{data.testimonial.quote}&rdquo;
@@ -754,10 +781,10 @@ export default function ServiceDetailPage({
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
             <div className="space-y-2 mb-8">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
-                ANSWERS FOR EMPLOYERS
+                {isSv ? "SVAR FÖR ARBETSGIVARE" : "ANSWERS FOR EMPLOYERS"}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
-                Frequently Asked Questions
+                {isSv ? "Vanliga Frågor & Svar" : "Frequently Asked Questions"}
               </h2>
             </div>
 
@@ -812,10 +839,12 @@ export default function ServiceDetailPage({
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0B1522]/80 border border-white/10 flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#C59C58]">
-                  OPERATIONAL ACCREDITATION
+                  {isSv ? "OPERATIONELL ACKREDITERING" : "OPERATIONAL ACCREDITATION"}
                 </span>
                 <p className="text-sm sm:text-base text-white/90 font-light">
-                  Full turnkey compliance under Scandinavian and European labor directives.
+                  {isSv
+                    ? "Fullständig efterlevnad enligt skandinaviska och europeiska arbetsmarknadsdirektiv."
+                    : "Full turnkey compliance under Scandinavian and European labor directives."}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -846,15 +875,19 @@ export default function ServiceDetailPage({
               <div className="relative z-10 max-w-3xl mx-auto space-y-4">
                 <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[#C59C58] bg-[#C59C58]/10 px-3.5 py-1 rounded-full border border-[#C59C58]/30">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>START YOUR INQUIRY TODAY</span>
+                  <span>{isSv ? "STARTA ER FÖRFRÅGAN IDAG" : "START YOUR INQUIRY TODAY"}</span>
                 </div>
 
                 <h2 className="font-serif text-3xl sm:text-5xl font-normal text-white tracking-tight">
-                  Ready to Mobilize {data.title} Talent?
+                  {isSv 
+                    ? `Redo att Mobilisera Yrkeslag inom ${data.title}?`
+                    : `Ready to Mobilize ${data.title} Talent?`}
                 </h2>
 
                 <p className="text-sm sm:text-base text-white/75 font-light leading-relaxed max-w-xl mx-auto">
-                  Connect with our recruitment team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe.
+                  {isSv
+                    ? "Kontakta vårt rekryteringsteam för att gå igenom projektplaner, kompetenskrav och tillgänglig personal över hela Skandinavien och Europa."
+                    : "Connect with our recruitment team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe."}
                 </p>
 
                 <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
@@ -870,7 +903,7 @@ export default function ServiceDetailPage({
                     onClick={onClose}
                     className="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs font-semibold uppercase tracking-wider transition-all border border-white/15 cursor-pointer"
                   >
-                    <span>Return to Slide (✕)</span>
+                    <span>{isSv ? "Återgå till Presentation (✕)" : "Return to Slide (✕)"}</span>
                   </button>
                 </div>
               </div>
@@ -897,9 +930,11 @@ export default function ServiceDetailPage({
               {/* Quick links to explore other services */}
               {onSwitchService && (
                 <div className="flex flex-wrap items-center gap-3 text-xs">
-                  <span className="text-white/40 font-mono uppercase tracking-wider">OTHER SERVICES:</span>
+                  <span className="text-white/40 font-mono uppercase tracking-wider">
+                    {isSv ? "ÖVRIGA BRANSCHER:" : "OTHER SERVICES:"}
+                  </span>
                   {otherServices.map((key) => {
-                    const otherData = SERVICES_DATA[key];
+                    const otherData = servicesDataMap[key];
                     return (
                       <button
                         key={key}

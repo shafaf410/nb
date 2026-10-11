@@ -22,7 +22,8 @@ interface NavbarProps {
 }
 
 export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isSv = language === "sv";
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
@@ -114,7 +115,7 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
                     {t.nav.brandSub}
                   </span>
                   <span className="text-[7.5px] tracking-[0.18em] text-[#C59C58] font-bold uppercase mt-0.5">
-                    Nordic Workforce • EU
+                    {isSv ? "Nordisk Arbetskraft • EU" : "Nordic Workforce • EU"}
                   </span>
                 </div>
               </Link>

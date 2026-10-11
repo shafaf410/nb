@@ -17,7 +17,8 @@ interface RouteStop {
 }
 
 export default function GlobalNetworkSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isSv = language === "sv";
   const triggerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const mapCanvasRef = useRef<HTMLDivElement>(null);
@@ -37,42 +38,42 @@ export default function GlobalNetworkSection() {
   const stops: RouteStop[] = [
     {
       id: "norway",
-      name: "NORWAY",
-      country: "Oslo & Western Fjords",
+      name: isSv ? "NORGE" : "NORWAY",
+      country: isSv ? "Oslo & Västkustens fjordar" : "Oslo & Western Fjords",
       coords: { x: 285, y: 175 },
-      code: "NO-01/MARITIME",
+      code: isSv ? "NO-01/MARINT" : "NO-01/MARITIME",
       activePhase: 0,
     },
     {
       id: "germany",
-      name: "GERMANY",
-      country: "Hamburg & Rhine-Ruhr",
+      name: isSv ? "TYSKLAND" : "GERMANY",
+      country: isSv ? "Hamburg & Rhen-Ruhr" : "Hamburg & Rhine-Ruhr",
       coords: { x: 310, y: 260 },
-      code: "DE-02/HEAVY-IND",
+      code: isSv ? "DE-02/TUNG-IND" : "DE-02/HEAVY-IND",
       activePhase: 1,
     },
     {
       id: "netherlands",
-      name: "NETHERLANDS",
-      country: "Rotterdam Ports & Logistics",
+      name: isSv ? "NEDERLÄNDERNA" : "NETHERLANDS",
+      country: isSv ? "Rotterdams hamnar & logistik" : "Rotterdam Ports & Logistics",
       coords: { x: 275, y: 255 },
-      code: "NL-03/LOGISTICS",
+      code: isSv ? "NL-03/LOGISTIK" : "NL-03/LOGISTICS",
       activePhase: 2,
     },
     {
       id: "sweden",
-      name: "SWEDEN",
-      country: "Gothenburg & Stockholm",
+      name: isSv ? "SVERIGE" : "SWEDEN",
+      country: isSv ? "Göteborg & Stockholm" : "Gothenburg & Stockholm",
       coords: { x: 340, y: 165 },
-      code: "SE-04/ADV-MFG",
+      code: isSv ? "SE-04/TILLV-IND" : "SE-04/ADV-MFG",
       activePhase: 3,
     },
     {
       id: "europe",
-      name: "REST OF EUROPE",
-      country: "Continental Corridor",
+      name: isSv ? "ÖVRIGA EUROPA" : "REST OF EUROPE",
+      country: isSv ? "Kontinental Korridor" : "Continental Corridor",
       coords: { x: 370, y: 290 },
-      code: "EU-05/NETWORK",
+      code: isSv ? "EU-05/NÄTVERK" : "EU-05/NETWORK",
       activePhase: 4,
     },
   ];
@@ -80,29 +81,29 @@ export default function GlobalNetworkSection() {
   // Text variations for scroll interaction:
   const textNarratives = [
     {
-      region: "SCANDINAVIA",
-      quote: "Connecting specialist talent with European industry.",
-      detail: "Strategic maritime & offshore yards in Bergen, Stavanger, and Oslo.",
+      region: isSv ? "SKANDINAVIEN" : "SCANDINAVIA",
+      quote: isSv ? "Förenar specialistkompetens med europeisk industri." : "Connecting specialist talent with European industry.",
+      detail: isSv ? "Strategiska marina och offshore-varv i Bergen, Stavanger och Oslo." : "Strategic maritime & offshore yards in Bergen, Stavanger, and Oslo.",
     },
     {
-      region: "CENTRAL EUROPE",
-      quote: "Moving expertise where industry needs it.",
-      detail: "Heavy mechanical engineering and infrastructure corridors in Germany.",
+      region: isSv ? "CENTRALEUROPA" : "CENTRAL EUROPE",
+      quote: isSv ? "Flyttar expertis dit industrin behöver den." : "Moving expertise where industry needs it.",
+      detail: isSv ? "Tung maskinteknik och infrastrukturkorridorer i Tyskland." : "Heavy mechanical engineering and infrastructure corridors in Germany.",
     },
     {
-      region: "NETHERLANDS",
-      quote: "Automated port logistics & European distribution arteries.",
-      detail: "Connecting Rotterdam maritime gateways with vetted CE transport teams.",
+      region: isSv ? "NEDERLÄNDERNA" : "NETHERLANDS",
+      quote: isSv ? "Automatiserad hamnlogistik och europeiska distributionspulsådror." : "Automated port logistics & European distribution arteries.",
+      detail: isSv ? "Förbinder Rotterdams hamnar med certifierade CE-transportteam." : "Connecting Rotterdam maritime gateways with vetted CE transport teams.",
     },
     {
-      region: "SWEDEN",
-      quote: "Precision manufacturing & renewable industrial scale.",
-      detail: "Clean energy facilities, battery gigafactories, and automotive assembly.",
+      region: isSv ? "SVERIGE" : "SWEDEN",
+      quote: isSv ? "Precisionstillverkning och industriell förnybar skala." : "Precision manufacturing & renewable industrial scale.",
+      detail: isSv ? "Rena energianläggningar, batterifabriker och fordonstillverkning." : "Clean energy facilities, battery gigafactories, and automotive assembly.",
     },
     {
-      region: "EUROPE",
-      quote: "One network. Multiple industries.",
-      detail: "A unified, compliant workforce bridge servicing 15+ destination hubs.",
+      region: isSv ? "EUROPA" : "EUROPE",
+      quote: isSv ? "Ett nätverk. Många branscher." : "One network. Multiple industries.",
+      detail: isSv ? "En enhetlig, regelrätt bemanningsbro som betjänar 15+ destinationer." : "A unified, compliant workforce bridge servicing 15+ destination hubs.",
     },
   ];
 
@@ -421,7 +422,7 @@ export default function GlobalNetworkSection() {
             <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.25em] text-[#C59C58]">
               <span className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                ACTIVE CORRIDOR PHASE
+                {isSv ? "AKTIV KORRIDORFAS" : "ACTIVE CORRIDOR PHASE"}
               </span>
               <span>0{activeStep + 1} / 05</span>
             </div>
@@ -502,36 +503,36 @@ export default function GlobalNetworkSection() {
         />
 
         <div className="text-[10px] font-mono uppercase tracking-[0.28em] text-[#C59C58] mb-12">
-          AUDITED METRICS // CONTINENTAL VERIFICATION
+          {isSv ? "REVIDERADE NYCKELTAL // KONTINENTAL VERIFIERING" : "AUDITED METRICS // CONTINENTAL VERIFICATION"}
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <StatCounterItem
             target={1000}
             suffix="+"
-            label="Verified Deployments"
-            sublabel="Active skilled placements across European industries"
+            label={isSv ? "Verifierade Utplaceringar" : "Verified Deployments"}
+            sublabel={isSv ? "Aktiva kvalificerade placeringar inom europeisk industri" : "Active skilled placements across European industries"}
             animate={statsAnimated}
           />
           <StatCounterItem
             target={15}
             suffix="+"
-            label="Destination Hubs"
-            sublabel="Direct operational corridors in Scandinavia & Central EU"
+            label={isSv ? "Destinationshubbar" : "Destination Hubs"}
+            sublabel={isSv ? "Direkta operativa korridorer i Skandinavien & Centraleuropa" : "Direct operational corridors in Scandinavia & Central EU"}
             animate={statsAnimated}
           />
           <StatCounterItem
             target={5}
             suffix="+"
-            label="Specialized Sectors"
-            sublabel="Maritime, Heavy Civil, Infrastructure, Energy & Logistics"
+            label={isSv ? "Specialiserade Sektorer" : "Specialized Sectors"}
+            sublabel={isSv ? "Marint, Tung anläggning, Infrastruktur, Energi & Logistik" : "Maritime, Heavy Civil, Infrastructure, Energy & Logistics"}
             animate={statsAnimated}
           />
           <StatCounterItem
             target={3}
-            suffix="-Week"
-            label="Mobilization Average"
-            sublabel="From compliance audit to on-site operational induction"
+            suffix={isSv ? "-Veckor" : "-Week"}
+            label={isSv ? "Genomsnittlig Mobilisering" : "Mobilization Average"}
+            sublabel={isSv ? "Från regelefterlevnadskontroll till operativ introduktion på plats" : "From compliance audit to on-site operational induction"}
             animate={statsAnimated}
           />
         </div>

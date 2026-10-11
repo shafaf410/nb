@@ -14,12 +14,15 @@ import {
   Truck,
   Check
 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface AboutSectionProps {
   onRequestWorkforce?: () => void;
 }
 
 export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) {
+  const { language, t } = useLanguage();
+  const isSv = language === "sv";
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -51,13 +54,36 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
   }, []);
 
   const sectors = [
-    { title: "Shipbuilding & Marine", icon: Anchor, desc: "Shipyards, dry docks, and offshore fabrication" },
-    { title: "Construction", icon: Building2, desc: "Commercial, industrial, and infrastructure builds" },
-    { title: "Manufacturing", icon: Cog, desc: "Precision fabrication, CNC, and assembly plants" },
-    { title: "Transport & Logistics", icon: Truck, desc: "Heavy road freight, distribution, and fleet operations" },
+    { 
+      title: isSv ? "Skeppsbyggnad & Marint" : "Shipbuilding & Marine", 
+      icon: Anchor, 
+      desc: isSv ? "Varv, torrdockor och offshore-konstruktion" : "Shipyards, dry docks, and offshore fabrication" 
+    },
+    { 
+      title: isSv ? "Bygg & Anläggning" : "Construction", 
+      icon: Building2, 
+      desc: isSv ? "Kommersiella, industriella och anläggningsbyggen" : "Commercial, industrial, and infrastructure builds" 
+    },
+    { 
+      title: isSv ? "Tillverkningsindustri" : "Manufacturing", 
+      icon: Cog, 
+      desc: isSv ? "Precisionsbearbetning, CNC och monteringsfabriker" : "Precision fabrication, CNC, and assembly plants" 
+    },
+    { 
+      title: isSv ? "Transport & Logistik" : "Transport & Logistics", 
+      icon: Truck, 
+      desc: isSv ? "Tung fjärrtransport, distribution och åkeriverksamhet" : "Heavy road freight, distribution, and fleet operations" 
+    },
   ];
 
-  const trades = [
+  const trades = isSv ? [
+    "Svetsare (TIG & MIG)",
+    "Skeppsbyggnadsspecialister",
+    "Rörläggare & montörer",
+    "Bygg- & anläggningsarbetare",
+    "CNC-operatörer",
+    "Tunga lastbilschaufförer (CE)",
+  ] : [
     "Welders (TIG & MIG)",
     "Shipbuilding Specialists",
     "Pipe Fitters",
@@ -66,7 +92,11 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
     "Truck & Trailer Drivers",
   ];
 
-  const contractModels = [
+  const contractModels = isSv ? [
+    "Korttidsbehov",
+    "Långtidsplaceringar",
+    "Projektbaserad arbetskraft",
+  ] : [
     "Short-term requirements",
     "Long-term placements",
     "Project-based workforce",
@@ -94,22 +124,33 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
           <div className="flex items-center gap-3">
             <span className="h-[2px] w-8 bg-[#C59C58]" />
             <h2 className="text-xs sm:text-sm font-mono uppercase tracking-[0.22em] text-[#C59C58]">
-              About Us
+              {isSv ? "Om Oss" : "About Us"}
             </h2>
-            <span className="text-xs text-white/40 font-mono">/ Norvian AB Company Profile</span>
+            <span className="text-xs text-white/40 font-mono">
+              {isSv ? "/ Norvian AB Företagsprofil" : "/ Norvian AB Company Profile"}
+            </span>
           </div>
 
           <div className="flex items-center gap-2 text-xs font-mono text-white/70">
             <MapPin className="w-3.5 h-3.5 text-[#C59C58]" />
-            <span>Headquartered in Västervik, Sweden</span>
+            <span>{isSv ? "Huvudkontor i Västervik, Sverige" : "Headquartered in Västervik, Sweden"}</span>
           </div>
         </div>
 
         {/* Hero Editorial Statement */}
         <div className="about-fade-up max-w-4xl mb-16 sm:mb-20">
           <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-normal text-white leading-[1.18] tracking-[-0.015em]">
-            Norvian AB is a manpower supply and recruitment company based in{" "}
-            <span className="text-[#C59C58] italic">Västervik, Sweden.</span>
+            {isSv ? (
+              <>
+                Norvian AB är ett bemannings- och rekryteringsföretag baserat i{" "}
+                <span className="text-[#C59C58] italic">Västervik, Sverige.</span>
+              </>
+            ) : (
+              <>
+                Norvian AB is a manpower supply and recruitment company based in{" "}
+                <span className="text-[#C59C58] italic">Västervik, Sweden.</span>
+              </>
+            )}
           </h3>
         </div>
 
@@ -122,20 +163,24 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
             {/* Story Paragraph 1 */}
             <div className="space-y-4">
               <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-[#C59C58]">
-                Cross-Continent Workforce Solutions
+                {isSv ? "Interkontinentala Bemanningslösningar" : "Cross-Continent Workforce Solutions"}
               </h4>
               <p className="text-lg sm:text-xl text-white/90 font-light leading-relaxed">
-                We help European companies in the shipbuilding, construction, manufacturing, and transport & logistics sectors find skilled and experienced workers from Asian countries.
+                {isSv 
+                  ? "Vi hjälper europeiska företag inom skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik att rekrytera erfaren och kvalificerad personal från Asien."
+                  : "We help European companies in the shipbuilding, construction, manufacturing, and transport & logistics sectors find skilled and experienced workers from Asian countries."}
               </p>
             </div>
 
             {/* Story Paragraph 2 */}
             <div className="space-y-4">
               <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-[#C59C58]">
-                Specialized Disciplines & Contract Terms
+                {isSv ? "Specialiserade Yrken & Avtalsmodeller" : "Specialized Disciplines & Contract Terms"}
               </h4>
               <p className="text-base sm:text-lg text-white/75 font-light leading-relaxed">
-                We specialize in supplying welders, shipbuilding specialists, pipe fitters, construction workers, CNC operators, and professional truck and trailer drivers for short-term, long-term, and project-based workforce requirements.
+                {isSv
+                  ? "Vi är specialiserade på att förmedla svetsare, skeppsbyggare, rörläggare, anläggningsarbetare, CNC-operatörer samt yrkeschaufförer för korttidsbehov, långtidsuppdrag och projektbaserad bemanning."
+                  : "We specialize in supplying welders, shipbuilding specialists, pipe fitters, construction workers, CNC operators, and professional truck and trailer drivers for short-term, long-term, and project-based workforce requirements."}
               </p>
 
               {/* Verified Trades List */}
@@ -154,7 +199,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               {/* Engagement Terms */}
               <div className="flex flex-wrap items-center gap-2 pt-2">
                 <span className="text-xs font-mono text-white/50 uppercase tracking-wider mr-2">
-                  Flexible Deployment:
+                  {isSv ? "Flexibel Bemanning:" : "Flexible Deployment:"}
                 </span>
                 {contractModels.map((model, i) => (
                   <span
@@ -172,10 +217,12 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
             <div className="p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
               <div className="flex items-center gap-2.5 text-xs font-mono uppercase tracking-wider text-[#C59C58]">
                 <ShieldCheck className="w-4 h-4 text-[#C59C58]" />
-                <span>Regulatory Rigor & Compliance</span>
+                <span>{isSv ? "Rigorös Regelefterlevnad & Juridisk Trygghet" : "Regulatory Rigor & Compliance"}</span>
               </div>
               <p className="text-base text-white/85 font-light leading-relaxed">
-                Through our international recruitment network, we connect companies with qualified and experienced workers while following applicable European labour laws and industry standards.
+                {isSv 
+                  ? "Genom vårt internationella rekryteringsnätverk förenar vi företag med kvalificerad personal under full efterlevnad av tillämpliga europeiska arbetsrättsliga lagar och industristandarder."
+                  : "Through our international recruitment network, we connect companies with qualified and experienced workers while following applicable European labour laws and industry standards."}
               </p>
             </div>
 
@@ -197,7 +244,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               
               {/* Photo Caption Badge */}
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-white/80 bg-[#080E18]/85 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10">
-                <span>Vetted Technical Trades</span>
+                <span>{isSv ? "Kvalificerade Yrkesroller" : "Vetted Technical Trades"}</span>
                 <span className="text-[#C59C58]">DNV & ISO Standard</span>
               </div>
             </div>
@@ -206,7 +253,9 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
             <div className="relative p-7 sm:p-8 rounded-2xl bg-[#0C1524] border border-[#C59C58]/30 shadow-xl space-y-4">
               <div className="text-[#C59C58] font-serif text-3xl leading-none">“</div>
               <blockquote className="font-serif text-lg sm:text-xl text-white font-normal leading-snug">
-                Our goal is to provide reliable manpower solutions, help businesses overcome workforce shortages, and build strong, long-term partnerships with our clients.
+                {isSv
+                  ? "Vårt mål är att leverera pålitliga bemanningslösningar, hjälpa företag att överbrygga personalbrist och bygga starka, långsiktiga partnerskap med våra kunder."
+                  : "Our goal is to provide reliable manpower solutions, help businesses overcome workforce shortages, and build strong, long-term partnerships with our clients."}
               </blockquote>
               <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/60">
                 <span className="text-white/80 font-medium">Norvian AB</span>
@@ -221,7 +270,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
         {/* Sectors Overview Grid */}
         <div className="about-fade-up pt-12 border-t border-white/10">
           <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#C59C58] mb-6">
-            Key Industry Sectors We Serve
+            {isSv ? "Viktiga Industrisektorer Vi Betjänar" : "Key Industry Sectors We Serve"}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -250,10 +299,14 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
           <div className="about-fade-up mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <p className="text-sm font-serif text-white/90">
-                Ready to address critical workforce gaps with certified personnel?
+                {isSv 
+                  ? "Redo att säkra er kompetensförsörjning med certifierad personal?"
+                  : "Ready to address critical workforce gaps with certified personnel?"}
               </p>
               <p className="text-xs text-white/50 font-mono mt-0.5">
-                Headquarters in Västervik, Sweden • Direct deployment across Europe
+                {isSv 
+                  ? "Huvudkontor i Västervik, Sverige • Direktmobilisering över hela Europa"
+                  : "Headquarters in Västervik, Sweden • Direct deployment across Europe"}
               </p>
             </div>
 
@@ -261,7 +314,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               onClick={onRequestWorkforce}
               className="inline-flex items-center gap-2.5 bg-[#C59C58] hover:bg-[#D4AF37] text-[#080E18] px-7 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 shadow-[0_10px_25px_-5px_rgba(197,156,88,0.4)] cursor-pointer active:scale-95 shrink-0"
             >
-              <span>Request Workforce</span>
+              <span>{t.nav.requestCta}</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#080E18]" />
             </button>
           </div>

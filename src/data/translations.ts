@@ -258,7 +258,7 @@ export const translations = {
       process: "Rekryteringsprocess",
       osloHq: "Oslo HK",
       requestCta: "Begär Arbetskraft",
-      requestShort: "Beställ",
+      requestShort: "Förfrågan",
       certifiedDisciplines: "Certifierade Industriella Discipliner",
       mobileTitle: "Oslo Huvudkontor • Aktivt",
       callHq: "Ring Norge HK: +47 22 00 90 00",

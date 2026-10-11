@@ -13,7 +13,8 @@ interface IndustriesSectionProps {
 }
 
 export default function IndustriesSection({ onSelectIndustry, activeIndustryKey }: IndustriesSectionProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isSv = language === "sv";
   const triggerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
 
@@ -23,57 +24,42 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
   const industries = [
     {
       id: "shipbuilding" as const,
-      number: "01",
-      code: "IND-01 / MARITIME",
-      title: "Shipbuilding & Marine",
-      category: "MARITIME & OFFSHORE FABRICATION",
-      subtitle: "Precision welders, pipe fitters, and marine electricians powering Northern Europe's leading commercial and defense yards.",
-      badge: "DNV & ISO 9606-1",
+      number: t.industries.shipbuilding.number,
+      code: isSv ? "IND-01 / MARINT" : "IND-01 / MARITIME",
+      title: t.industries.shipbuilding.title,
+      category: t.industries.shipbuilding.category.toUpperCase(),
+      subtitle: t.industries.shipbuilding.subtitle,
+      badge: t.industries.shipbuilding.badge,
       image: "/images/shipbuilding_real.jpg",
-      buttonText: "Explore Shipbuilding",
+      buttonText: t.industries.buttonTextShipbuilding,
       icon: Anchor,
-      skills: [
-        "ISO 9606-1 TIG & MIG Multi-Position Welders",
-        "Hull, Structural Steel & High-Pressure Pipe Fitters",
-        "Marine Systems Electricians & Cable Riggers",
-        "Dry Dock & Offshore Vessel Maintenance Crews"
-      ],
+      skills: t.industries.shipbuilding.skills,
     },
     {
       id: "construction" as const,
-      number: "02",
-      code: "IND-02 / CIVIL",
-      title: "Industrial Construction",
-      category: "CIVIL & HEAVY INFRASTRUCTURE",
-      subtitle: "Vetted civil crews, formwork specialists, and structural steel erectors delivering complex industrial infrastructure across Europe.",
-      badge: "EN 1090 & ISO 45001",
+      number: t.industries.construction.number,
+      code: isSv ? "IND-02 / BYGG" : "IND-02 / CIVIL",
+      title: t.industries.construction.title,
+      category: t.industries.construction.category.toUpperCase(),
+      subtitle: t.industries.construction.subtitle,
+      badge: t.industries.construction.badge,
       image: "/images/construction_real.jpg",
-      buttonText: "Explore Construction",
+      buttonText: t.industries.buttonTextConstruction,
       icon: Building2,
-      skills: [
-        "EN 1090 Structural Steel Erectors & Riggers",
-        "Industrial Formwork & Concrete Specialists",
-        "Heavy Machinery & Tower Crane Operators",
-        "Site Civil Engineers & Survey Coordinators"
-      ],
+      skills: t.industries.construction.skills,
     },
     {
       id: "logistics" as const,
-      number: "03",
-      code: "IND-03 / FLEET",
-      title: "Transport & Logistics",
-      category: "CONTINENTAL FLEET & BULK HAULAGE",
-      subtitle: "Certified heavy freight drivers and logistics specialists keeping Scandinavian and European supply chains running at full throttle.",
-      badge: "EU CODE 95 & ADR",
+      number: t.industries.logistics.number,
+      code: isSv ? "IND-03 / LOGISTIK" : "IND-03 / FLEET",
+      title: t.industries.logistics.title,
+      category: t.industries.logistics.category.toUpperCase(),
+      subtitle: t.industries.logistics.subtitle,
+      badge: t.industries.logistics.badge,
       image: "/images/norvian_truck.jpg",
-      buttonText: "Explore Transport & Logistics",
+      buttonText: t.industries.buttonTextLogistics,
       icon: Truck,
-      skills: [
-        "EU Code 95 Certified Articulated CE Drivers",
-        "ADR Hazardous Materials Transport Crews",
-        "Automated Terminal & Warehouse Specialists",
-        "Heavy Haulage & Specialized Trailer Pilots"
-      ],
+      skills: t.industries.logistics.skills,
     },
   ];
 
@@ -243,7 +229,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
                     : "bg-black/50 text-white/60 hover:text-white border border-white/10"
                 }`}
               >
-                {ind.number} {ind.id === "shipbuilding" ? "MARITIME" : ind.id === "construction" ? "CIVIL" : "FLEET"}
+                {ind.number} {ind.id === "shipbuilding" ? (isSv ? "MARINT" : "MARITIME") : ind.id === "construction" ? (isSv ? "BYGG" : "CIVIL") : (isSv ? "LOGISTIK" : "FLEET")}
               </button>
             ))}
           </div>
@@ -251,7 +237,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
           {/* Guaranteed Correct Discipline Number: 01, 02, 03 */}
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden sm:inline text-[9px] sm:text-[10px] uppercase font-mono tracking-widest text-white/40">
-              DISCIPLINE
+              {isSv ? "BRANSCH" : "DISCIPLINE"}
             </span>
             <div className="h-7 w-9 sm:h-8 sm:w-12 border border-[#C59C58]/40 rounded-lg bg-black/60 backdrop-blur-md flex items-center justify-center overflow-hidden shadow-inner">
               <span className="font-serif text-sm sm:text-lg font-normal text-[#C59C58] transition-all duration-300">
@@ -388,7 +374,9 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         <div className="absolute bottom-0 inset-x-0 z-30 py-3 sm:py-4 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-between text-white/50 text-[10px] font-mono tracking-widest uppercase bg-gradient-to-t from-[#070D16] via-[#070D16]/80 to-transparent">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
-            <span className="hidden sm:inline">DISCIPLINE 0{activeIndex + 1} OF 03 ACTIVE</span>
+            <span className="hidden sm:inline">
+              {isSv ? `BRANSCH 0${activeIndex + 1} AV 03 AKTIV` : `DISCIPLINE 0${activeIndex + 1} OF 03 ACTIVE`}
+            </span>
             {/* Mobile Slide Dots */}
             <div className="flex items-center gap-1.5 sm:hidden">
               {industries.map((_, i) => (
