@@ -9,8 +9,8 @@ interface VideoScrollIntroProps {
 }
 
 const TOTAL_FRAMES = 165;
-// Full 10-second cinematic presentation pace
-const AUTO_SCROLL_DURATION = 10000;
+// Slower cinematic presentation pace (15s duration)
+const AUTO_SCROLL_DURATION = 15000;
 
 // Persistent module-level frame cache
 const frameCache: HTMLImageElement[] = [];
