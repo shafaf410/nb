@@ -143,13 +143,13 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-[#070D16]/88 to-[#070D16]/92" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
+      <div className="max-w-6xl xl:max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         
         {/* Top Eyebrow Tag */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
           <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase">
-            {isSv ? "KONTAKT // FÖRFRÅGAN OM ARBETSKRAFT" : "CONTACT // MANPOWER INQUIRY"}
+            {isSv ? "KONTAKT // DIREKT LEDNING & FÖRFRÅGAN" : "CONTACT // DIRECT LEADERSHIP & INQUIRY"}
           </span>
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
         </div>
@@ -166,7 +166,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         </div>
 
         {/* Header Message */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <p className="text-base sm:text-lg lg:text-xl text-white/80 font-light leading-relaxed">
             {isSv 
               ? "Vi är alltid redo att diskutera era projektbehov, bemanningslösningar eller besvara frågor om yrkeskunnig arbetskraft från Asien."
@@ -174,41 +174,86 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
           </p>
         </div>
 
-        {/* Corporate Address & Contact Details */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 text-xs sm:text-sm">
-          <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-[#0B1522]/90 border border-[#C59C58]/40 shadow-lg text-white/90 backdrop-blur-md">
-            <MapPin className="w-4 h-4 text-[#C59C58] shrink-0" />
-            <span className="font-mono text-xs sm:text-[13px] tracking-wide">
-              Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : "Sweden"}
-            </span>
+        {/* 2-Column Responsive Grid: Left = Direct Leadership Contacts, Right = Inquiry Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          
+          {/* Left Column: Direct Leadership & Partners Card (Image 2) */}
+          <div className="lg:col-span-5 bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)] flex flex-col justify-between">
+            <div>
+              {/* Card Header Badge */}
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
+                <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
+                <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-[#C59C58] uppercase font-semibold">
+                  {isSv ? "DIREKT LEDNING & PARTNERS" : "KEY LEADERSHIP & PARTNERS"}
+                </span>
+              </div>
+
+              {/* Person 1: Bianka Bittlingmeier */}
+              <div className="pb-6 border-b border-white/15">
+                <h3 className="font-serif text-2xl sm:text-[26px] text-white font-medium tracking-tight">
+                  Bianka Bittlingmeier
+                </h3>
+                <p className="text-[#C59C58] font-semibold text-sm sm:text-base mt-1.5">
+                  {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
+                </p>
+                <p className="text-white/60 text-xs sm:text-sm mt-1 font-light leading-relaxed">
+                  {isSv ? "Rekrytering & Affärspartnerskap" : "Recruitment & Business Partnerships"}
+                </p>
+              </div>
+
+              {/* Person 2: Vinu Mohan */}
+              <div className="py-6 border-b border-white/15">
+                <h3 className="font-serif text-2xl sm:text-[26px] text-white font-medium tracking-tight">
+                  Vinu Mohan
+                </h3>
+                <p className="text-[#C59C58] font-semibold text-sm sm:text-base mt-1.5">
+                  {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
+                </p>
+                <p className="text-white/60 text-xs sm:text-sm mt-1 font-light leading-relaxed">
+                  {isSv ? "Internationell Drift & Rekrytering" : "International Operations & Recruitment"}
+                </p>
+              </div>
+
+              {/* Person 3: Isabelle Beyer */}
+              <div className="pt-6">
+                <h3 className="font-serif text-2xl sm:text-[26px] text-white font-medium tracking-tight">
+                  Isabelle Beyer
+                </h3>
+                <p className="text-[#C59C58] font-semibold text-sm sm:text-base mt-1.5">
+                  {isSv ? "Extern Affärspartner – Tyskland" : "External Business Partner – Germany"}
+                </p>
+                <p className="text-white/60 text-xs sm:text-sm mt-1 font-light leading-relaxed">
+                  {isSv ? "Tysk Marknadskoordinering" : "German Market Coordination"}
+                </p>
+              </div>
+            </div>
+
+            {/* Office & Direct Contact Info */}
+            <div className="mt-8 pt-6 border-t border-white/15 space-y-3.5">
+              <div className="flex items-start gap-3 text-xs sm:text-sm text-white/75">
+                <MapPin className="w-4 h-4 text-[#C59C58] shrink-0 mt-0.5" />
+                <span>Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : "Sweden"}</span>
+              </div>
+              <div className="flex items-center gap-3 text-xs sm:text-sm text-white/75">
+                <Mail className="w-4 h-4 text-[#C59C58] shrink-0" />
+                <a href="mailto:contact@norvian.no" className="hover:text-[#C59C58] transition-colors">
+                  contact@norvian.no
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-xs sm:text-sm text-white/75">
+                <Phone className="w-4 h-4 text-[#C59C58] shrink-0" />
+                <a href="tel:+4722009000" className="hover:text-[#C59C58] transition-colors">
+                  +47 22 00 90 00
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-[#0B1522]/90 border border-white/15 shadow-lg text-white/90 backdrop-blur-md">
-            <Mail className="w-4 h-4 text-[#C59C58] shrink-0" />
-            <a
-              href="mailto:contact@norvian.no"
-              className="font-mono text-xs sm:text-[13px] hover:text-[#C59C58] transition-colors"
-            >
-              contact@norvian.no
-            </a>
-          </div>
-
-          <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-[#0B1522]/90 border border-white/15 shadow-lg text-white/90 backdrop-blur-md">
-            <Phone className="w-4 h-4 text-[#C59C58] shrink-0" />
-            <a
-              href="tel:+4722009000"
-              className="font-mono text-xs sm:text-[13px] hover:text-[#C59C58] transition-colors"
-            >
-              +47 22 00 90 00
-            </a>
-          </div>
-        </div>
-
-        {/* Form Container */}
-        <div
-          ref={formCardRef}
-          className="bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-10 lg:p-12 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)]"
-        >
+          {/* Right Column: Form Container */}
+          <div
+            ref={formCardRef}
+            className="lg:col-span-7 bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-10 lg:p-12 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)]"
+          >
           {submitted ? (
             <div className="py-12 text-center space-y-6 animate-fadeIn">
               <div className="w-16 h-16 rounded-full bg-[#C59C58]/15 text-[#C59C58] mx-auto flex items-center justify-center border border-[#C59C58]/30 shadow-md">
@@ -327,6 +372,8 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
 
             </form>
           )}
+        </div>
+
         </div>
 
       </div>

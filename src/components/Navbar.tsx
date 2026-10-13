@@ -217,7 +217,24 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     <a
                       key={link.label}
                       href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        setMobileMenuOpen(false);
+                        if (link.href.startsWith("#")) {
+                          e.preventDefault();
+                          const el = document.querySelector(link.href);
+                          if (el) {
+                            if ((window as any).lenis) {
+                              (window as any).lenis.start();
+                              (window as any).lenis.scrollTo(el as HTMLElement, {
+                                offset: -40,
+                                duration: 1.2,
+                              });
+                            } else {
+                              el.scrollIntoView({ behavior: "smooth" });
+                            }
+                          }
+                        }
+                      }}
                       className="flex items-center justify-between text-base font-serif font-medium text-white/90 py-3 px-3.5 rounded-xl hover:bg-white/[0.08] transition-colors active:bg-white/15"
                     >
                       <span>{link.label}</span>
@@ -238,6 +255,17 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     <span>{t.nav.requestCta}</span>
                     <ArrowRight className="w-4 h-4 text-[#070D16]" />
                   </button>
+                </div>
+
+                {/* Mobile Drawer Key Contacts Preview */}
+                <div className="pt-3 border-t border-white/10 text-xs text-white/50 space-y-1.5 font-light">
+                  <div className="flex items-center gap-2 text-white/80 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58]" />
+                    <span>{isSv ? "Direkt Ledning & Partners:" : "Direct Leadership & Partners:"}</span>
+                  </div>
+                  <p className="text-[11px] text-white/60">
+                    Bianka Bittlingmeier • Vinu Mohan • Isabelle Beyer
+                  </p>
                 </div>
               </div>
             </motion.div>
