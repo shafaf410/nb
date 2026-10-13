@@ -216,7 +216,7 @@ export default function ServiceDetailPage({
                 alt="NORVIAN AB"
                 width={130}
                 height={32}
-                className="h-6 sm:h-7 w-auto object-contain"
+                className="h-6 sm:h-7 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
                 priority
               />
             </button>
@@ -1188,7 +1188,7 @@ export default function ServiceDetailPage({
                   alt="NORVIAN AB"
                   width={130}
                   height={32}
-                  className="h-7 w-auto object-contain"
+                  className="h-7 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
                 />
                 <span className="text-xs text-white/50 font-light">
                   © {new Date().getFullYear()} Norvian AB

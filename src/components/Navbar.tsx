@@ -91,7 +91,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                   alt="NORVIAN AB"
                   width={180}
                   height={144}
-                  className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                  className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
                   priority
                 />
                 <div className="hidden lg:flex flex-col border-l border-white/15 pl-3">
@@ -202,7 +202,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                       alt="NORVIAN AB"
                       width={140}
                       height={112}
-                      className="h-8 sm:h-9 w-auto object-contain"
+                      className="h-8 sm:h-9 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
                     />
                   </Link>
                   <div className="flex items-center gap-2">

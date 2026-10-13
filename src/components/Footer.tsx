@@ -49,7 +49,7 @@ export default function Footer() {
                 alt="NORVIAN AB"
                 width={180}
                 height={150}
-                className="h-12 sm:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-12 sm:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_rgba(255,255,255,0.18)]"
               />
               <div className="flex flex-col border-l border-white/15 pl-3.5 sm:pl-4">
                 <span className="text-[10px] tracking-[0.25em] text-[#C59C58] font-semibold uppercase">
