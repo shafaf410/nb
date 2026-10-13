@@ -562,85 +562,142 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             startAutoScroll();
           }
         }}
-        className="fixed top-0 left-0 h-[100dvh] w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer"
+        className="fixed top-0 left-0 h-[100dvh] w-full overflow-hidden z-0 bg-[#070D16] cursor-pointer flex items-center justify-center"
         style={{ touchAction: "none" }}
       >
+        {/* Atmospheric Studio Backlight & Radial Ambient Halo */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_65%_at_50%_50%,_rgba(197,156,88,0.13),_rgba(15,23,42,0.45)_55%,_#070D16_100%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#070D16]/90 via-transparent to-[#070D16] pointer-events-none" />
+
+        {/* Outer Background Subtle Atmospheric Ring */}
+        <div className="absolute w-[500px] sm:w-[680px] h-[500px] sm:h-[680px] rounded-full border border-[#C59C58]/10 -z-10 pointer-events-none opacity-60 animate-pulse" />
+
+        {/* Smartphone Chassis Container (9:19.2 Flagship Mobile Format) */}
         <div
-          className="relative w-full h-full flex items-center justify-center overflow-hidden"
+          className="relative z-10 flex flex-col items-center justify-center transition-transform duration-500 will-change-transform pt-4 sm:pt-6"
           style={{
-            perspective: "1200px",
-            transformStyle: "preserve-3d",
+            height: "calc(100dvh - 110px)",
+            maxHeight: "720px",
+            aspectRatio: "9 / 19.2",
+            maxWidth: "calc(100vw - 28px)",
           }}
         >
-          {/* Top Reel Progress Bar (Reel format on mobile & widescreen) */}
-          <div className="absolute top-0 inset-x-0 h-1 bg-white/10 z-30 pointer-events-none">
-            <div
-              ref={progressBarRef}
-              className="h-full bg-gradient-to-r from-[#C59C58] via-[#E8C587] to-[#C59C58] shadow-[0_0_12px_rgba(197,156,88,0.9)]"
-              style={{ width: "0%" }}
-            />
-          </div>
+          {/* Outer Ambient Nordic Glow Behind the Phone */}
+          <div className="absolute -inset-4 sm:-inset-6 rounded-[56px] sm:rounded-[64px] bg-gradient-to-b from-[#C59C58]/25 via-[#1E3A8A]/30 to-[#C59C58]/20 blur-3xl -z-10 pointer-events-none opacity-90" />
 
-          {/* Reel Category Pill (Subtle Nordic Reel HUD below Navbar) */}
-          <div className="absolute top-20 sm:top-24 left-4 sm:left-8 z-20 pointer-events-none flex items-center gap-2">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white shadow-xl">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58] animate-pulse" />
-              <span
-                ref={chapterTextRef}
-                className="text-[9.5px] sm:text-[10px] uppercase font-mono tracking-[0.22em] font-semibold text-white/95"
-              >
-                {isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE"}
-              </span>
+          {/* Left Chassis Volume Buttons */}
+          <div className="absolute -left-[4px] sm:-left-[5px] top-24 w-[3px] sm:w-[4px] h-7 sm:h-8 bg-[#334155] rounded-l pointer-events-none" />
+          <div className="absolute -left-[4px] sm:-left-[5px] top-36 w-[3px] sm:w-[4px] h-10 sm:h-12 bg-[#334155] rounded-l pointer-events-none" />
+          <div className="absolute -left-[4px] sm:-left-[5px] top-52 w-[3px] sm:w-[4px] h-10 sm:h-12 bg-[#334155] rounded-l pointer-events-none" />
+
+          {/* Right Chassis Power Button */}
+          <div className="absolute -right-[4px] sm:-right-[5px] top-32 w-[3px] sm:w-[4px] h-14 sm:h-16 bg-[#334155] rounded-r pointer-events-none" />
+
+          {/* Outer Titanium Chassis Rim with Chamfered Reflection */}
+          <div className="relative w-full h-full p-[2.5px] sm:p-[3.5px] rounded-[44px] sm:rounded-[52px] bg-gradient-to-b from-[#64748B]/70 via-[#1E293B]/95 to-[#0F172A] shadow-[0_25px_80px_rgba(0,0,0,0.95),0_0_50px_rgba(197,156,88,0.22)]">
+            
+            {/* Inner Titanium Bezel */}
+            <div className="relative w-full h-full p-[5px] sm:p-[7px] rounded-[41px] sm:rounded-[49px] bg-[#070D16] border border-white/10 shadow-[inset_0_0_12px_rgba(0,0,0,0.9)]">
+              
+              {/* Screen Display Surface */}
+              <div className="relative w-full h-full rounded-[35px] sm:rounded-[42px] overflow-hidden bg-black select-none shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
+                
+                {/* Status Bar */}
+                <div className="absolute top-0 inset-x-0 h-10 z-30 flex items-center justify-between px-5 sm:px-6 pointer-events-none text-white/90">
+                  <span className="text-[10px] sm:text-[11px] font-semibold tracking-tight font-mono">09:41</span>
+                  
+                  {/* Dynamic Island / Camera Notch */}
+                  <div className="w-22 sm:w-26 h-4.5 sm:h-5 rounded-full bg-black border border-white/10 flex items-center justify-between px-2 sm:px-2.5 shadow-md">
+                    <span className="w-2 h-2 rounded-full bg-[#0a1527] ring-1 ring-[#1e3a5f]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-[9.5px] sm:text-[10px] font-mono">
+                    <span className="font-semibold">5G</span>
+                    <div className="w-3.5 h-2 border border-white/80 rounded-[2px] p-[1px] flex items-center">
+                      <div className="h-full w-full bg-white rounded-[0.5px]" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Top Reel Progress Indicator */}
+                <div className="absolute top-10 sm:top-11 inset-x-4 sm:inset-x-5 h-[2px] bg-white/20 rounded-full overflow-hidden z-25 pointer-events-none">
+                  <div
+                    ref={progressBarRef}
+                    className="h-full bg-gradient-to-r from-[#C59C58] via-[#E8C587] to-[#C59C58] shadow-[0_0_8px_rgba(197,156,88,0.9)]"
+                    style={{ width: "0%" }}
+                  />
+                </div>
+
+                {/* In-Reel Chapter Badge */}
+                <div className="absolute top-13 sm:top-14 left-4 sm:left-5 z-25 pointer-events-none">
+                  <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/65 backdrop-blur-md border border-white/15 text-white shadow-lg">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58] animate-pulse" />
+                    <span
+                      ref={chapterTextRef}
+                      className="text-[8.5px] sm:text-[9px] uppercase font-mono tracking-[0.2em] font-semibold text-[#E8C587]"
+                    >
+                      {isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Hardware-Accelerated Video Canvas (Reel 9:19.2 Portrait Fit) */}
+                <canvas
+                  ref={canvasRef}
+                  className="w-full h-full select-none pointer-events-none object-cover"
+                  style={{
+                    transform: "scale(1) translateZ(0)",
+                    willChange: "transform",
+                    filter: "contrast(1.02) saturate(1.04)",
+                  }}
+                />
+
+                {/* Vertical Vignette Gradients for True Reel Depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-black/70 pointer-events-none z-15" />
+
+                {/* Realistic Screen Glass Specular Reflection Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none z-20" />
+
+                {/* Bottom Home Indicator Bar */}
+                <div className="absolute bottom-2.5 inset-x-0 mx-auto w-24 sm:w-28 h-1 bg-white/60 rounded-full z-30 pointer-events-none" />
+              </div>
             </div>
           </div>
-
-          {/* Hardware-Accelerated Canvas (Full-bleed 100dvh portrait Reel format on mobile) */}
-          <canvas
-            ref={canvasRef}
-            className="w-full h-full select-none pointer-events-none"
-            style={{
-              transform: "scale(1) translateZ(0)",
-              willChange: "transform",
-              filter: "contrast(1.02) saturate(1.04)",
-            }}
-          />
-
-          {/* Vertical Vignette Gradients for True Reel Format legibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070D16]/65 via-transparent to-[#070D16]/75 pointer-events-none" />
-
-          {/* Bottom Center Reel Prompt: Swipe Up or Tap to Play */}
-          {showPrompt && (
-            <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center pointer-events-auto z-20 px-4 text-center">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  startAutoScroll();
-                }}
-                className="flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black/70 backdrop-blur-md border border-[#C59C58]/50 shadow-[0_12px_36px_rgba(0,0,0,0.85)] active:scale-95 transition-all cursor-pointer"
-              >
-                <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-ping" />
-                <span className="text-[10.5px] sm:text-xs uppercase tracking-[0.22em] text-white font-medium whitespace-nowrap">
-                  <span className="md:hidden">
-                    {isSv ? "Svep upp eller tryck för att spela" : "Swipe up or Tap to play"}
-                  </span>
-                  <span className="hidden md:inline">
-                    {isSv ? "Skrolla för att spela Reel" : "Scroll to play Reel"}
-                  </span>
-                </span>
-                <svg
-                  className="w-4 h-4 text-[#C59C58] animate-bounce"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-                </svg>
-              </button>
-            </div>
-          )}
         </div>
+
+        {/* Bottom Reel Prompt: Swipe Up / Scroll to Play */}
+        {showPrompt && (
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex items-center pointer-events-auto z-30 px-4 text-center">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                startAutoScroll();
+              }}
+              className="flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black/80 backdrop-blur-md border border-[#C59C58]/60 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_20px_rgba(197,156,88,0.25)] active:scale-95 transition-all cursor-pointer group hover:border-[#E8C587]"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-ping" />
+              <span className="text-[10.5px] sm:text-xs uppercase tracking-[0.22em] text-white font-medium whitespace-nowrap">
+                <span className="md:hidden">
+                  {isSv ? "Svep upp eller tryck för att spela" : "Swipe up or Tap to play"}
+                </span>
+                <span className="hidden md:inline">
+                  {isSv ? "Skrolla eller klicka för att spela" : "Scroll or Click to play"}
+                </span>
+              </span>
+              <svg
+                className="w-4 h-4 text-[#C59C58] group-hover:text-[#E8C587] animate-bounce"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
