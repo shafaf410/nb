@@ -122,11 +122,11 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
 
   return (
     <section
-      id="request-form"
+      id="contact"
       ref={containerRef}
-      className="py-24 sm:py-36 lg:py-44 bg-[#070D16] relative overflow-hidden text-white"
+      className="py-24 sm:py-36 lg:py-44 bg-[#070D16] relative overflow-hidden text-white scroll-mt-20"
     >
-      <div id="contact" className="sr-only" />
+      <div id="request-form" className="sr-only" />
       <div id="contact-us" className="sr-only" />
       {/* Background Architectural Ambient Image & Grid */}
       <div
