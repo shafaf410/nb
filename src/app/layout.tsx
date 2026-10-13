@@ -17,7 +17,22 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "NORVIAN AB | Qualified International Workforce & Talent Placement",
   description: "Norvian AB is an experienced Swedish manpower supply company based in Västervik, Sweden. With over 1,000 workers successfully placed, we provide skilled professionals across Europe in shipbuilding, construction, manufacturing, and transport & logistics.",
-  keywords: ["workforce", "recruitment", "shipbuilding", "construction", "manufacturing", "transport", "logistics", "Europe", "manpower supply", "NORVIAN", "NORVIAN AB", "Västervik Sweden"],
+  keywords: [
+    "workforce",
+    "recruitment",
+    "shipbuilding",
+    "construction",
+    "manufacturing",
+    "transport",
+    "logistics",
+    "Europe",
+    "manpower supply",
+    "NORVIAN",
+    "NORVIAN AB",
+    "Baumansgatan 4",
+    "593 32 Västervik",
+    "Västervik Sweden",
+  ],
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
@@ -29,11 +44,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EmploymentAgency",
+    name: "NORVIAN AB",
+    description: "Swedish manpower supply and international recruitment consultancy",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Baumansgatan 4",
+      postalCode: "593 32",
+      addressLocality: "Västervik",
+      addressCountry: "SE",
+    },
+    telephone: "+47 22 00 90 00",
+    email: "contact@norvian.no",
+  };
+
   return (
     <html
       lang="en"
       className={`${playfair.variable} ${jakarta.variable} antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-screen font-sans bg-[#FAF8F5] text-[#0E1B2B] flex flex-col selection:bg-[#C59C58]/20 selection:text-[#C59C58]">
         {children}
       </body>

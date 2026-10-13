@@ -519,7 +519,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         cancelAnimationFrame(stateRef.current.rafId);
       }
     };
-  }, [drawFrame, isSv, onProgress, startAutoScroll]);
+  }, [drawFrame, onProgress, startAutoScroll]);
 
   return (
     <div

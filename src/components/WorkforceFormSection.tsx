@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CheckCircle2, ShieldCheck, Send } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Send, MapPin, Mail, Phone } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import MagneticButton from "@/components/MagneticButton";
 
@@ -166,12 +166,42 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         </div>
 
         {/* Header Message */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <p className="text-base sm:text-lg lg:text-xl text-white/80 font-light leading-relaxed">
             {isSv 
               ? "Vi är alltid redo att diskutera era projektbehov, bemanningslösningar eller besvara frågor om yrkeskunnig arbetskraft från Asien."
               : "We're always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from Asia."}
           </p>
+        </div>
+
+        {/* Corporate Address & Contact Details */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 text-xs sm:text-sm">
+          <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-[#0B1522]/90 border border-[#C59C58]/40 shadow-lg text-white/90 backdrop-blur-md">
+            <MapPin className="w-4 h-4 text-[#C59C58] shrink-0" />
+            <span className="font-mono text-xs sm:text-[13px] tracking-wide">
+              Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : "Sweden"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-[#0B1522]/90 border border-white/15 shadow-lg text-white/90 backdrop-blur-md">
+            <Mail className="w-4 h-4 text-[#C59C58] shrink-0" />
+            <a
+              href="mailto:contact@norvian.no"
+              className="font-mono text-xs sm:text-[13px] hover:text-[#C59C58] transition-colors"
+            >
+              contact@norvian.no
+            </a>
+          </div>
+
+          <div className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-[#0B1522]/90 border border-white/15 shadow-lg text-white/90 backdrop-blur-md">
+            <Phone className="w-4 h-4 text-[#C59C58] shrink-0" />
+            <a
+              href="tel:+4722009000"
+              className="font-mono text-xs sm:text-[13px] hover:text-[#C59C58] transition-colors"
+            >
+              +47 22 00 90 00
+            </a>
+          </div>
         </div>
 
         {/* Form Container */}

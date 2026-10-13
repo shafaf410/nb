@@ -134,7 +134,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
 
           <div className="flex items-center gap-2 text-xs font-mono text-white/70">
             <MapPin className="w-3.5 h-3.5 text-[#C59C58]" />
-            <span>{isSv ? "Huvudkontor i Västervik, Sverige" : "Headquartered in Västervik, Sweden"}</span>
+            <span>{isSv ? "Huvudkontor: Baumansgatan 4, 593 32 Västervik, Sverige" : "Headquarters: Baumansgatan 4, 593 32 Västervik, Sweden"}</span>
           </div>
         </div>
 
@@ -260,7 +260,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               </blockquote>
               <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/60">
                 <span className="text-white/80 font-medium">Norvian AB</span>
-                <span>Västervik, Sweden</span>
+                <span>Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : "Sweden"}</span>
               </div>
             </div>
 

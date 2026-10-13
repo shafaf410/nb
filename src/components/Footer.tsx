@@ -56,7 +56,7 @@ export default function Footer() {
                   {t.nav.brandSub}
                 </span>
                 <span className="text-xs text-white/50 font-light mt-0.5">
-                  Oslo • Bergen • European Corridor
+                  Baumansgatan 4, 593 32 Västervik • Sweden
                 </span>
               </div>
             </Link>
