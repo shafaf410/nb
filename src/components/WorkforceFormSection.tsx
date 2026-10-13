@@ -166,11 +166,11 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         </div>
 
         {/* Header Message */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <p className="text-base sm:text-lg lg:text-xl text-white/80 font-light leading-relaxed">
             {isSv 
-              ? "Vi är alltid redo att diskutera era projektbehov, bemanningslösningar eller besvara frågor om yrkeskunnig arbetskraft från Asien."
-              : "We're always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from Asia."}
+              ? "Vi är alltid redo att diskutera era projektbehov, bemanningslösningar eller besvara frågor om yrkeskunnig arbetskraft från Sydamerika, Filippinerna, Vietnam och Indien."
+              : "We're always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from South America, the Philippines, Vietnam, and India."}
           </p>
         </div>
 
