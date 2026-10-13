@@ -10,13 +10,32 @@ import LanguageToggle from "@/components/LanguageToggle";
 
 interface NavbarProps {
   onRequestWorkforce: () => void;
+  onGoHome?: () => void;
   showNav?: boolean;
 }
 
-export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarProps) {
+export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }: NavbarProps) {
   const { t, language } = useLanguage();
   const isSv = language === "sv";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onGoHome) {
+      onGoHome();
+    } else if (typeof window !== "undefined") {
+      if (window.location.hash) {
+        window.history.pushState(null, "", window.location.pathname);
+      }
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+        (window as any).lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      window.dispatchEvent(new CustomEvent("norvian:go-home"));
+    }
+  };
 
   const navLinks = [
     { label: t.nav.services, href: "#services" },
@@ -62,7 +81,11 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
               transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 flex items-center shrink-0"
             >
-              <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+              <Link
+                href="/"
+                onClick={handleLogoClick}
+                className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
+              >
                 <Image
                   src="/logo.png"
                   alt="NORVIAN AB"
@@ -166,7 +189,14 @@ export default function Navbar({ onRequestWorkforce, showNav = true }: NavbarPro
               <div className="bg-[#070D16]/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85)] border border-white/[0.12] space-y-5 text-white">
                 {/* Header inside Mobile Drawer */}
                 <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2">
+                  <Link
+                    href="/"
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      handleLogoClick(e);
+                    }}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
                     <Image
                       src="/logo.png"
                       alt="NORVIAN AB"

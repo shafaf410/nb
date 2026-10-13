@@ -205,14 +205,21 @@ export default function ServiceDetailPage({
               <span>{isSv ? "TILLBAKA" : "BACK"}</span>
             </button>
 
-            <Image
-              src="/logo.png"
-              alt="NORVIAN AB"
-              width={130}
-              height={32}
-              className="h-6 sm:h-7 w-auto object-contain hidden md:block"
-              priority
-            />
+            <button
+              type="button"
+              onClick={onClose}
+              className="hidden md:block cursor-pointer focus:outline-none hover:opacity-85 transition-opacity"
+              aria-label={isSv ? "Gå till startsidan" : "Go to home page"}
+            >
+              <Image
+                src="/logo.png"
+                alt="NORVIAN AB"
+                width={130}
+                height={32}
+                className="h-6 sm:h-7 w-auto object-contain"
+                priority
+              />
+            </button>
           </div>
 
           {/* Center: Interactive Service Tabs Switcher */}

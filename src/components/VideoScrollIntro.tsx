@@ -467,6 +467,34 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       drawFrame(stateRef.current.currentFrame);
     };
 
+    // 6. Return-to-home reset listener (triggered when clicking header/footer logo)
+    const handleGoHomeEvent = () => {
+      if (stateRef.current.rafId) {
+        cancelAnimationFrame(stateRef.current.rafId);
+        stateRef.current.rafId = 0;
+      }
+      stateRef.current.isAutoScrolling = false;
+      stateRef.current.hasCompleted = false;
+      stateRef.current.currentFrame = 0;
+      setHasCompleted(false);
+      setShowPrompt(true);
+      drawFrame(0);
+      onProgress?.(0);
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = "0%";
+      }
+      if (chapterTextRef.current) {
+        chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
+      }
+      if (stageRef.current) {
+        stageRef.current.style.visibility = "visible";
+        stageRef.current.style.pointerEvents = "auto";
+      }
+      if (canvasRef.current) {
+        canvasRef.current.style.transform = "scale(1) translateZ(0)";
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -475,6 +503,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
+    window.addEventListener("norvian:go-home", handleGoHomeEvent);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
@@ -485,11 +514,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("orientationchange", handleResize);
+      window.removeEventListener("norvian:go-home", handleGoHomeEvent);
       if (stateRef.current.rafId) {
         cancelAnimationFrame(stateRef.current.rafId);
       }
     };
-  }, [drawFrame, onProgress, startAutoScroll]);
+  }, [drawFrame, isSv, onProgress, startAutoScroll]);
 
   return (
     <div

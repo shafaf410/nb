@@ -10,10 +10,17 @@ export default function Footer() {
   const { t } = useLanguage();
 
   const scrollToTop = () => {
-    if (typeof window !== "undefined" && (window as any).lenis) {
-      (window as any).lenis.scrollTo(0, { duration: 1.4 });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== "undefined") {
+      if (window.location.hash) {
+        window.history.pushState(null, "", window.location.pathname);
+      }
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+        (window as any).lenis.scrollTo(0, { duration: 1.4 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      window.dispatchEvent(new CustomEvent("norvian:go-home"));
     }
   };
 
@@ -29,7 +36,14 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-5 sm:space-y-6">
-            <Link href="/" className="inline-flex items-center gap-3.5 sm:gap-4 group">
+            <Link
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToTop();
+              }}
+              className="inline-flex items-center gap-3.5 sm:gap-4 group cursor-pointer"
+            >
               <Image
                 src="/logo.png"
                 alt="NORVIAN AB"

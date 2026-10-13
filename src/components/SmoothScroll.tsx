@@ -52,6 +52,18 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       const target = (e.target as HTMLElement)?.closest("a");
       if (!target) return;
       const href = target.getAttribute("href");
+      if (href === "/" || href === "#") {
+        e.preventDefault();
+        lenis.start();
+        lenis.scrollTo(0, { duration: 1.2 });
+        if (typeof window !== "undefined") {
+          if (window.location.hash) {
+            window.history.pushState(null, "", window.location.pathname);
+          }
+          window.dispatchEvent(new CustomEvent("norvian:go-home"));
+        }
+        return;
+      }
       if (href && href.startsWith("#") && href.length > 1) {
         const el = document.querySelector(href);
         if (el) {

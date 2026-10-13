@@ -94,9 +94,29 @@ function MainContent() {
     setIsNavVisible(true);
   }, []);
 
+  const handleGoHome = useCallback(() => {
+    setActiveModal(null);
+    if (typeof window !== "undefined") {
+      if (window.location.hash) {
+        window.history.pushState(null, "", window.location.pathname);
+      }
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+        (window as any).lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      window.dispatchEvent(new CustomEvent("norvian:go-home"));
+    }
+  }, []);
+
   return (
     <SmoothScroll>
-      <Navbar onRequestWorkforce={scrollToRequestForm} showNav={isNavVisible} />
+      <Navbar
+        onRequestWorkforce={scrollToRequestForm}
+        onGoHome={handleGoHome}
+        showNav={isNavVisible}
+      />
       <main className="min-h-screen flex flex-col bg-[#070D16]">
         {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro - Unchanged) */}
         <VideoScrollIntro onProgress={handleIntroProgress} />
