@@ -56,7 +56,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
           <nav
             className={`${
               showNav ? "pointer-events-auto" : "pointer-events-none invisible"
-            } relative w-full max-w-4xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#070D16]/92 backdrop-blur-2xl py-2 px-3.5 sm:py-2.5 sm:px-6 rounded-full border border-white/[0.12] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] flex items-center justify-between gap-3`}
+            } relative w-full max-w-4xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#E2E8F0]/95 backdrop-blur-2xl py-2 px-3.5 sm:py-2.5 sm:px-6 rounded-full border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.25)] flex items-center justify-between gap-3`}
           >
             {/* Very Subtle Moving Light Reflection Across Surface */}
             <motion.div
@@ -68,11 +68,11 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 ease: "easeInOut",
                 repeatDelay: 3.5,
               }}
-              className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/[0.045] to-transparent -skew-x-12 pointer-events-none"
+              className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12 pointer-events-none"
             />
 
-            {/* Subtle top edge champagne highlight */}
-            <div className="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white/[0.15] to-transparent pointer-events-none" />
+            {/* Subtle top edge highlight */}
+            <div className="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent pointer-events-none" />
 
             {/* Left: Prominent Official NORVIAN AB Crest */}
             <motion.div
@@ -91,14 +91,14 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                   alt="NORVIAN AB"
                   width={180}
                   height={144}
-                  className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
+                  className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                   priority
                 />
-                <div className="hidden lg:flex flex-col border-l border-white/15 pl-3">
-                  <span className="text-[8.5px] tracking-[0.22em] text-white/70 font-semibold uppercase leading-tight">
+                <div className="hidden lg:flex flex-col border-l border-slate-400/40 pl-3">
+                  <span className="text-[8.5px] tracking-[0.22em] text-slate-700 font-semibold uppercase leading-tight">
                     {t.nav.brandSub}
                   </span>
-                  <span className="text-[7.5px] tracking-[0.18em] text-[#C59C58] font-bold uppercase mt-0.5">
+                  <span className="text-[7.5px] tracking-[0.18em] text-[#9E7324] font-bold uppercase mt-0.5">
                     {isSv ? "Nordisk Arbetskraft • EU" : "Nordic Workforce • EU"}
                   </span>
                 </div>
@@ -116,10 +116,10 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-[12.5px] lg:text-[13px] font-medium tracking-wide text-white/75 hover:text-white transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+                  className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
                 >
                   <span>{link.label}</span>
-                  <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#E6C687] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
+                  <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
                 </a>
               ))}
             </motion.div>
@@ -131,13 +131,13 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="hidden md:flex items-center gap-3 relative z-10 shrink-0"
             >
-              {/* Glassmorphic Language Toggle (EN / SV) */}
-              <LanguageToggle variant="dark" />
+              {/* Language Toggle (EN / SV) */}
+              <LanguageToggle variant="pill" />
 
               {/* Request CTA Button */}
               <button
                 onClick={onRequestWorkforce}
-                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-4.5 sm:px-5 py-1.5 rounded-full text-[11px] font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_14px_rgba(197,156,88,0.22)] hover:shadow-[0_0_20px_rgba(197,156,88,0.4)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-4.5 sm:px-5 py-1.5 rounded-full text-[11px] font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_14px_rgba(197,156,88,0.35)] hover:shadow-[0_0_20px_rgba(197,156,88,0.5)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <span className="relative z-10 font-bold">{t.nav.requestShort}</span>
               </button>
@@ -145,7 +145,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
             {/* Mobile Actions: Language toggle + Fast Request CTA & Hamburger */}
             <div className="flex md:hidden items-center gap-2 sm:gap-2.5 relative z-10 shrink-0">
-              <LanguageToggle variant="dark" />
+              <LanguageToggle variant="pill" />
 
               <button
                 onClick={onRequestWorkforce}
@@ -156,10 +156,10 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-1.5 sm:p-2 text-white/90 rounded-xl hover:bg-white/10 focus:outline-none transition-colors touch-manipulation cursor-pointer"
+                className="p-1.5 sm:p-2 text-slate-800 rounded-xl hover:bg-slate-300/60 focus:outline-none transition-colors touch-manipulation cursor-pointer"
                 aria-label="Toggle Navigation Menu"
               >
-                {mobileMenuOpen ? <X className="w-5 h-5 text-[#C59C58]" /> : <Menu className="w-5 h-5" />}
+                {mobileMenuOpen ? <X className="w-5 h-5 text-[#9E7324]" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </nav>
@@ -186,9 +186,9 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="fixed inset-x-3 top-16 sm:top-20 z-50 max-h-[85vh] overflow-y-auto md:hidden pointer-events-auto"
             >
-              <div className="bg-[#070D16]/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85)] border border-white/[0.12] space-y-5 text-white">
+              <div className="bg-[#E2E8F0]/98 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.35)] border border-white/80 space-y-5 text-slate-900">
                 {/* Header inside Mobile Drawer */}
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-300">
                   <Link
                     href="/"
                     onClick={(e) => {
@@ -202,12 +202,12 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                       alt="NORVIAN AB"
                       width={140}
                       height={112}
-                      className="h-8 sm:h-9 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
+                      className="h-8 sm:h-9 w-auto object-contain"
                     />
                   </Link>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <LanguageToggle variant="dark" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <LanguageToggle variant="pill" />
                   </div>
                 </div>
 
@@ -235,10 +235,10 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                           }
                         }
                       }}
-                      className="flex items-center justify-between text-base font-serif font-medium text-white/90 py-3 px-3.5 rounded-xl hover:bg-white/[0.08] transition-colors active:bg-white/15"
+                      className="flex items-center justify-between text-base font-serif font-medium text-slate-800 py-3 px-3.5 rounded-xl hover:bg-slate-300/40 transition-colors active:bg-slate-300/60"
                     >
                       <span>{link.label}</span>
-                      <ArrowRight className="w-4 h-4 text-[#C59C58]/70" />
+                      <ArrowRight className="w-4 h-4 text-[#9E7324]" />
                     </a>
                   ))}
                 </div>
@@ -250,7 +250,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                       setMobileMenuOpen(false);
                       onRequestWorkforce();
                     }}
-                    className="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] text-[#070D16] py-3.5 rounded-2xl text-xs font-bold tracking-wider uppercase shadow-[0_0_24px_rgba(197,156,88,0.35)] active:scale-98 cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] text-[#070D16] py-3.5 rounded-2xl text-xs font-bold tracking-wider uppercase shadow-[0_4px_16px_rgba(197,156,88,0.35)] active:scale-98 cursor-pointer"
                   >
                     <span>{t.nav.requestCta}</span>
                     <ArrowRight className="w-4 h-4 text-[#070D16]" />
@@ -258,12 +258,12 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 </div>
 
                 {/* Mobile Drawer Key Contacts Preview */}
-                <div className="pt-3 border-t border-white/10 text-xs text-white/50 space-y-1.5 font-light">
-                  <div className="flex items-center gap-2 text-white/80 font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58]" />
+                <div className="pt-3 border-t border-slate-300 text-xs text-slate-600 space-y-1.5 font-light">
+                  <div className="flex items-center gap-2 text-slate-800 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#9E7324]" />
                     <span>{isSv ? "Direkt Ledning & Partners:" : "Direct Leadership & Partners:"}</span>
                   </div>
-                  <p className="text-[11px] text-white/60">
+                  <p className="text-[11px] text-slate-600">
                     Bianka Bittlingmeier • Vinu Mohan • Isabelle Beyer
                   </p>
                 </div>
