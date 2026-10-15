@@ -189,40 +189,40 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               </div>
 
               {/* Person 1: Bianka Bittlingmeier */}
-              <div className="pb-5 border-b border-white/15">
-                <h3 className="font-serif text-lg sm:text-xl text-white font-medium tracking-tight">
+              <div className="pb-4 border-b border-white/10">
+                <h3 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight">
                   Bianka Bittlingmeier
                 </h3>
-                <p className="text-[#C59C58] font-semibold text-xs sm:text-sm mt-1">
+                <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
                   {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
                 </p>
-                <p className="text-white/60 text-[11px] sm:text-xs mt-0.5 font-light leading-relaxed">
+                <p className="text-white/60 text-[10.5px] sm:text-[11.5px] mt-0.5 font-light leading-relaxed">
                   {isSv ? "Rekrytering & Affärspartnerskap" : "Recruitment & Business Partnerships"}
                 </p>
               </div>
 
               {/* Person 2: Vinu Mohan */}
-              <div className="py-5 border-b border-white/15">
-                <h3 className="font-serif text-lg sm:text-xl text-white font-medium tracking-tight">
+              <div className="py-4 border-b border-white/10">
+                <h3 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight">
                   Vinu Mohan
                 </h3>
-                <p className="text-[#C59C58] font-semibold text-xs sm:text-sm mt-1">
+                <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
                   {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
                 </p>
-                <p className="text-white/60 text-[11px] sm:text-xs mt-0.5 font-light leading-relaxed">
+                <p className="text-white/60 text-[10.5px] sm:text-[11.5px] mt-0.5 font-light leading-relaxed">
                   {isSv ? "Internationell Drift & Rekrytering" : "International Operations & Recruitment"}
                 </p>
               </div>
 
               {/* Person 3: Isabelle Beyer */}
-              <div className="pt-5">
-                <h3 className="font-serif text-lg sm:text-xl text-white font-medium tracking-tight">
+              <div className="pt-4">
+                <h3 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight">
                   Isabelle Beyer
                 </h3>
-                <p className="text-[#C59C58] font-semibold text-xs sm:text-sm mt-1">
+                <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
                   {isSv ? "Extern Affärspartner – Tyskland" : "External Business Partner – Germany"}
                 </p>
-                <p className="text-white/60 text-[11px] sm:text-xs mt-0.5 font-light leading-relaxed">
+                <p className="text-white/60 text-[10.5px] sm:text-[11.5px] mt-0.5 font-light leading-relaxed">
                   {isSv ? "Tysk Marknadskoordinering" : "German Market Coordination"}
                 </p>
               </div>
