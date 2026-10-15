@@ -112,22 +112,27 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 sm:space-y-3 text-sm text-white/70 font-light">
               <li>
-                <a href="#why-norvian" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/about" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                  {t.nav.about}
+                </a>
+              </li>
+              <li>
+                <a href="/#why-norvian" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.whyNorvian}
                 </a>
               </li>
               <li>
-                <a href="#global-network" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/#global-network" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.globalCorridor}
                 </a>
               </li>
               <li>
-                <a href="#deployment-process" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/#deployment-process" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.process}
                 </a>
               </li>
               <li>
-                <a href="#request-form" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/contact" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.requestCta}
                 </a>
               </li>

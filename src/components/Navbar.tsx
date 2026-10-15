@@ -38,9 +38,9 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
   };
 
   const navLinks = [
-    { label: t.nav.services, href: "#services" },
-    { label: t.nav.about, href: "#about" },
-    { label: t.nav.contactUs, href: "#contact" },
+    { label: t.nav.services, href: "/#services" },
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.contactUs, href: "/contact" },
   ];
 
   return (
@@ -113,14 +113,14 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               className="hidden md:flex items-center gap-6 lg:gap-8 relative z-10"
             >
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
                   className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
                 >
                   <span>{link.label}</span>
                   <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
-                </a>
+                </Link>
               ))}
             </motion.div>
 
@@ -214,32 +214,15 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 {/* Main Links: Services, About, Contact Us */}
                 <div className="flex flex-col space-y-1">
                   {navLinks.map((link) => (
-                    <a
+                    <Link
                       key={link.label}
                       href={link.href}
-                      onClick={(e) => {
-                        setMobileMenuOpen(false);
-                        if (link.href.startsWith("#")) {
-                          e.preventDefault();
-                          const el = document.querySelector(link.href);
-                          if (el) {
-                            if ((window as any).lenis) {
-                              (window as any).lenis.start();
-                              (window as any).lenis.scrollTo(el as HTMLElement, {
-                                offset: -40,
-                                duration: 1.2,
-                              });
-                            } else {
-                              el.scrollIntoView({ behavior: "smooth" });
-                            }
-                          }
-                        }
-                      }}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center justify-between text-base font-serif font-medium text-slate-800 py-3 px-3.5 rounded-xl hover:bg-slate-300/40 transition-colors active:bg-slate-300/60"
                     >
                       <span>{link.label}</span>
                       <ArrowRight className="w-4 h-4 text-[#9E7324]" />
-                    </a>
+                    </Link>
                   ))}
                 </div>
 

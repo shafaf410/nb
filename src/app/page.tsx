@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import VideoScrollIntro from "@/components/VideoScrollIntro";
 import IntroCinematicSection from "@/components/IntroCinematicSection";
 import IndustriesSection from "@/components/IndustriesSection";
-import AboutSection from "@/components/AboutSection";
 import WhyNorvianSection from "@/components/WhyNorvianSection";
 import WorkforceFormSection from "@/components/WorkforceFormSection";
 import IndustryModal from "@/components/IndustryModal";
@@ -131,9 +130,6 @@ function MainContent() {
             onSelectIndustry={handleSelectIndustry}
             activeIndustryKey={currentServiceSlide}
           />
-
-          {/* Section 2.5: Corporate About Us — Västervik, Sweden & International Talent Network */}
-          <AboutSection onRequestWorkforce={scrollToRequestForm} />
 
           {/* Regulatory Pillars & Scandinavian Working Directives */}
           <WhyNorvianSection />
