@@ -253,6 +253,7 @@ export const translations = {
       privacy: "Privacy Policy",
       terms: "Terms of Engagement",
       complianceNotice: "Compliance & AML",
+      cookies: "Cookie Settings",
     },
   },
 
@@ -508,6 +509,7 @@ export const translations = {
       privacy: "Integritetspolicy",
       terms: "Villkor & Avtal",
       complianceNotice: "Efterlevnad & AML",
+      cookies: "Hantera kakor",
     },
   },
 } as const;

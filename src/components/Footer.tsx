@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
+import CookieConsent from "@/components/CookieConsent";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -183,6 +184,17 @@ export default function Footer() {
               {t.footer.complianceNotice}
             </a>
             <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("norvian:open-cookies"));
+                }
+              }}
+              className="hover:text-white transition-colors cursor-pointer"
+            >
+              {(t.footer as any).cookies || "Cookie Settings"}
+            </button>
+            <button
               onClick={scrollToTop}
               className="p-2 rounded-full bg-white/5 hover:bg-[#C59C58] hover:text-[#0B1522] text-white transition-all cursor-pointer"
               aria-label="Scroll to top"
@@ -193,6 +205,9 @@ export default function Footer() {
         </div>
 
       </div>
+
+      {/* Global GDPR & ePrivacy Cookie Consent Drawer */}
+      <CookieConsent />
     </footer>
   );
 }
