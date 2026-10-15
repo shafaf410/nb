@@ -26,11 +26,36 @@ export default function CookieConsent() {
   useEffect(() => {
     // Check existing consent
     const stored = localStorage.getItem("norvian_cookie_consent");
+    
+    // Only show cookie banner after user scrolls down the page
     if (!stored) {
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 1000);
-      return () => clearTimeout(timer);
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop || 0;
+        if (scrollPosition > 220) {
+          setIsVisible(true);
+          window.removeEventListener("scroll", handleScroll);
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      // Support for Lenis smooth scroll if active
+      let lenisOff: (() => void) | null = null;
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        const onLenisScroll = (e: any) => {
+          if (e && e.scroll > 220) {
+            setIsVisible(true);
+            (window as any).lenis?.off("scroll", onLenisScroll);
+          }
+        };
+        (window as any).lenis.on("scroll", onLenisScroll);
+        lenisOff = () => (window as any).lenis?.off("scroll", onLenisScroll);
+      }
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        if (lenisOff) lenisOff();
+      };
     }
 
     // Global listener to re-open cookie preferences from footer or links
