@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cookie, ShieldCheck, Check, Settings2, X, ChevronRight } from "lucide-react";
+import { Cookie, Check, Settings2, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface CookiePreferences {
@@ -14,7 +16,9 @@ interface CookiePreferences {
 export default function CookieConsent() {
   const { language } = useLanguage();
   const isSv = language === "sv";
+  const pathname = usePathname();
 
+  const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -24,51 +28,97 @@ export default function CookieConsent() {
   });
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     // Check existing consent
     const stored = localStorage.getItem("norvian_cookie_consent");
-    
-    // Only show cookie banner after user scrolls down the page
-    if (!stored) {
-      const handleScroll = () => {
-        const scrollPosition = window.scrollY || document.documentElement.scrollTop || 0;
-        if (scrollPosition > 220) {
-          setIsVisible(true);
-          window.removeEventListener("scroll", handleScroll);
-        }
+
+    // If already consented, don't auto-show
+    if (stored) {
+      // Global listener to re-open cookie preferences from footer or links
+      const handleOpenCookies = () => {
+        setIsVisible(true);
+        setShowPreferences(true);
       };
 
-      window.addEventListener("scroll", handleScroll, { passive: true });
-
-      // Support for Lenis smooth scroll if active
-      let lenisOff: (() => void) | null = null;
-      if (typeof window !== "undefined" && (window as any).lenis) {
-        const onLenisScroll = (e: any) => {
-          if (e && e.scroll > 220) {
-            setIsVisible(true);
-            (window as any).lenis?.off("scroll", onLenisScroll);
-          }
-        };
-        (window as any).lenis.on("scroll", onLenisScroll);
-        lenisOff = () => (window as any).lenis?.off("scroll", onLenisScroll);
-      }
-
+      window.addEventListener("norvian:open-cookies", handleOpenCookies);
       return () => {
-        window.removeEventListener("scroll", handleScroll);
-        if (lenisOff) lenisOff();
+        window.removeEventListener("norvian:open-cookies", handleOpenCookies);
       };
     }
 
-    // Global listener to re-open cookie preferences from footer or links
+    // Trigger cookie banner as soon as user starts scrolling on ANY page
+    let triggered = false;
+    const triggerBanner = () => {
+      if (!triggered) {
+        triggered = true;
+        setIsVisible(true);
+        cleanup();
+      }
+    };
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop || 0;
+      if (scrollPosition > 40) {
+        triggerBanner();
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY > 10) {
+        triggerBanner();
+      }
+    };
+
+    const handleTouch = () => {
+      triggerBanner();
+    };
+
+    // Safety timeout fallback: if user stays on page for 3 seconds without scrolling, show banner
+    const fallbackTimer = setTimeout(() => {
+      triggerBanner();
+    }, 3500);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchmove", handleTouch, { passive: true });
+
+    // Also support Lenis smooth scroll instances
+    let lenisOff: (() => void) | null = null;
+    if ((window as any).lenis) {
+      const onLenisScroll = (e: any) => {
+        if (e && e.scroll > 40) {
+          triggerBanner();
+        }
+      };
+      (window as any).lenis.on("scroll", onLenisScroll);
+      lenisOff = () => (window as any).lenis?.off("scroll", onLenisScroll);
+    }
+
+    // Global listener to re-open cookie preferences
     const handleOpenCookies = () => {
       setIsVisible(true);
       setShowPreferences(true);
     };
-
     window.addEventListener("norvian:open-cookies", handleOpenCookies);
+
+    const cleanup = () => {
+      clearTimeout(fallbackTimer);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchmove", handleTouch);
+      if (lenisOff) lenisOff();
+    };
+
     return () => {
+      cleanup();
       window.removeEventListener("norvian:open-cookies", handleOpenCookies);
     };
-  }, []);
+  }, [pathname]);
 
   const saveConsent = (type: "all" | "necessary" | "custom", prefs?: CookiePreferences) => {
     const finalPrefs = prefs || (type === "all" 
@@ -77,7 +127,11 @@ export default function CookieConsent() {
       ? { necessary: true, analytics: false, marketing: false }
       : preferences);
 
-    localStorage.setItem("norvian_cookie_consent", JSON.stringify({ type, preferences: finalPrefs, timestamp: new Date().toISOString() }));
+    localStorage.setItem("norvian_cookie_consent", JSON.stringify({ 
+      type, 
+      preferences: finalPrefs, 
+      timestamp: new Date().toISOString() 
+    }));
     setIsVisible(false);
     setShowPreferences(false);
   };
@@ -86,17 +140,19 @@ export default function CookieConsent() {
   const handleAcceptNecessary = () => saveConsent("necessary");
   const handleSaveCustom = () => saveConsent("custom", preferences);
 
-  return (
+  if (!mounted) return null;
+
+  const modalContent = (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 32, scale: 0.96 }}
+          initial={{ opacity: 0, y: 36, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 32, scale: 0.96 }}
+          exit={{ opacity: 0, y: 36, scale: 0.95 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-3 inset-x-3 sm:bottom-6 sm:inset-x-auto sm:right-6 z-[9999] max-w-lg w-full pointer-events-auto"
+          className="fixed bottom-4 inset-x-3 sm:bottom-6 sm:inset-x-auto sm:right-6 z-[999999] max-w-lg w-full pointer-events-auto"
         >
-          <div className="relative bg-[#0B1522]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.8)] text-white space-y-4">
+          <div className="relative bg-[#0B1522]/98 backdrop-blur-3xl border border-white/20 rounded-3xl p-5 sm:p-6 shadow-[0_25px_70px_rgba(0,0,0,0.9)] text-white space-y-4">
             
             {/* Top Bar with Icon & Title */}
             <div className="flex items-start justify-between gap-3">
@@ -265,4 +321,6 @@ export default function CookieConsent() {
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }
