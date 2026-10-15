@@ -35,7 +35,10 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
     return () => window.removeEventListener("click", handleOutsideClick);
   }, [servicesOpen]);
 
-  const handleLogoClick = (e: React.MouseEvent) => {
+  const handleHomeClick = (e: React.MouseEvent) => {
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      return; // allow default Link navigation to "/"
+    }
     e.preventDefault();
     if (onGoHome) {
       onGoHome();
@@ -141,7 +144,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
             >
               <Link
                 href="/"
-                onClick={handleLogoClick}
+                onClick={handleHomeClick}
                 className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
               >
                 <Image
@@ -163,14 +166,24 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               </Link>
             </motion.div>
 
-            {/* Center: Desktop Navigation Links (Services Dropdown, About, Contact Us) */}
+            {/* Center: Desktop Navigation Links (Home, Services Dropdown, About, Contact Us) */}
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={showNav ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
               transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
               className="hidden md:flex items-center gap-6 lg:gap-8 relative z-10"
             >
-              {/* 1. Services with Dropdown Menu */}
+              {/* 1. Home Link */}
+              <Link
+                href="/"
+                onClick={handleHomeClick}
+                className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+              >
+                <span>{t.nav.home || (isSv ? "Hem" : "Home")}</span>
+                <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
+              </Link>
+
+              {/* 2. Services with Dropdown Menu */}
               <div
                 className="relative services-dropdown-container"
                 onMouseEnter={() => setServicesOpen(true)}
@@ -346,7 +359,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     href="/"
                     onClick={(e) => {
                       setMobileMenuOpen(false);
-                      handleLogoClick(e);
+                      handleHomeClick(e);
                     }}
                     className="flex items-center gap-2 cursor-pointer"
                   >
@@ -364,8 +377,21 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                   </div>
                 </div>
 
-                {/* Main Links with Services Accordion */}
+                {/* Main Links with Home & Services Accordion */}
                 <div className="flex flex-col space-y-1">
+                  {/* Home Link */}
+                  <Link
+                    href="/"
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      handleHomeClick(e);
+                    }}
+                    className="flex items-center justify-between text-base font-serif font-medium text-slate-800 py-3 px-3.5 rounded-xl hover:bg-slate-300/40 transition-colors active:bg-slate-300/60"
+                  >
+                    <span>{t.nav.home || (isSv ? "Hem" : "Home")}</span>
+                    <ArrowRight className="w-4 h-4 text-[#9E7324]" />
+                  </Link>
+
                   {/* Services Accordion Button */}
                   <div className="space-y-1">
                     <button

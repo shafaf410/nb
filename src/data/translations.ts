@@ -12,6 +12,7 @@ export const translations = {
     // Navbar
     nav: {
       brandSub: "Nordic & European Workforce",
+      home: "Home",
       services: "Services",
       about: "About",
       contactUs: "Contact Us",
@@ -266,6 +267,7 @@ export const translations = {
     // Navbar
     nav: {
       brandSub: "Nordisk & Europeisk Arbetskraft",
+      home: "Hem",
       services: "Tjänster",
       about: "Om oss",
       contactUs: "Kontakta oss",
