@@ -273,7 +273,7 @@ function PillarCard({
         <h3 className="font-serif text-2xl font-normal leading-snug group-hover:text-white transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-xs text-[#0B1522]/70 group-hover:text-white/75 font-light leading-relaxed pt-1">
+        <p className="text-xs text-[#0B1522]/70 group-hover:text-white/75 font-light leading-relaxed pt-1 whitespace-pre-line">
           {description}
         </p>
       </div>

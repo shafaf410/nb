@@ -21,6 +21,23 @@ function preloadAllFrames(onFirstFrame?: () => void) {
     if (onFirstFrame && frameCache[0]?.complete) onFirstFrame();
     return;
   }
+
+  // On mobile screens (< 768px), the portrait video handles intro animation
+  // Only preload the first frame as a fast fallback
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
+    if (frameCache.length === 0) {
+      const img = new Image();
+      img.src = "/frames/frame_001.webp";
+      if (img.complete) {
+        onFirstFrame?.();
+      } else {
+        img.onload = () => onFirstFrame?.();
+      }
+      frameCache.push(img);
+    }
+    return;
+  }
+
   if (isPreloading) return;
   isPreloading = true;
 
@@ -67,6 +84,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
 
   const progressBarRef = useRef<HTMLDivElement>(null);
   const chapterTextRef = useRef<HTMLSpanElement>(null);
@@ -222,6 +240,15 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         state.rafId = 0;
       }
 
+      // Stop mobile video if playing
+      const mobileVideo = mobileVideoRef.current;
+      if (mobileVideo) {
+        try {
+          mobileVideo.pause();
+          mobileVideo.currentTime = mobileVideo.duration || 9.0;
+        } catch (err) {}
+      }
+
       state.isAutoScrolling = false;
       state.hasCompleted = true;
       setHasCompleted(true);
@@ -273,6 +300,100 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     const container = containerRef.current;
     const targetScrollY = container ? container.offsetHeight : window.innerHeight;
 
+    // 1. MOBILE VIDEO SCROLL ANIMATION (Active ONLY on mobile screens < 768px)
+    const isMobileMode = typeof window !== "undefined" && window.innerWidth < 768;
+    const mobileVideo = mobileVideoRef.current;
+
+    if (isMobileMode && mobileVideo) {
+      try {
+        mobileVideo.currentTime = 0;
+        const playPromise = mobileVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      } catch (err) {}
+
+      const mobileStep = () => {
+        const video = mobileVideoRef.current;
+        if (!video) return;
+
+        const dur = video.duration && !isNaN(video.duration) && video.duration > 0 ? video.duration : 9.0;
+        const cur = video.currentTime || 0;
+        const t = Math.min(1, cur / dur);
+
+        // Fluid Direct DOM updates for 60fps Reel HUD on mobile
+        if (progressBarRef.current) {
+          progressBarRef.current.style.width = `${Math.min(100, Math.max(0, t * 100))}%`;
+        }
+
+        if (chapterTextRef.current) {
+          if (cur <= 2.8) {
+            chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
+          } else if (cur <= 5.5) {
+            chapterTextRef.current.innerText = isSv ? "02 • KONTINENTAL LOGISTIK" : "02 • CONTINENTAL LOGISTICS";
+          } else if (cur <= 7.2) {
+            chapterTextRef.current.innerText = isSv ? "03 • TERMINALVERKSAMHET" : "03 • TERMINAL OPERATIONS";
+          } else {
+            chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
+          }
+        }
+
+        // Viewport Scroll progression (Curtain Slide):
+        // Smoothly glides up at t > 0.68 as the glowing NORVIAN AB logo appears
+        let scrollProgress = 0;
+        if (t > 0.68) {
+          if (typeof window !== "undefined" && (window as any).lenis) {
+            (window as any).lenis.start();
+          }
+
+          const scrollT = (t - 0.68) / 0.32;
+          scrollProgress =
+            scrollT < 0.5
+              ? 2 * scrollT * scrollT
+              : -1 + (4 - 2 * scrollT) * scrollT;
+        }
+
+        const currentScrollTarget = scrollProgress * targetScrollY;
+
+        if (typeof window !== "undefined") {
+          if ((window as any).lenis) {
+            (window as any).lenis.scrollTo(currentScrollTarget, { immediate: true });
+          } else {
+            window.scrollTo(0, currentScrollTarget);
+          }
+        }
+
+        onProgress?.(t);
+
+        if (t < 0.99 && !video.paused && !video.ended) {
+          state.rafId = requestAnimationFrame(mobileStep);
+        } else {
+          // Completed cleanly on mobile
+          state.isAutoScrolling = false;
+          state.hasCompleted = true;
+          setHasCompleted(true);
+          onProgress?.(1.0);
+
+          if (stageRef.current) {
+            stageRef.current.style.pointerEvents = "none";
+          }
+
+          if (typeof window !== "undefined") {
+            if ((window as any).lenis) {
+              (window as any).lenis.start();
+              (window as any).lenis.scrollTo(targetScrollY, { immediate: true });
+            } else {
+              window.scrollTo(0, targetScrollY);
+            }
+          }
+        }
+      };
+
+      state.rafId = requestAnimationFrame(mobileStep);
+      return;
+    }
+
+    // 2. DESKTOP CANVAS SCROLL ANIMATION (Active ONLY on desktop screens >= 768px)
     const step = (now: number) => {
       const elapsed = now - state.startTime;
       const t = Math.min(1, elapsed / AUTO_SCROLL_DURATION);
@@ -487,6 +608,15 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         stateRef.current.hasCompleted = false;
         setHasCompleted(false);
         setShowPrompt(true);
+
+        const mobileVideo = mobileVideoRef.current;
+        if (mobileVideo) {
+          try {
+            mobileVideo.pause();
+            mobileVideo.currentTime = 0;
+          } catch (err) {}
+        }
+
         drawFrame(0);
         onProgress?.(0);
         if (progressBarRef.current) {
@@ -506,7 +636,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
 
     // 5. Responsive Resize & Orientation handler
     const handleResize = () => {
-      drawFrame(stateRef.current.currentFrame);
+      if (window.innerWidth >= 768) {
+        preloadAllFrames(() => drawFrame(stateRef.current.currentFrame));
+        drawFrame(stateRef.current.currentFrame);
+      }
     };
 
     // 6. Return-to-home reset listener (triggered when clicking header/footer logo)
@@ -520,6 +653,15 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       stateRef.current.currentFrame = 0;
       setHasCompleted(false);
       setShowPrompt(true);
+
+      const mobileVideo = mobileVideoRef.current;
+      if (mobileVideo) {
+        try {
+          mobileVideo.pause();
+          mobileVideo.currentTime = 0;
+        } catch (err) {}
+      }
+
       drawFrame(0);
       onProgress?.(0);
       if (progressBarRef.current) {
@@ -636,10 +778,47 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             </div>
           </div>
 
-          {/* Hardware-Accelerated Canvas (Fullscreen on desktop, beautifully framed with ambient glow on mobile) */}
+          {/* Mobile Video Scroll Animation (Active ONLY on mobile screens < 768px) */}
+          <video
+            ref={mobileVideoRef}
+            playsInline
+            muted
+            preload="auto"
+            poster="/images/intro_mobile_poster.jpg"
+            className="md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            style={{
+              filter: "contrast(1.02) saturate(1.04)",
+            }}
+            onEnded={() => {
+              const state = stateRef.current;
+              if (!state.hasCompleted) {
+                state.isAutoScrolling = false;
+                state.hasCompleted = true;
+                setHasCompleted(true);
+                onProgress?.(1.0);
+                if (stageRef.current) {
+                  stageRef.current.style.pointerEvents = "none";
+                }
+                const container = containerRef.current;
+                const targetScrollY = container ? container.offsetHeight : window.innerHeight;
+                if (typeof window !== "undefined") {
+                  if ((window as any).lenis) {
+                    (window as any).lenis.start();
+                    (window as any).lenis.scrollTo(targetScrollY, { immediate: true });
+                  } else {
+                    window.scrollTo(0, targetScrollY);
+                  }
+                }
+              }
+            }}
+          >
+            <source src="/videos/intro_mobile.mp4" type="video/mp4" />
+          </video>
+
+          {/* Hardware-Accelerated Canvas (Active ONLY on desktop screens >= 768px) */}
           <canvas
             ref={canvasRef}
-            className="w-full h-full select-none pointer-events-none"
+            className="hidden md:block w-full h-full select-none pointer-events-none"
             style={{
               transform: "scale(1) translateZ(0)",
               willChange: "transform",
