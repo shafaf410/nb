@@ -37,7 +37,9 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
   const handleHomeClick = (e: React.MouseEvent) => {
     if (typeof window !== "undefined" && window.location.pathname !== "/") {
-      return; // allow default Link navigation to "/"
+      e.preventDefault();
+      window.location.href = "/";
+      return;
     }
     e.preventDefault();
     if (onGoHome) {

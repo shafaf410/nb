@@ -25,6 +25,16 @@ export default function Footer() {
     }
   };
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      e.preventDefault();
+      window.location.href = "/";
+      return;
+    }
+    e.preventDefault();
+    scrollToTop();
+  };
+
   return (
     <footer className="bg-[#0B1522] text-white pt-16 pb-12 sm:pt-28 sm:pb-16 relative overflow-hidden">
       {/* Subtle Gold Horizontal Accent Line */}
@@ -39,10 +49,7 @@ export default function Footer() {
           <div className="lg:col-span-5 space-y-5 sm:space-y-6">
             <Link
               href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToTop();
-              }}
+              onClick={handleLogoClick}
               className="inline-flex items-center gap-3.5 sm:gap-4 group cursor-pointer"
             >
               <Image
@@ -84,22 +91,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 sm:space-y-3 text-sm text-white/70 font-light">
               <li>
-                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/#service-shipbuilding" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secShipbuilding}
                 </a>
               </li>
               <li>
-                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/#service-construction" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secConstruction}
                 </a>
               </li>
               <li>
-                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/#service-logistics" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secTransport}
                 </a>
               </li>
               <li>
-                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="/#service-industrial" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secTrades}
                 </a>
               </li>
