@@ -12,27 +12,34 @@ export default function Footer() {
 
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
+      const isHome = window.location.pathname === "/" || window.location.pathname === "";
+      if (isHome) {
+        const homeEl = document.getElementById("home") || document.getElementById("intro-manifesto");
+        if (homeEl) {
+          window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
+          const targetY = homeEl.getBoundingClientRect().top + window.scrollY;
+          if ((window as any).lenis) {
+            (window as any).lenis.start();
+            (window as any).lenis.scrollTo(targetY, { duration: 1.1 });
+          } else {
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+          }
+          if (window.location.hash !== "#home") {
+            window.history.pushState(null, "", "/#home");
+          }
+          return;
+        }
+      }
       if (window.location.hash) {
         window.history.pushState(null, "", window.location.pathname);
       }
       if ((window as any).lenis) {
         (window as any).lenis.start();
-        (window as any).lenis.scrollTo(0, { duration: 1.4 });
+        (window as any).lenis.scrollTo(0, { duration: 1.2 });
       } else {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
-      window.dispatchEvent(new CustomEvent("norvian:go-home"));
     }
-  };
-
-  const handleLogoClick = (e: React.MouseEvent) => {
-    if (typeof window !== "undefined" && window.location.pathname !== "/") {
-      e.preventDefault();
-      window.location.href = "/";
-      return;
-    }
-    e.preventDefault();
-    scrollToTop();
   };
 
   return (
@@ -48,8 +55,13 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-5 sm:space-y-6">
             <Link
-              href="/"
-              onClick={handleLogoClick}
+              href="/#home"
+              onClick={(e) => {
+                if (typeof window !== "undefined" && (window.location.pathname === "/" || window.location.pathname === "")) {
+                  e.preventDefault();
+                  scrollToTop();
+                }
+              }}
               className="inline-flex items-center gap-3.5 sm:gap-4 group cursor-pointer"
             >
               <Image
@@ -91,22 +103,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 sm:space-y-3 text-sm text-white/70 font-light">
               <li>
-                <a href="/#service-shipbuilding" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secShipbuilding}
                 </a>
               </li>
               <li>
-                <a href="/#service-construction" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secConstruction}
                 </a>
               </li>
               <li>
-                <a href="/#service-logistics" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secTransport}
                 </a>
               </li>
               <li>
-                <a href="/#service-industrial" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <a href="#industries" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.footer.secTrades}
                 </a>
               </li>

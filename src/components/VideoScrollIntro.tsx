@@ -504,24 +504,34 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   useEffect(() => {
     const container = containerRef.current;
 
-    // Check if initial load is already below intro (e.g. anchor link)
+    // Check if initial load is already below intro or targeted at home / anchor link
+    const hasHomeHash =
+      typeof window !== "undefined" &&
+      (window.location.hash === "#home" ||
+        window.location.hash === "#main" ||
+        window.location.hash === "#intro-manifesto" ||
+        (window.location.hash && window.location.hash.length > 1));
+
     const initialY = window.scrollY || window.pageYOffset || 0;
-    if (container && initialY >= container.offsetHeight - 50) {
+    if (hasHomeHash || (container && initialY >= container.offsetHeight - 50)) {
       stateRef.current.hasCompleted = true;
       setHasCompleted(true);
       setShowPrompt(false);
+      drawFrame(TOTAL_FRAMES - 1);
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = "100%";
+      }
       onProgress?.(1.0);
       if (stageRef.current) {
         stageRef.current.style.pointerEvents = "none";
       }
-      return;
     }
 
     // 1. Wheel event: ONE scroll down initiates auto-scroll
     const handleWheel = (e: WheelEvent) => {
       if (stateRef.current.hasCompleted) {
-        // Reset if user scrolled back up to the very top
-        if (window.scrollY <= 10 && e.deltaY < 0) {
+        // Reset if user scrolled back up to the very top (and not anchored at #home)
+        if (window.scrollY <= 10 && e.deltaY < 0 && window.location.hash !== "#home") {
           stateRef.current.hasCompleted = false;
           setHasCompleted(false);
           setShowPrompt(true);
@@ -603,8 +613,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         }
       }
 
-      // Reset when user returns to top
-      if (scrollY <= 5 && stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
+      // Reset when user returns to top (and not anchored at #home)
+      if (scrollY <= 5 && stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling && window.location.hash !== "#home") {
         stateRef.current.hasCompleted = false;
         setHasCompleted(false);
         setShowPrompt(true);
@@ -679,6 +689,45 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
 
+    // 7. Go-to-home section listener: instantly completes intro so user lands on content after intro
+    const handleGoToHome = () => {
+      if (stateRef.current.rafId) {
+        cancelAnimationFrame(stateRef.current.rafId);
+        stateRef.current.rafId = 0;
+      }
+      stateRef.current.isAutoScrolling = false;
+      stateRef.current.hasCompleted = true;
+      setHasCompleted(true);
+      setShowPrompt(false);
+
+      const mobileVideo = mobileVideoRef.current;
+      if (mobileVideo) {
+        try {
+          mobileVideo.pause();
+          mobileVideo.currentTime = mobileVideo.duration || 9.0;
+        } catch (err) {}
+      }
+
+      drawFrame(TOTAL_FRAMES - 1);
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = "100%";
+      }
+      if (chapterTextRef.current) {
+        chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
+      }
+      onProgress?.(1.0);
+      if (stageRef.current) {
+        stageRef.current.style.pointerEvents = "none";
+      }
+    };
+
+    const handleHashSync = () => {
+      const h = window.location.hash;
+      if (h === "#home" || h === "#main" || h === "#intro-manifesto") {
+        handleGoToHome();
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -688,6 +737,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
     window.addEventListener("norvian:go-home", handleGoHomeEvent);
+    window.addEventListener("norvian:go-to-home", handleGoToHome);
+    window.addEventListener("hashchange", handleHashSync);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
@@ -699,6 +750,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("orientationchange", handleResize);
       window.removeEventListener("norvian:go-home", handleGoHomeEvent);
+      window.removeEventListener("norvian:go-to-home", handleGoToHome);
+      window.removeEventListener("hashchange", handleHashSync);
       if (stateRef.current.rafId) {
         cancelAnimationFrame(stateRef.current.rafId);
       }

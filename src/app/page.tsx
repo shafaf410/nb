@@ -96,16 +96,18 @@ function MainContent() {
   const handleGoHome = useCallback(() => {
     setActiveModal(null);
     if (typeof window !== "undefined") {
-      if (window.location.hash) {
-        window.history.pushState(null, "", window.location.pathname);
+      if (window.location.hash !== "#home") {
+        window.history.pushState(null, "", "/#home");
       }
+      window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
+      const homeEl = document.getElementById("home") || document.getElementById("intro-manifesto");
+      const targetY = homeEl ? homeEl.offsetTop : window.innerHeight;
       if ((window as any).lenis) {
         (window as any).lenis.start();
-        (window as any).lenis.scrollTo(0, { duration: 1.2 });
+        (window as any).lenis.scrollTo(targetY, { duration: 1.1 });
       } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: targetY, behavior: "smooth" });
       }
-      window.dispatchEvent(new CustomEvent("norvian:go-home"));
     }
   }, []);
 
@@ -121,7 +123,7 @@ function MainContent() {
         <VideoScrollIntro onProgress={handleIntroProgress} />
 
         {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
-        <div className="relative z-30 shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">
+        <div id="home" className="relative z-30 shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">
           {/* Section 1: Intro Section — Your Industry. Our People. One Goal. */}
           <IntroCinematicSection onRequestWorkforce={scrollToRequestForm} />
 

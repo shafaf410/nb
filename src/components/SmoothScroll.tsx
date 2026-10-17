@@ -1,37 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
-  // Route change scroll reset: whenever user navigates between pages, start at the top!
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!window.location.hash) {
-        if ((window as any).lenis) {
-          (window as any).lenis.scrollTo(0, { immediate: true });
-        }
-        window.scrollTo(0, 0);
-        if (pathname === "/") {
-          window.dispatchEvent(new CustomEvent("norvian:go-home"));
-        }
-      } else if (!window.location.hash.startsWith("#service-")) {
-        const hash = window.location.hash;
-        setTimeout(() => {
-          const el = document.querySelector(hash);
-          if (el && (window as any).lenis) {
-            (window as any).lenis.scrollTo(el, { duration: 1.2, offset: -40 });
-          }
-        }, 300);
-      }
-    }
-  }, [pathname]);
-
   useEffect(() => {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -43,7 +17,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     // Ensure browser does not remember and restore midway scroll on refresh/load
     if (typeof window !== "undefined" && "scrollRestoration" in history) {
       history.scrollRestoration = "manual";
-      window.scrollTo(0, 0);
+      if (!window.location.hash) {
+        window.scrollTo(0, 0);
+      }
     }
 
     gsap.registerPlugin(ScrollTrigger);
@@ -68,6 +44,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     };
 
     gsap.ticker.add(updateTicker);
+    // CRITICAL: Disable GSAP lag smoothing.
+    // If enabled (>0), any minor initial frame lag artificially advances the ticker clock,
+    // which Lenis interprets as an enormous delta time, launching the scroll all the way down on the first try!
     gsap.ticker.lagSmoothing(0);
 
     // Smooth anchor navigation handling
@@ -75,34 +54,19 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       const target = (e.target as HTMLElement)?.closest("a");
       if (!target) return;
       const href = target.getAttribute("href");
-      if (!href) return;
-
-      // 1. Home link ("/" or "#")
-      if (href === "/" || href === "#") {
-        if (typeof window !== "undefined" && window.location.pathname !== "/") {
-          // If on another page (/about, /contact, etc.), allow direct navigation back to home!
-          return;
-        }
-        // If already on home page ("/"), smooth scroll to top and reset intro
-        e.preventDefault();
-        lenis.start();
-        lenis.scrollTo(0, { duration: 1.2 });
-        if (typeof window !== "undefined") {
-          if (window.location.hash) {
-            window.history.pushState(null, "", window.location.pathname);
-          }
-          window.dispatchEvent(new CustomEvent("norvian:go-home"));
-        }
-        return;
-      }
-
-      // 2. Hash anchor link (e.g. href="#industries")
-      if (href.startsWith("#") && href.length > 1) {
-        if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      if (href === "/#home" || href === "#home" || href === "/" || href === "#") {
+        if (typeof window !== "undefined" && window.location.pathname === "/") {
           e.preventDefault();
-          window.location.href = "/" + href;
-          return;
+          lenis.start();
+          const homeEl = document.getElementById("home") || document.getElementById("intro-manifesto");
+          if (homeEl) {
+            window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
+            lenis.scrollTo(homeEl, { duration: 1.1, offset: 0 });
+            return;
+          }
         }
+      }
+      if (href && href.startsWith("#") && href.length > 1) {
         const el = document.querySelector(href);
         if (el) {
           e.preventDefault();
@@ -111,27 +75,38 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
             duration: 1.3,
           });
         }
-        return;
-      }
-
-      // 3. Section link targeting home from another page (e.g. href="/#services")
-      if (href.startsWith("/#") && href.length > 2) {
-        if (typeof window !== "undefined" && window.location.pathname === "/") {
-          const targetId = href.replace("/#", "");
-          const el = document.getElementById(targetId) || document.querySelector("#" + targetId);
-          if (el) {
-            e.preventDefault();
-            lenis.start();
-            lenis.scrollTo(el as HTMLElement, {
-              offset: -40,
-              duration: 1.3,
-            });
-          }
-        }
       }
     };
 
     document.addEventListener("click", handleAnchorClick);
+
+    const scrollToHash = () => {
+      if (typeof window === "undefined") return;
+      const hash = window.location.hash;
+      if (!hash) return;
+      if (hash === "#home" || hash === "#main" || hash === "#intro-manifesto") {
+        window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
+        const homeEl = document.getElementById("home") || document.getElementById("intro-manifesto");
+        if (homeEl) {
+          lenis.start();
+          lenis.scrollTo(homeEl, { duration: 0.9, offset: 0 });
+        }
+      } else {
+        const el = document.querySelector(hash);
+        if (el) {
+          window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
+          lenis.start();
+          lenis.scrollTo(el as HTMLElement, { offset: -40, duration: 1.1 });
+        }
+      }
+    };
+
+    if (window.location.hash) {
+      setTimeout(scrollToHash, 60);
+      setTimeout(scrollToHash, 300);
+    }
+
+    window.addEventListener("hashchange", scrollToHash);
 
     const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
@@ -140,6 +115,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     return () => {
       clearTimeout(refreshTimer);
       document.removeEventListener("click", handleAnchorClick);
+      window.removeEventListener("hashchange", scrollToHash);
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
       delete (window as any).lenis;

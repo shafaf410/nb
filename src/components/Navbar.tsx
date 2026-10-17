@@ -37,24 +37,24 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
   const handleHomeClick = (e: React.MouseEvent) => {
     if (typeof window !== "undefined" && window.location.pathname !== "/") {
-      e.preventDefault();
-      window.location.href = "/";
-      return;
+      return; // allow default Link navigation to "/#home"
     }
     e.preventDefault();
+    if (typeof window !== "undefined" && window.location.hash !== "#home") {
+      window.history.pushState(null, "", "/#home");
+    }
     if (onGoHome) {
       onGoHome();
     } else if (typeof window !== "undefined") {
-      if (window.location.hash) {
-        window.history.pushState(null, "", window.location.pathname);
-      }
+      window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
+      const homeEl = document.getElementById("home") || document.getElementById("intro-manifesto");
+      const targetY = homeEl ? homeEl.offsetTop : window.innerHeight;
       if ((window as any).lenis) {
         (window as any).lenis.start();
-        (window as any).lenis.scrollTo(0, { duration: 1.2 });
+        (window as any).lenis.scrollTo(targetY, { duration: 1.1 });
       } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: targetY, behavior: "smooth" });
       }
-      window.dispatchEvent(new CustomEvent("norvian:go-home"));
     }
   };
 
@@ -145,7 +145,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               className="relative z-10 flex items-center shrink-0"
             >
               <Link
-                href="/"
+                href="/#home"
                 onClick={handleHomeClick}
                 className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
               >
@@ -177,7 +177,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
             >
               {/* 1. Home Link */}
               <Link
-                href="/"
+                href="/#home"
                 onClick={handleHomeClick}
                 className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
               >
@@ -358,7 +358,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 {/* Header inside Mobile Drawer */}
                 <div className="flex items-center justify-between pb-3 border-b border-slate-300">
                   <Link
-                    href="/"
+                    href="/#home"
                     onClick={(e) => {
                       setMobileMenuOpen(false);
                       handleHomeClick(e);
@@ -383,7 +383,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 <div className="flex flex-col space-y-1">
                   {/* Home Link */}
                   <Link
-                    href="/"
+                    href="/#home"
                     onClick={(e) => {
                       setMobileMenuOpen(false);
                       handleHomeClick(e);
