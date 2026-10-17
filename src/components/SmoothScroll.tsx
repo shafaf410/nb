@@ -66,6 +66,18 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
           }
         }
       }
+      if (
+        href === "/#request-form" ||
+        href === "#request-form" ||
+        href === "/#contact" ||
+        href === "#contact" ||
+        href === "/#contact-us" ||
+        href === "#contact-us"
+      ) {
+        e.preventDefault();
+        window.location.href = "/contact";
+        return;
+      }
       if (href && href.startsWith("#") && href.length > 1) {
         const el = document.querySelector(href);
         if (el) {
@@ -84,6 +96,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       if (typeof window === "undefined") return;
       const hash = window.location.hash;
       if (!hash) return;
+      if (hash === "#contact" || hash === "#request-form" || hash === "#contact-us") {
+        if (window.location.pathname !== "/contact" && window.location.pathname !== "/request") {
+          window.location.href = "/contact";
+          return;
+        }
+      }
       if (hash === "#home" || hash === "#main" || hash === "#intro-manifesto") {
         window.dispatchEvent(new CustomEvent("norvian:go-to-home"));
         const homeEl = document.getElementById("home") || document.getElementById("intro-manifesto");

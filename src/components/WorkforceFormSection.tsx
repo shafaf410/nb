@@ -25,10 +25,28 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
   });
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const queryIndustry = params.get("industry") || params.get("service");
+      if (queryIndustry) {
+        let decoded = decodeURIComponent(queryIndustry);
+        if (decoded.toLowerCase() === "shipbuilding") {
+          decoded = isSv ? "Skeppsbyggnad & Marint" : "Shipbuilding & Marine";
+        } else if (decoded.toLowerCase() === "construction") {
+          decoded = isSv ? "Bygg & Anläggning" : "Civil & Infrastructure";
+        } else if (decoded.toLowerCase() === "logistics" || decoded.toLowerCase() === "transport") {
+          decoded = isSv ? "Tung Logistik & Transport" : "Heavy Transport & Logistics";
+        } else if (decoded.toLowerCase() === "industrial" || decoded.toLowerCase() === "manufacturing") {
+          decoded = isSv ? "Industri & Tillverkning" : "Industrial Manufacturing";
+        }
+        setFormData((prev) => ({ ...prev, serviceNeeded: decoded }));
+        return;
+      }
+    }
     if (initialIndustry) {
       setFormData((prev) => ({ ...prev, serviceNeeded: initialIndustry }));
     }
-  }, [initialIndustry]);
+  }, [initialIndustry, isSv]);
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);

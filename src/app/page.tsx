@@ -6,7 +6,6 @@ import VideoScrollIntro from "@/components/VideoScrollIntro";
 import IntroCinematicSection from "@/components/IntroCinematicSection";
 import IndustriesSection from "@/components/IndustriesSection";
 import WhyNorvianSection from "@/components/WhyNorvianSection";
-import WorkforceFormSection from "@/components/WorkforceFormSection";
 import IndustryModal from "@/components/IndustryModal";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -15,18 +14,10 @@ import { LanguageProvider } from "@/context/LanguageContext";
 function MainContent() {
   const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | "industrial" | null>(null);
   const [currentServiceSlide, setCurrentServiceSlide] = useState<"shipbuilding" | "construction" | "logistics" | "industrial">("shipbuilding");
-  const [prefilledIndustry, setPrefilledIndustry] = useState<string>("");
   const [isNavVisible, setIsNavVisible] = useState(true);
 
-  const scrollToRequestForm = () => {
-    const el = document.getElementById("request-form");
-    if (el) {
-      if (typeof window !== "undefined" && (window as any).lenis) {
-        (window as any).lenis.scrollTo(el, { duration: 1.3, offset: -20 });
-      } else {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    }
+  const handleRequestWorkforce = () => {
+    window.location.href = "/contact";
   };
 
   const handleSelectIndustry = (key: "shipbuilding" | "construction" | "logistics" | "industrial") => {
@@ -52,8 +43,7 @@ function MainContent() {
 
   const handleRequestForIndustry = (industryName: string) => {
     setActiveModal(null);
-    setPrefilledIndustry(industryName);
-    scrollToRequestForm();
+    window.location.href = `/contact?industry=${encodeURIComponent(industryName)}`;
   };
 
   // URL Hash & Browser History Synchronization:
@@ -114,7 +104,7 @@ function MainContent() {
   return (
     <SmoothScroll>
       <Navbar
-        onRequestWorkforce={scrollToRequestForm}
+        onRequestWorkforce={handleRequestWorkforce}
         onGoHome={handleGoHome}
         showNav={isNavVisible}
       />
@@ -125,7 +115,7 @@ function MainContent() {
         {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
         <div id="home" className="relative z-30 shadow-[0_-35px_100px_rgba(0,0,0,0.95)] border-t border-[#C59C58]/35">
           {/* Section 1: Intro Section — Your Industry. Our People. One Goal. */}
-          <IntroCinematicSection onRequestWorkforce={scrollToRequestForm} />
+          <IntroCinematicSection onRequestWorkforce={handleRequestWorkforce} />
 
           {/* Section 2: Specialized Industries with Pinned Horizontal Reel */}
           <IndustriesSection
@@ -135,9 +125,6 @@ function MainContent() {
 
           {/* Regulatory Pillars & Scandinavian Working Directives */}
           <WhyNorvianSection />
-
-          {/* 9. Section 11: Final CTA Section (BUILD YOUR NEXT TEAM.) */}
-          <WorkforceFormSection initialIndustry={prefilledIndustry} />
 
           {/* 10. Complete Full-Screen Service Detail Pages (MacBook-Inspired Opening/Closing Transition) */}
           <IndustryModal

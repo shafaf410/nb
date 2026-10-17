@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, ShieldCheck, Compass, MoveDown } from "lucide-react";
@@ -254,17 +255,21 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
           </div>
 
           {/* 5. Request Workforce Action Button (Mobile Touch-Optimized) */}
-          {onRequestWorkforce && (
-            <div className="mt-5 sm:mt-6">
-              <button
-                onClick={onRequestWorkforce}
-                className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-[#0B1522] hover:bg-[#142337] text-white px-7 py-3.5 rounded-full text-[11.5px] font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_12px_24px_-6px_rgba(11,21,34,0.2)] border border-[#C59C58]/35 hover:border-[#C59C58] active:scale-95 cursor-pointer overflow-hidden"
-              >
-                <span>{t.nav.requestCta}</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#C59C58] transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
-              </button>
-            </div>
-          )}
+          <div className="mt-5 sm:mt-6">
+            <Link
+              href="/contact"
+              onClick={(e) => {
+                if (onRequestWorkforce) {
+                  e.preventDefault();
+                  onRequestWorkforce();
+                }
+              }}
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-[#0B1522] hover:bg-[#142337] text-white px-7 py-3.5 rounded-full text-[11.5px] font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_12px_24px_-6px_rgba(11,21,34,0.2)] border border-[#C59C58]/35 hover:border-[#C59C58] active:scale-95 cursor-pointer overflow-hidden"
+            >
+              <span>{t.nav.requestCta}</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#C59C58] transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
+            </Link>
+          </div>
 
         </div>
       </div>

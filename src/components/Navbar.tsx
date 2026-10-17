@@ -303,24 +303,36 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               <LanguageToggle variant="pill" />
 
               {/* Request CTA Button */}
-              <button
-                onClick={onRequestWorkforce}
+              <Link
+                href="/contact"
+                onClick={(e) => {
+                  if (typeof window !== "undefined" && window.location.pathname === "/contact") {
+                    e.preventDefault();
+                    onRequestWorkforce?.();
+                  }
+                }}
                 className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-4.5 sm:px-5 py-1.5 rounded-full text-[11px] font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_14px_rgba(197,156,88,0.35)] hover:shadow-[0_0_20px_rgba(197,156,88,0.5)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <span className="relative z-10 font-bold">{t.nav.requestShort}</span>
-              </button>
+              </Link>
             </motion.div>
 
             {/* Mobile Actions: Language toggle + Fast Request CTA & Hamburger */}
             <div className="flex md:hidden items-center gap-2 sm:gap-2.5 relative z-10 shrink-0">
               <LanguageToggle variant="pill" />
 
-              <button
-                onClick={onRequestWorkforce}
+              <Link
+                href="/contact"
+                onClick={(e) => {
+                  if (typeof window !== "undefined" && window.location.pathname === "/contact") {
+                    e.preventDefault();
+                    onRequestWorkforce?.();
+                  }
+                }}
                 className="hidden sm:inline-flex bg-gradient-to-r from-[#C59C58] to-[#D8B474] text-[#070D16] text-[11px] font-bold px-3 py-1.5 rounded-full shadow-sm uppercase tracking-wider active:scale-95 cursor-pointer"
               >
                 {t.nav.requestShort}
-              </button>
+              </Link>
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -470,16 +482,20 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
                 {/* Single Strong Action Button: Request */}
                 <div className="pt-2">
-                  <button
-                    onClick={() => {
+                  <Link
+                    href="/contact"
+                    onClick={(e) => {
                       setMobileMenuOpen(false);
-                      onRequestWorkforce();
+                      if (typeof window !== "undefined" && window.location.pathname === "/contact") {
+                        e.preventDefault();
+                        onRequestWorkforce?.();
+                      }
                     }}
                     className="w-full inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] text-[#070D16] py-3.5 rounded-2xl text-xs font-bold tracking-wider uppercase shadow-[0_4px_16px_rgba(197,156,88,0.35)] active:scale-98 cursor-pointer"
                   >
                     <span>{t.nav.requestCta}</span>
                     <ArrowRight className="w-4 h-4 text-[#070D16]" />
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Mobile Drawer Key Contacts Preview */}
