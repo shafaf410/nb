@@ -23,12 +23,12 @@ export default function ImpressumSection() {
     <div className="bg-[#070D16] text-slate-200 py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-12">
         
-        {/* Top Navigation: Clean Back Link */}
+        {/* Top Navigation: Clean Back Button */}
         <div>
           <button
             type="button"
             onClick={handleBack}
-            className="group inline-flex items-center gap-2 text-sm text-slate-400 hover:text-[#C59C58] transition-colors cursor-pointer"
+            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm"
             aria-label={isSv ? "Gå tillbaka till föregående sida" : "Go back to previous page"}
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
@@ -266,7 +266,7 @@ export default function ImpressumSection() {
           <button
             type="button"
             onClick={handleBack}
-            className="group inline-flex items-center gap-1.5 text-slate-400 hover:text-[#C59C58] transition-colors cursor-pointer"
+            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
             <span>{isSv ? "Tillbaka" : "Back"}</span>

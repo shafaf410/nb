@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CheckCircle2, ShieldCheck, Send, MapPin, Mail, Phone } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Send, MapPin, Mail, Phone, ArrowLeft } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import MagneticButton from "@/components/MagneticButton";
 
@@ -163,6 +163,27 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         
+        {/* Back Button Navigation */}
+        <div className="mb-8">
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.location.href = "/#home";
+                }
+              }
+            }}
+            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm"
+            aria-label={isSv ? "Gå tillbaka till föregående sida" : "Go back to previous page"}
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+            <span>{isSv ? "Tillbaka" : "Back"}</span>
+          </button>
+        </div>
+
         {/* Top Eyebrow Tag */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />

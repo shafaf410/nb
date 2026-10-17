@@ -14,6 +14,7 @@ import {
   Phone, 
   CheckCircle2, 
   ArrowRight,
+  ArrowLeft,
   Plane,
   Scale
 } from "lucide-react";
@@ -67,6 +68,27 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
 
       <div ref={containerRef} className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
         
+        {/* Back Button Navigation */}
+        <div className="mb-8">
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.location.href = "/#home";
+                }
+              }
+            }}
+            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm"
+            aria-label={isSv ? "Gå tillbaka till föregående sida" : "Go back to previous page"}
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+            <span>{isSv ? "Tillbaka" : "Back"}</span>
+          </button>
+        </div>
+
         {/* Formal Institutional Header */}
         <div className="about-fade-up pb-8 mb-12 sm:mb-16 border-b border-white/15">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#C59C58] tracking-widest uppercase mb-4">
