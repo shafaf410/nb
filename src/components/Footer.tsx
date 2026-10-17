@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowUp, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
 import CookieConsent from "@/components/CookieConsent";
@@ -43,9 +43,33 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#0B1522] text-white pt-16 pb-12 sm:pt-28 sm:pb-16 relative overflow-hidden">
+    <footer className="bg-[#0B1522] text-white pt-0 pb-12 sm:pb-16 relative overflow-hidden">
       {/* Subtle Gold Horizontal Accent Line */}
       <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#C59C58]/60 to-transparent" />
+
+      {/* Pre-Footer Statutory Corporate Badge & Impressum Tab */}
+      <div className="border-b border-white/10 bg-[#070D16]/95 backdrop-blur-md py-3.5 sm:py-4 px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5 text-white/70">
+            <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
+            <span className="font-mono text-[10.5px] sm:text-[11.5px] uppercase tracking-wider text-[#C59C58] font-bold">
+              NORVIAN AB • ORG. NR: 559473-4997
+            </span>
+            <span className="text-white/30 hidden md:inline">•</span>
+            <span className="text-white/60 hidden md:inline">
+              Registered with Bolagsverket, Sweden
+            </span>
+          </div>
+
+          <Link
+            href="/impressum"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-[#C59C58] text-[#C59C58] hover:text-[#070D16] border border-[#C59C58]/40 hover:border-[#C59C58] font-semibold text-[11px] tracking-wider uppercase transition-all duration-300 group cursor-pointer shadow-sm"
+          >
+            <span>Impressum / Legal Notice</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-20">
         
@@ -156,6 +180,11 @@ export default function Footer() {
                   {t.nav.requestCta}
                 </a>
               </li>
+              <li>
+                <Link href="/impressum" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300 text-[#C59C58]/90">
+                  Impressum / Legal Notice
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -193,15 +222,18 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-6">
-            <a href="#" className="hover:text-white transition-colors">
+            <Link href="/impressum" className="hover:text-white text-[#C59C58] transition-colors font-medium">
+              Impressum / Legal Notice
+            </Link>
+            <Link href="/impressum#privacy" className="hover:text-white transition-colors">
               {t.footer.privacy}
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link href="/impressum#terms" className="hover:text-white transition-colors">
               {t.footer.terms}
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link href="/impressum" className="hover:text-white transition-colors">
               {t.footer.complianceNotice}
-            </a>
+            </Link>
             <button
               type="button"
               onClick={() => {
