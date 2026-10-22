@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, Users, FileCheck2, Scale, CheckCircle2, Award, Sparkles } from "lucide-react";
@@ -87,25 +87,6 @@ export default function WhyNorvianSection() {
           toggleActions: "play none none none",
         },
       });
-
-      // 5. Responsive parallax micro-movement on numbers as you continue scrolling
-      const numbers = cardsContainer.querySelectorAll(".card-number");
-      numbers.forEach((num) => {
-        gsap.fromTo(
-          num,
-          { y: 15 },
-          {
-            y: -15,
-            ease: "none",
-            scrollTrigger: {
-              trigger: num,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 0.8,
-            },
-          }
-        );
-      });
     }, section);
 
     return () => ctx.revert();
@@ -116,7 +97,6 @@ export default function WhyNorvianSection() {
       ref={sectionRef}
       id="why-norvian"
       className="py-24 sm:py-36 lg:py-44 bg-[#FAF7F2] relative border-t border-[#0B1522]/10 overflow-hidden"
-      style={{ perspective: "1400px" }}
     >
       {/* Golden Architectural Beam line that draws across the section */}
       <div
@@ -164,11 +144,10 @@ export default function WhyNorvianSection() {
           </div>
         </div>
 
-        {/* 4 Architectural Benefit Cards with 3D Rise & Curtain Shutter Reveal */}
+        {/* 4 Architectural Benefit Cards */}
         <div
           ref={cardsContainerRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
-          style={{ transformStyle: "preserve-3d" }}
         >
           {t.why.pillars.map((item, idx) => {
             const Icon = icons[idx] || Award;
@@ -191,7 +170,7 @@ export default function WhyNorvianSection() {
   );
 }
 
-// Sub-component with 3D Tilt Micro-Interaction and Shutter Aesthetics
+// Sub-component with Clean, Smooth Hover Interaction
 function PillarCard({
   number,
   subtitle,
@@ -207,61 +186,18 @@ function PillarCard({
   stats: string;
   Icon: any;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0, glowX: 50, glowY: 50 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -6; // max 6deg
-    const rotateY = ((x - centerX) / centerX) * 6;
-
-    setTilt({
-      x: rotateX,
-      y: rotateY,
-      glowX: (x / rect.width) * 100,
-      glowY: (y / rect.height) * 100,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0, glowX: 50, glowY: 50 });
-  };
-
   return (
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="pillar-card group relative flex flex-col justify-between rounded-3xl p-7 sm:p-8 bg-white/90 hover:bg-[#070D16] text-[#0B1522] hover:text-white border border-[#0B1522]/10 hover:border-[#C59C58]/60 shadow-[0_16px_36px_-12px_rgba(11,21,34,0.08)] hover:shadow-[0_30px_70px_-15px_rgba(11,21,34,0.45)] transition-colors duration-500 will-change-transform overflow-hidden"
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: tilt.x === 0 ? "transform 0.5s ease-out, background-color 0.5s ease" : "background-color 0.5s ease",
-      }}
+      className="pillar-card group relative flex flex-col justify-between rounded-3xl p-7 sm:p-8 bg-white/95 hover:bg-[#070D16] text-[#0B1522] hover:text-white border border-[#0B1522]/10 hover:border-[#C59C58]/60 shadow-[0_16px_36px_-12px_rgba(11,21,34,0.08)] hover:shadow-[0_24px_50px_-12px_rgba(11,21,34,0.3)] hover:-translate-y-2 transition-all duration-300 ease-out overflow-hidden"
     >
-      {/* Interactive Cursor Light Sheen */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(circle 240px at ${tilt.glowX}% ${tilt.glowY}%, rgba(197, 156, 88, 0.15), transparent 70%)`,
-        }}
-      />
-
       {/* Top Number & Icon Row */}
       <div className="flex items-center justify-between mb-6 relative z-10">
-        <span className="card-number font-serif text-3xl font-light tracking-widest text-[#C59C58] will-change-transform">
+        <span className="card-number font-serif text-3xl font-light tracking-widest text-[#C59C58]">
           {number}
         </span>
         
         <div className="w-12 h-12 rounded-2xl bg-[#0B1522]/5 group-hover:bg-white/10 border border-[#0B1522]/10 group-hover:border-[#C59C58]/40 flex items-center justify-center text-[#0B1522] group-hover:text-[#C59C58] transition-all duration-300 shadow-xs">
-          <Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-115" />
+          <Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
         </div>
       </div>
 
@@ -280,8 +216,7 @@ function PillarCard({
 
       {/* Bottom Stat Pill with Animated Hairline Gold Draw */}
       <div className="pt-4 relative z-10">
-        {/* Animated Line Draw on reveal */}
-        <div className="card-bottom-line absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#C59C58]/60 to-transparent origin-left will-change-transform" />
+        <div className="card-bottom-line absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#C59C58]/60 to-transparent origin-left" />
 
         <div className="flex items-center justify-between pt-2">
           <span className="text-[11px] font-mono font-semibold tracking-wider text-[#C59C58]">
