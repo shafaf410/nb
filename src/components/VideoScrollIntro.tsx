@@ -305,21 +305,45 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     const mobileVideo = mobileVideoRef.current;
 
     if (isMobileMode && mobileVideo) {
+      // Ensure muted and playsInline are strictly enforced on DOM object
       try {
-        mobileVideo.currentTime = 0;
+        mobileVideo.muted = true;
+        mobileVideo.defaultMuted = true;
+        mobileVideo.playsInline = true;
+        if (mobileVideo.currentTime > 0.1 && (mobileVideo.ended || mobileVideo.paused)) {
+          mobileVideo.currentTime = 0;
+        }
         const playPromise = mobileVideo.play();
         if (playPromise !== undefined) {
           playPromise.catch(() => {});
         }
       } catch (err) {}
 
-      const mobileStep = () => {
+      const mobileDuration =
+        mobileVideo.duration && !isNaN(mobileVideo.duration) && mobileVideo.duration > 0
+          ? mobileVideo.duration
+          : 7.28;
+      const durationMs = mobileDuration * 1000;
+      const startTime = performance.now();
+
+      const mobileStep = (now: number) => {
         const video = mobileVideoRef.current;
         if (!video) return;
 
-        const dur = video.duration && !isNaN(video.duration) && video.duration > 0 ? video.duration : 9.0;
-        const cur = video.currentTime || 0;
-        const t = Math.min(1, cur / dur);
+        const elapsed = now - startTime;
+        const timeProgress = Math.min(1, elapsed / durationMs);
+        const actualDur =
+          video.duration && !isNaN(video.duration) && video.duration > 0
+            ? video.duration
+            : mobileDuration;
+        const videoProgress =
+          actualDur > 0 && typeof video.currentTime === "number"
+            ? Math.min(1, video.currentTime / actualDur)
+            : 0;
+
+        // Progress based on actual time elapsed or video playback (whichever is further)
+        // This guarantees the progress bar and curtain slide NEVER STALL, even if video frames take a moment to decode!
+        const t = Math.min(1, Math.max(timeProgress, videoProgress));
 
         // Fluid Direct DOM updates for 60fps Reel HUD on mobile
         if (progressBarRef.current) {
@@ -365,7 +389,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
 
         onProgress?.(t);
 
-        if (t < 0.99 && !video.paused && !video.ended) {
+        if (t < 1 && !video.ended) {
           state.rafId = requestAnimationFrame(mobileStep);
         } else {
           // Completed cleanly on mobile
@@ -503,6 +527,17 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   // Single-Scroll Event Detection
   useEffect(() => {
     const container = containerRef.current;
+
+    // Initialize mobile video attributes for cross-browser autoplay compliance
+    const mobileVideo = mobileVideoRef.current;
+    if (mobileVideo) {
+      mobileVideo.muted = true;
+      mobileVideo.defaultMuted = true;
+      mobileVideo.playsInline = true;
+      mobileVideo.setAttribute("muted", "");
+      mobileVideo.setAttribute("playsinline", "");
+      mobileVideo.setAttribute("webkit-playsinline", "");
+    }
 
     // Check if initial load is already below intro or targeted at home / anchor link
     const hasHomeHash =
@@ -834,7 +869,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Mobile Video Scroll Animation (Active ONLY on mobile screens < 768px) */}
           <video
             ref={mobileVideoRef}
-            src="/videos/intro_mobile.mp4#t=0.001"
+            src="/videos/intro_mobile.mp4"
             playsInline
             muted
             preload="auto"
