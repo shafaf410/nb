@@ -327,11 +327,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         }
 
         if (chapterTextRef.current) {
-          if (cur <= 2.8) {
+          if (t <= 0.25) {
             chapterTextRef.current.innerText = isSv ? "01 • SKEPPSBYGGNAD & MARINT" : "01 • SHIPBUILDING & MARINE";
-          } else if (cur <= 5.5) {
+          } else if (t <= 0.55) {
             chapterTextRef.current.innerText = isSv ? "02 • KONTINENTAL LOGISTIK" : "02 • CONTINENTAL LOGISTICS";
-          } else if (cur <= 7.2) {
+          } else if (t <= 0.80) {
             chapterTextRef.current.innerText = isSv ? "03 • TERMINALVERKSAMHET" : "03 • TERMINAL OPERATIONS";
           } else {
             chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
@@ -834,10 +834,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Mobile Video Scroll Animation (Active ONLY on mobile screens < 768px) */}
           <video
             ref={mobileVideoRef}
+            src="/videos/intro_mobile.mp4#t=0.001"
             playsInline
             muted
             preload="auto"
-            poster="/images/intro_mobile_poster.jpg"
             className="md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             style={{
               filter: "contrast(1.02) saturate(1.04)",

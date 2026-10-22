@@ -43,5 +43,6 @@ next-env.d.ts
 # scratch files
 scratch/
 ship2*.mp4
+TensorPix*.mp4
 *.MOV
 *.mov
