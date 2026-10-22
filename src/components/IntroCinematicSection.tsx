@@ -23,7 +23,6 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const imageInnerRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
-  const statsLineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -60,20 +59,6 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
       id="intro-manifesto"
       className="relative min-h-[90vh] lg:min-h-screen flex items-center pt-20 sm:pt-28 lg:pt-20 pb-16 sm:pb-20 lg:pb-16 px-4 sm:px-8 lg:px-14 xl:px-16 overflow-hidden bg-[#FAF7F2] text-[#0B1522]"
     >
-      {/* Background Architectural Accent Lines (Clean & Serene Guidelines) */}
-      <div className="absolute inset-0 pointer-events-none select-none z-10 opacity-60">
-        {/* Left vertical guideline */}
-        <div className="absolute left-4 sm:left-8 lg:left-14 top-0 bottom-0 w-[1px] bg-[#C59C58]/30" />
-
-        {/* Subtle geometric corner diamonds */}
-        <div className="absolute left-4 sm:left-8 lg:left-14 top-16 sm:top-24 -translate-x-1/2 flex items-center justify-center">
-          <div className="w-2 h-2 rotate-45 border border-[#C59C58]/55 bg-[#FAF7F2]" />
-        </div>
-        <div className="absolute left-4 sm:left-8 lg:left-14 bottom-16 sm:bottom-24 -translate-x-1/2 flex items-center justify-center">
-          <div className="w-2 h-2 rotate-45 border border-[#C59C58]/55 bg-[#FAF7F2]" />
-        </div>
-      </div>
-
       {/* Right Scenic Truck Photography with Soft Feathered Edge (Desktop Only) */}
       <div
         ref={imageWrapperRef}
@@ -228,34 +213,8 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             </p>
           </div>
 
-          {/* 4. Verified Credential Pills */}
-          <div
-            ref={statsLineRef}
-            className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-2.5"
-          >
-            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-[#C59C58]/40 shadow-[0_2px_8px_rgba(11,21,34,0.04)] text-[11px] sm:text-[11.5px] text-[#0B1522] font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">1,000+</strong> {isSv ? "Placerade yrkesarbetare" : "Workers Placed"}</span>
-            </div>
-
-            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">DNV & ISO 9001</strong> {isSv ? "Verifierad" : "Verified"}</span>
-            </div>
-
-            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">{isSv ? "100% Avtals- & Skatte-" : "100% Tax & Legal"}</strong> {isSv ? "enligt" : "Compliant"}</span>
-            </div>
-
-            <div className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white border border-[#0B1522]/12 shadow-[0_2px_6px_rgba(11,21,34,0.03)] text-[11px] sm:text-[11.5px] text-[#0B1522]/90 font-medium transition-all backdrop-blur-xs">
-              <span className="text-[#C59C58] text-[11px]">☉</span>
-              <span><strong className="font-semibold text-[#0B1522]">{isSv ? "21 Dagars" : "21-Day"}</strong> {isSv ? "Mobilisering" : "Deployment Window"}</span>
-            </div>
-          </div>
-
-          {/* 5. Request Workforce Action Button (Mobile Touch-Optimized) */}
-          <div className="mt-5 sm:mt-6">
+          {/* 4. Request Workforce Action Button (Mobile Touch-Optimized) */}
+          <div className="mt-6 sm:mt-7">
             <Link
               href="/contact"
               onClick={(e) => {
