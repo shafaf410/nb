@@ -62,7 +62,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
     <section
       ref={sectionRef}
       id="about"
-      className="relative bg-[#080E18] text-white py-16 sm:py-24 lg:py-28 border-t border-white/10"
+      className="relative bg-[#080E18] text-white pt-2 sm:pt-4 pb-16 sm:pb-24 border-t border-white/5"
     >
       <div id="about-us" className="sr-only" />
 

@@ -212,11 +212,11 @@ export default function ServiceDetailPage({
               aria-label={isSv ? "Gå till startsidan" : "Go to home page"}
             >
               <Image
-                src="/logo.png"
+                src="/logo-white.png"
                 alt="NORVIAN AB"
                 width={130}
                 height={32}
-                className="h-6 sm:h-7 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
+                className="h-6 sm:h-7 w-auto object-contain"
                 priority
               />
             </button>

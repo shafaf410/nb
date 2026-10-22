@@ -106,7 +106,7 @@ function MainContent() {
       <Navbar
         onRequestWorkforce={handleRequestWorkforce}
         onGoHome={handleGoHome}
-        showNav={isNavVisible}
+        showNav={isNavVisible && !activeModal}
       />
       <main className="min-h-screen flex flex-col bg-[#070D16]">
         {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro - Unchanged) */}
@@ -126,24 +126,24 @@ function MainContent() {
           {/* Regulatory Pillars & Scandinavian Working Directives */}
           <WhyNorvianSection />
 
-          {/* 10. Complete Full-Screen Service Detail Pages (MacBook-Inspired Opening/Closing Transition) */}
-          <IndustryModal
-            industryKey={activeModal}
-            onClose={handleCloseServicePage}
-            onRequestForIndustry={handleRequestForIndustry}
-            onSwitchService={(newKey) => {
-              setCurrentServiceSlide(newKey);
-              setActiveModal(newKey);
-              if (typeof window !== "undefined") {
-                window.history.pushState({ modal: newKey }, "", `#service-${newKey}`);
-              }
-            }}
-          />
-
           {/* 11. High-Authority Corporate Footer */}
           <Footer />
         </div>
       </main>
+
+      {/* 10. Complete Full-Screen Service Detail Pages (Clean Top-Level Overlay, No Overlapping Navbar) */}
+      <IndustryModal
+        industryKey={activeModal}
+        onClose={handleCloseServicePage}
+        onRequestForIndustry={handleRequestForIndustry}
+        onSwitchService={(newKey) => {
+          setCurrentServiceSlide(newKey);
+          setActiveModal(newKey);
+          if (typeof window !== "undefined") {
+            window.history.pushState({ modal: newKey }, "", `#service-${newKey}`);
+          }
+        }}
+      />
     </SmoothScroll>
   );
 }
