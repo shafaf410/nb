@@ -14,7 +14,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 function MainContent() {
   const [activeModal, setActiveModal] = useState<"shipbuilding" | "construction" | "logistics" | "industrial" | null>(null);
   const [currentServiceSlide, setCurrentServiceSlide] = useState<"shipbuilding" | "construction" | "logistics" | "industrial">("shipbuilding");
-  const [isNavVisible, setIsNavVisible] = useState(true);
+  const [isNavVisible, setIsNavVisible] = useState(false);
 
   const handleRequestWorkforce = () => {
     window.location.href = "/contact";
@@ -47,7 +47,6 @@ function MainContent() {
   };
 
   // URL Hash & Browser History Synchronization:
-  // Intercepts browser Back button so user returns to the main page without exiting the website!
   useEffect(() => {
     const syncModalWithHash = () => {
       const hash = window.location.hash.toLowerCase();
@@ -64,7 +63,6 @@ function MainContent() {
         setCurrentServiceSlide("industrial");
         setActiveModal("industrial");
       } else {
-        // When hash no longer contains a service (e.g. user pressed browser Back button), close modal!
         setActiveModal(null);
       }
     };
@@ -72,19 +70,44 @@ function MainContent() {
     syncModalWithHash();
     window.addEventListener("hashchange", syncModalWithHash);
     window.addEventListener("popstate", syncModalWithHash);
+
+    // If starting below the intro section, reveal navbar immediately
+    if (typeof window !== "undefined") {
+      const isPastIntro =
+        window.scrollY > 50 ||
+        window.location.hash === "#home" ||
+        window.location.hash === "#main" ||
+        window.location.hash.startsWith("#service-") ||
+        window.location.hash.startsWith("#intro-");
+      if (isPastIntro) {
+        setIsNavVisible(true);
+      }
+    }
+
+    const handleGoHomeEvent = () => {
+      setIsNavVisible(false);
+    };
+    window.addEventListener("norvian:go-home", handleGoHomeEvent);
+
     return () => {
       window.removeEventListener("hashchange", syncModalWithHash);
       window.removeEventListener("popstate", syncModalWithHash);
+      window.removeEventListener("norvian:go-home", handleGoHomeEvent);
     };
   }, []);
 
-  // Keep Nav visible throughout intro and main content
-  const handleIntroProgress = useCallback((_progress: number) => {
-    setIsNavVisible(true);
+  // Reveal Nav only when scrolling past the first intro video animation
+  const handleIntroProgress = useCallback((progress: number) => {
+    if (progress >= 0.85) {
+      setIsNavVisible(true);
+    } else {
+      setIsNavVisible(false);
+    }
   }, []);
 
   const handleGoHome = useCallback(() => {
     setActiveModal(null);
+    setIsNavVisible(true);
     if (typeof window !== "undefined") {
       if (window.location.hash !== "#home") {
         window.history.pushState(null, "", "/#home");
@@ -109,7 +132,7 @@ function MainContent() {
         showNav={isNavVisible && !activeModal}
       />
       <main className="min-h-screen flex flex-col bg-[#070D16]">
-        {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Pure Cinematic Intro - Unchanged) */}
+        {/* 0. Fullscreen 120 FPS Video Scroll Sequence (Navbar hidden during this section) */}
         <VideoScrollIntro onProgress={handleIntroProgress} />
 
         {/* 1. Main Website Experience (Curtain Slide-Over: scrolls directly above the static fixed video) */}
@@ -131,7 +154,7 @@ function MainContent() {
         </div>
       </main>
 
-      {/* 10. Complete Full-Screen Service Detail Pages (Clean Top-Level Overlay, No Overlapping Navbar) */}
+      {/* 10. Complete Full-Screen Service Detail Pages */}
       <IndustryModal
         industryKey={activeModal}
         onClose={handleCloseServicePage}
