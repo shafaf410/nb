@@ -20,6 +20,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const progressBarRef = useRef<HTMLDivElement>(null);
   const chapterTextRef = useRef<HTMLSpanElement>(null);
 
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const isVideoReadyRef = useRef(false);
+  const pendingAutoScrollRef = useRef(false);
+
   const [showPrompt, setShowPrompt] = useState(true);
   const [hasCompleted, setHasCompleted] = useState(false);
 
@@ -55,62 +59,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     }
   }, [isSv, getActiveVideo]);
 
-  // Seamless Skip Intro Handler: smoothly completes intro and scrolls to main website
-  const handleSkipIntro = useCallback(
-    (e?: React.MouseEvent | React.TouchEvent) => {
-      if (e) {
-        e.stopPropagation();
-      }
-      const state = stateRef.current;
-      if (state.hasCompleted) return;
-
-      if (state.rafId) {
-        cancelAnimationFrame(state.rafId);
-        state.rafId = 0;
-      }
-
-      [desktopVideoRef.current, mobileVideoRef.current].forEach((video) => {
-        if (video) {
-          try {
-            video.pause();
-            video.currentTime = video.duration || 12.5;
-          } catch (err) {}
-        }
-      });
-
-      state.isAutoScrolling = false;
-      state.hasCompleted = true;
-      setHasCompleted(true);
-      setShowPrompt(false);
-
-      if (progressBarRef.current) {
-        progressBarRef.current.style.width = "100%";
-      }
-      if (chapterTextRef.current) {
-        chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
-      }
-
-      onProgress?.(1.0);
-
-      if (stageRef.current) {
-        stageRef.current.style.pointerEvents = "none";
-      }
-
-      const container = containerRef.current;
-      const targetScrollY = container ? container.offsetHeight : window.innerHeight;
-
-      if (typeof window !== "undefined") {
-        if ((window as any).lenis) {
-          (window as any).lenis.start();
-          (window as any).lenis.scrollTo(targetScrollY, { duration: 1.1 });
-        } else {
-          window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-        }
-      }
-    },
-    [isSv, onProgress]
-  );
-
   // Main Auto-Scroll Routine: triggered by a single scroll gesture, plays the full video
   const startAutoScroll = useCallback(() => {
     const state = stateRef.current;
@@ -118,6 +66,12 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
 
     const video = getActiveVideo();
     if (!video) return;
+
+    // If video hasn't finished loading yet, queue it to play as soon as it's ready
+    if (!isVideoReadyRef.current && video.readyState < 2) {
+      pendingAutoScrollRef.current = true;
+      return;
+    }
 
     state.isAutoScrolling = true;
     state.startTime = performance.now();
@@ -169,13 +123,13 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           ? Math.min(1, v.currentTime / actualDur)
           : 0;
 
-      // Keep animation synchronized to actual video playback
+      // Keep progress synchronized to active playback
       const isVideoActive = v.currentTime > 0.05 || !v.paused;
       const t = isVideoActive
         ? Math.min(1, Math.max(timeProgress, videoProgress))
         : 0;
 
-      // If video hasn't started yet on mobile, re-trigger play
+      // Re-trigger play once if paused initially
       if (v.paused && !state.hasCompleted && t === 0) {
         v.play().catch(() => {});
       }
@@ -251,6 +205,74 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     state.rafId = requestAnimationFrame(step);
   }, [getActiveVideo, isSv, onProgress]);
 
+  // Signal that video is loaded and ready to present
+  const handleVideoReady = useCallback(() => {
+    if (!isVideoReadyRef.current) {
+      isVideoReadyRef.current = true;
+      setIsVideoReady(true);
+      if (pendingAutoScrollRef.current) {
+        pendingAutoScrollRef.current = false;
+        startAutoScroll();
+      }
+    }
+  }, [startAutoScroll]);
+
+  // Seamless Skip Intro Handler: smoothly completes intro and scrolls to main website
+  const handleSkipIntro = useCallback(
+    (e?: React.MouseEvent | React.TouchEvent) => {
+      if (e) {
+        e.stopPropagation();
+      }
+      const state = stateRef.current;
+      if (state.hasCompleted) return;
+
+      if (state.rafId) {
+        cancelAnimationFrame(state.rafId);
+        state.rafId = 0;
+      }
+
+      [desktopVideoRef.current, mobileVideoRef.current].forEach((video) => {
+        if (video) {
+          try {
+            video.pause();
+            video.currentTime = video.duration || 12.5;
+          } catch (err) {}
+        }
+      });
+
+      state.isAutoScrolling = false;
+      state.hasCompleted = true;
+      setHasCompleted(true);
+      setShowPrompt(false);
+
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = "100%";
+      }
+      if (chapterTextRef.current) {
+        chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
+      }
+
+      onProgress?.(1.0);
+
+      if (stageRef.current) {
+        stageRef.current.style.pointerEvents = "none";
+      }
+
+      const container = containerRef.current;
+      const targetScrollY = container ? container.offsetHeight : window.innerHeight;
+
+      if (typeof window !== "undefined") {
+        if ((window as any).lenis) {
+          (window as any).lenis.start();
+          (window as any).lenis.scrollTo(targetScrollY, { duration: 1.1 });
+        } else {
+          window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+        }
+      }
+    },
+    [isSv, onProgress]
+  );
+
   // Single-Scroll Event Detection & Gesture Listeners
   useEffect(() => {
     const container = containerRef.current;
@@ -264,6 +286,16 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         video.setAttribute("webkit-playsinline", "");
       }
     });
+
+    // Check if video is already ready from cache
+    const checkReady = () => {
+      const v = getActiveVideo();
+      if (v && (v.readyState >= 2 || v.currentTime > 0)) {
+        handleVideoReady();
+      }
+    };
+    checkReady();
+    const readyTimer = setTimeout(checkReady, 600);
 
     // Check if initial load is already below intro or targeted at home / anchor link
     const hasHomeHash =
@@ -361,7 +393,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           const diffY = touchStartY - currentY;
           const diffX = touchStartX - currentX;
 
-          // Single swipe starts playback; once started, further swipes have no effect
+          // Single swipe starts playback
           if (Math.abs(diffY) > 8 || Math.abs(diffX) > 8) {
             startAutoScroll();
           }
@@ -370,7 +402,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     };
 
     const handleTouchEnd = () => {
-      // Tap on mobile without dragging triggers playback
+      // Tap on mobile triggers playback
       if (!stateRef.current.hasCompleted && !stateRef.current.isAutoScrolling) {
         startAutoScroll();
       }
@@ -511,6 +543,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     window.addEventListener("hashchange", handleHashSync);
 
     return () => {
+      clearTimeout(readyTimer);
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
@@ -524,7 +557,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         cancelAnimationFrame(stateRef.current.rafId);
       }
     };
-  }, [getActiveVideo, isSv, onProgress, startAutoScroll]);
+  }, [getActiveVideo, handleVideoReady, isSv, onProgress, startAutoScroll]);
 
   const handleVideoEnded = () => {
     const state = stateRef.current;
@@ -619,10 +652,13 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           <video
             ref={desktopVideoRef}
             src="/videos/intro.mp4"
+            poster="/images/intro_desktop_poster.jpg"
             playsInline
             muted
             preload="auto"
             className="hidden md:block absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            onLoadedData={handleVideoReady}
+            onCanPlay={handleVideoReady}
             onEnded={handleVideoEnded}
           />
 
@@ -630,16 +666,32 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           <video
             ref={mobileVideoRef}
             src="/videos/intro_mobile.mp4"
+            poster="/images/intro_mobile_poster.jpg"
             playsInline
             muted
             preload="auto"
-            className="md:block md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            className="block md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            onLoadedData={handleVideoReady}
+            onCanPlay={handleVideoReady}
             onEnded={handleVideoEnded}
           />
 
-          {/* Bottom Center Reel Prompt: Scroll or Tap to Play */}
-          {showPrompt && (
-            <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center pointer-events-auto z-20 px-4 text-center">
+          {/* Elegant Luxury Preloader: Shown until video is buffered & ready */}
+          {!isVideoReady && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-black/40 backdrop-blur-[2px] transition-opacity duration-500">
+              <div className="relative flex items-center justify-center">
+                <div className="w-11 h-11 rounded-full border-2 border-[#C59C58]/25 border-t-[#E8C587] animate-spin" />
+                <span className="absolute w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
+              </div>
+              <span className="mt-4 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase font-semibold text-white/85">
+                {isSv ? "Laddar upplevelse..." : "Loading experience..."}
+              </span>
+            </div>
+          )}
+
+          {/* Bottom Center Reel Prompt: Scroll or Tap to Play (Shown only once video is fully ready) */}
+          {showPrompt && isVideoReady && (
+            <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center pointer-events-auto z-20 px-4 text-center transition-all duration-700 animate-in fade-in zoom-in-95">
               <button
                 type="button"
                 onClick={(e) => {
