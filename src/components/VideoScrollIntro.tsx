@@ -30,7 +30,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const stateRef = useRef({
     isAutoScrolling: false,
     hasCompleted: false,
-    startTime: 0,
     rafId: 0,
   });
 
@@ -59,7 +58,51 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     }
   }, [isSv, getActiveVideo]);
 
-  // Main Auto-Scroll Routine: triggered by a single scroll gesture, plays the full video
+  // Unified intro finish handler: reveals website and smoothly scrolls down
+  const finishIntro = useCallback(() => {
+    const state = stateRef.current;
+    if (state.hasCompleted) return;
+
+    if (state.rafId) {
+      cancelAnimationFrame(state.rafId);
+      state.rafId = 0;
+    }
+
+    state.isAutoScrolling = false;
+    state.hasCompleted = true;
+    setHasCompleted(true);
+    setShowPrompt(false);
+
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = "100%";
+    }
+    if (chapterTextRef.current) {
+      chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
+    }
+
+    onProgress?.(1.0);
+
+    if (stageRef.current) {
+      stageRef.current.style.pointerEvents = "none";
+    }
+
+    const container = containerRef.current;
+    const targetScrollY = container ? container.offsetHeight : window.innerHeight;
+
+    if (typeof window !== "undefined") {
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+        (window as any).lenis.scrollTo(targetScrollY, {
+          duration: 1.2,
+          easing: (x: number) => 1 - Math.pow(1 - x, 3),
+        });
+      } else {
+        window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+      }
+    }
+  }, [isSv, onProgress]);
+
+  // Main Playback Routine: smoothly plays video and updates HUD
   const startAutoScroll = useCallback(() => {
     const state = stateRef.current;
     if (state.isAutoScrolling || state.hasCompleted) return;
@@ -74,18 +117,13 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     }
 
     state.isAutoScrolling = true;
-    state.startTime = performance.now();
     setShowPrompt(false);
 
-    // Pause Lenis during video playback so native/Lenis touch events cannot scroll or fling the page down
+    // Stop Lenis during playback so native gestures don't disrupt video
     if (typeof window !== "undefined" && (window as any).lenis) {
       (window as any).lenis.stop();
     }
 
-    const container = containerRef.current;
-    const targetScrollY = container ? container.offsetHeight : window.innerHeight;
-
-    // Ensure muted, playsinline, and start playback
     try {
       video.muted = true;
       video.defaultMuted = true;
@@ -101,40 +139,20 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
 
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const fallbackDuration = isMobile ? 12.5 : 26.1;
-    const videoDuration =
-      video.duration && !isNaN(video.duration) && video.duration > 0
-        ? video.duration
-        : fallbackDuration;
-    const durationMs = videoDuration * 1000;
-    const startTime = performance.now();
 
-    const step = (now: number) => {
+    const step = () => {
       const v = getActiveVideo();
       if (!v) return;
 
-      const elapsed = now - startTime;
       const actualDur =
         v.duration && !isNaN(v.duration) && v.duration > 0
           ? v.duration
-          : videoDuration;
-      const timeProgress = Math.min(1, elapsed / durationMs);
-      const videoProgress =
-        actualDur > 0 && typeof v.currentTime === "number"
-          ? Math.min(1, v.currentTime / actualDur)
-          : 0;
+          : fallbackDuration;
 
-      // Keep progress synchronized to active playback
-      const isVideoActive = v.currentTime > 0.05 || !v.paused;
-      const t = isVideoActive
-        ? Math.min(1, Math.max(timeProgress, videoProgress))
-        : 0;
+      const cur = typeof v.currentTime === "number" ? v.currentTime : 0;
+      const t = actualDur > 0 ? Math.min(1, cur / actualDur) : 0;
 
-      // Re-trigger play once if paused initially
-      if (v.paused && !state.hasCompleted && t === 0) {
-        v.play().catch(() => {});
-      }
-
-      // Fluid Direct DOM updates for 60fps/120fps Reel HUD
+      // Direct DOM update for HUD (butter smooth, zero React re-render lag)
       if (progressBarRef.current) {
         progressBarRef.current.style.width = `${Math.min(100, Math.max(0, t * 100))}%`;
       }
@@ -151,59 +169,17 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         }
       }
 
-      // Viewport Scroll progression (Curtain Slide):
-      // Smoothly glides up at t > 0.85 towards the end of the video
-      let scrollProgress = 0;
-      if (t > 0.85) {
-        if (typeof window !== "undefined" && (window as any).lenis) {
-          (window as any).lenis.start();
-        }
-
-        const scrollT = (t - 0.85) / 0.15;
-        scrollProgress =
-          scrollT < 0.5
-            ? 2 * scrollT * scrollT
-            : -1 + (4 - 2 * scrollT) * scrollT;
-      }
-
-      const currentScrollTarget = scrollProgress * targetScrollY;
-
-      if (typeof window !== "undefined") {
-        if ((window as any).lenis) {
-          (window as any).lenis.scrollTo(currentScrollTarget, { immediate: true });
-        } else {
-          window.scrollTo(0, currentScrollTarget);
-        }
-      }
-
       onProgress?.(t);
 
-      if (t < 1 && !v.ended) {
+      if (t < 0.98 && !v.ended) {
         state.rafId = requestAnimationFrame(step);
       } else {
-        // Completed cleanly
-        state.isAutoScrolling = false;
-        state.hasCompleted = true;
-        setHasCompleted(true);
-        onProgress?.(1.0);
-
-        if (stageRef.current) {
-          stageRef.current.style.pointerEvents = "none";
-        }
-
-        if (typeof window !== "undefined") {
-          if ((window as any).lenis) {
-            (window as any).lenis.start();
-            (window as any).lenis.scrollTo(targetScrollY, { immediate: true });
-          } else {
-            window.scrollTo(0, targetScrollY);
-          }
-        }
+        finishIntro();
       }
     };
 
     state.rafId = requestAnimationFrame(step);
-  }, [getActiveVideo, isSv, onProgress]);
+  }, [finishIntro, getActiveVideo, isSv, onProgress]);
 
   // Signal that video is loaded and ready to present
   const handleVideoReady = useCallback(() => {
@@ -217,60 +193,19 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     }
   }, [startAutoScroll]);
 
-  // Seamless Skip Intro Handler: smoothly completes intro and scrolls to main website
+  // Skip Intro Handler
   const handleSkipIntro = useCallback(
     (e?: React.MouseEvent | React.TouchEvent) => {
-      if (e) {
-        e.stopPropagation();
+      if (e) e.stopPropagation();
+      const v = getActiveVideo();
+      if (v) {
+        try {
+          v.pause();
+        } catch (err) {}
       }
-      const state = stateRef.current;
-      if (state.hasCompleted) return;
-
-      if (state.rafId) {
-        cancelAnimationFrame(state.rafId);
-        state.rafId = 0;
-      }
-
-      [desktopVideoRef.current, mobileVideoRef.current].forEach((video) => {
-        if (video) {
-          try {
-            video.pause();
-            video.currentTime = video.duration || 12.5;
-          } catch (err) {}
-        }
-      });
-
-      state.isAutoScrolling = false;
-      state.hasCompleted = true;
-      setHasCompleted(true);
-      setShowPrompt(false);
-
-      if (progressBarRef.current) {
-        progressBarRef.current.style.width = "100%";
-      }
-      if (chapterTextRef.current) {
-        chapterTextRef.current.innerText = isSv ? "04 • GLOBALT NÄTVERK" : "04 • GLOBAL NETWORK";
-      }
-
-      onProgress?.(1.0);
-
-      if (stageRef.current) {
-        stageRef.current.style.pointerEvents = "none";
-      }
-
-      const container = containerRef.current;
-      const targetScrollY = container ? container.offsetHeight : window.innerHeight;
-
-      if (typeof window !== "undefined") {
-        if ((window as any).lenis) {
-          (window as any).lenis.start();
-          (window as any).lenis.scrollTo(targetScrollY, { duration: 1.1 });
-        } else {
-          window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-        }
-      }
+      finishIntro();
     },
-    [isSv, onProgress]
+    [finishIntro, getActiveVideo]
   );
 
   // Single-Scroll Event Detection & Gesture Listeners
@@ -295,7 +230,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     };
     checkReady();
-    const readyTimer = setTimeout(checkReady, 600);
+    const readyTimer = setTimeout(checkReady, 300);
 
     // Check if initial load is already below intro or targeted at home / anchor link
     const hasHomeHash =
@@ -393,7 +328,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           const diffY = touchStartY - currentY;
           const diffX = touchStartX - currentX;
 
-          // Single swipe starts playback
+          // Single swipe starts playback; once started, further swipes have no effect
           if (Math.abs(diffY) > 8 || Math.abs(diffX) > 8) {
             startAutoScroll();
           }
@@ -559,29 +494,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     };
   }, [getActiveVideo, handleVideoReady, isSv, onProgress, startAutoScroll]);
 
-  const handleVideoEnded = () => {
-    const state = stateRef.current;
-    if (!state.hasCompleted) {
-      state.isAutoScrolling = false;
-      state.hasCompleted = true;
-      setHasCompleted(true);
-      onProgress?.(1.0);
-      if (stageRef.current) {
-        stageRef.current.style.pointerEvents = "none";
-      }
-      const container = containerRef.current;
-      const targetScrollY = container ? container.offsetHeight : window.innerHeight;
-      if (typeof window !== "undefined") {
-        if ((window as any).lenis) {
-          (window as any).lenis.start();
-          (window as any).lenis.scrollTo(targetScrollY, { immediate: true });
-        } else {
-          window.scrollTo(0, targetScrollY);
-        }
-      }
-    }
-  };
-
   return (
     <div
       ref={containerRef}
@@ -659,7 +571,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             className="hidden md:block absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             onLoadedData={handleVideoReady}
             onCanPlay={handleVideoReady}
-            onEnded={handleVideoEnded}
+            onEnded={finishIntro}
           />
 
           {/* Mobile View Video (Screens < 768px, portrait-optimized) */}
@@ -673,7 +585,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             className="block md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             onLoadedData={handleVideoReady}
             onCanPlay={handleVideoReady}
-            onEnded={handleVideoEnded}
+            onEnded={finishIntro}
           />
 
           {/* Elegant Luxury Preloader: Shown until video is buffered & ready */}
