@@ -131,7 +131,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     const container = containerRef.current;
     const targetScrollY = container ? container.offsetHeight : window.innerHeight;
 
-    // Ensure muted, playsinline, and start autoplay
+    // Ensure muted, playsinline, and start playback
     try {
       video.muted = true;
       video.defaultMuted = true;
@@ -159,18 +159,26 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       if (!v) return;
 
       const elapsed = now - startTime;
-      const timeProgress = Math.min(1, elapsed / durationMs);
       const actualDur =
         v.duration && !isNaN(v.duration) && v.duration > 0
           ? v.duration
           : videoDuration;
+      const timeProgress = Math.min(1, elapsed / durationMs);
       const videoProgress =
         actualDur > 0 && typeof v.currentTime === "number"
           ? Math.min(1, v.currentTime / actualDur)
           : 0;
 
-      // Progress based on actual time elapsed or video playback
-      const t = Math.min(1, Math.max(timeProgress, videoProgress));
+      // Keep animation synchronized to actual video playback
+      const isVideoActive = v.currentTime > 0.05 || !v.paused;
+      const t = isVideoActive
+        ? Math.min(1, Math.max(timeProgress, videoProgress))
+        : 0;
+
+      // If video hasn't started yet on mobile, re-trigger play
+      if (v.paused && !state.hasCompleted && t === 0) {
+        v.play().catch(() => {});
+      }
 
       // Fluid Direct DOM updates for 60fps/120fps Reel HUD
       if (progressBarRef.current) {
@@ -287,7 +295,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     // 1. Wheel event: A single scroll down plays the video. Mouse scroll has NO effect while playing!
     const handleWheel = (e: WheelEvent) => {
       if (stateRef.current.hasCompleted) {
-        // Reset if user scrolled back up to the very top (and not anchored at #home)
         if (window.scrollY <= 10 && e.deltaY < 0 && window.location.hash !== "#home") {
           stateRef.current.hasCompleted = false;
           setHasCompleted(false);
@@ -331,6 +338,16 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
       touchStartX = e.touches[0].clientX;
+
+      // Prime iOS media engine on initial touch gesture
+      const v = mobileVideoRef.current;
+      if (v && v.paused && !stateRef.current.isAutoScrolling && !stateRef.current.hasCompleted) {
+        v.play().then(() => {
+          if (!stateRef.current.isAutoScrolling) {
+            v.pause();
+          }
+        }).catch(() => {});
+      }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -601,28 +618,24 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
           {/* Desktop Cinematic Video (Screens >= 768px) */}
           <video
             ref={desktopVideoRef}
-            src="/videos/intro.mp4#t=0.001"
+            src="/videos/intro.mp4"
             playsInline
             muted
             preload="auto"
             className="hidden md:block absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             onEnded={handleVideoEnded}
-          >
-            <source src="/videos/intro.mp4" type="video/mp4" />
-          </video>
+          />
 
           {/* Mobile View Video (Screens < 768px, portrait-optimized) */}
           <video
             ref={mobileVideoRef}
-            src="/videos/intro_mobile.mp4#t=0.001"
+            src="/videos/intro_mobile.mp4"
             playsInline
             muted
             preload="auto"
-            className="md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            className="md:block md:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             onEnded={handleVideoEnded}
-          >
-            <source src="/videos/intro_mobile.mp4" type="video/mp4" />
-          </video>
+          />
 
           {/* Bottom Center Reel Prompt: Scroll or Tap to Play */}
           {showPrompt && (
@@ -630,6 +643,10 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
               <button
                 type="button"
                 onClick={(e) => {
+                  e.stopPropagation();
+                  startAutoScroll();
+                }}
+                onTouchEnd={(e) => {
                   e.stopPropagation();
                   startAutoScroll();
                 }}
