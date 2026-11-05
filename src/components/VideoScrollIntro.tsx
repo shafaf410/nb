@@ -137,8 +137,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     } catch (err) {}
 
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const fallbackDuration = isMobile ? 12.5 : 26.1;
+    const fallbackDuration = 21.33;
 
     const step = () => {
       const v = getActiveVideo();
@@ -247,7 +246,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       setShowPrompt(false);
       [desktopVideoRef.current, mobileVideoRef.current].forEach((video) => {
         if (video) {
-          video.currentTime = video.duration || 12.5;
+          video.currentTime = video.duration || 21.33;
         }
       });
       if (progressBarRef.current) {
@@ -443,7 +442,7 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
         if (v) {
           try {
             v.pause();
-            v.currentTime = v.duration || 12.5;
+            v.currentTime = v.duration || 21.33;
           } catch (err) {}
         }
       });
