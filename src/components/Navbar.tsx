@@ -299,7 +299,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="hidden md:flex items-center gap-3 relative z-10 shrink-0"
             >
-              {/* Language Toggle (EN / SV) */}
+              {/* Language Toggle (EN / SE) */}
               <LanguageToggle variant="pill" />
 
               {/* Request CTA Button */}

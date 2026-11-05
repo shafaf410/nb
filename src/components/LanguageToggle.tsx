@@ -18,7 +18,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
         title={language === "en" ? "Byt till Svenska" : "Switch to English"}
         aria-label="Switch Language"
       >
-        {language === "en" ? "SV" : "EN"}
+        {language === "en" ? "SE" : "EN"}
       </button>
     );
   }
@@ -52,7 +52,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
           }`}
           aria-pressed={language === "sv"}
         >
-          SV
+          SE
         </button>
       </div>
     );
@@ -86,7 +86,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
         }`}
         aria-pressed={language === "sv"}
       >
-        SV
+        SE
       </button>
     </div>
   );
