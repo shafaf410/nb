@@ -62,7 +62,7 @@ export default function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="sv"
       className={`${playfair.variable} ${jakarta.variable} antialiased`}
     >
       <head>

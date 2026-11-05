@@ -15,10 +15,10 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
       <button
         onClick={toggleLanguage}
         className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-300 hover:text-[#C59C58] cursor-pointer ${className}`}
-        title={language === "en" ? "Byt till Svenska" : "Switch to English"}
+        title={language === "sv" ? "Switch to English" : "Byt till Svenska"}
         aria-label="Switch Language"
       >
-        {language === "en" ? "SE" : "EN"}
+        {language === "sv" ? "EN" : "SE"}
       </button>
     );
   }
@@ -32,18 +32,6 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
       >
         <button
           type="button"
-          onClick={() => setLanguage("en")}
-          className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
-            language === "en"
-              ? "bg-white/15 text-[#E6C687] shadow-xs"
-              : "text-white/60 hover:text-white"
-          }`}
-          aria-pressed={language === "en"}
-        >
-          EN
-        </button>
-        <button
-          type="button"
           onClick={() => setLanguage("sv")}
           className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
             language === "sv"
@@ -53,6 +41,18 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
           aria-pressed={language === "sv"}
         >
           SE
+        </button>
+        <button
+          type="button"
+          onClick={() => setLanguage("en")}
+          className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+            language === "en"
+              ? "bg-white/15 text-[#E6C687] shadow-xs"
+              : "text-white/60 hover:text-white"
+          }`}
+          aria-pressed={language === "en"}
+        >
+          EN
         </button>
       </div>
     );
@@ -66,18 +66,6 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
     >
       <button
         type="button"
-        onClick={() => setLanguage("en")}
-        className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
-          language === "en"
-            ? "bg-[#0B1522] text-[#C59C58] shadow-sm"
-            : "text-[#0B1522]/60 hover:text-[#0B1522]"
-        }`}
-        aria-pressed={language === "en"}
-      >
-        EN
-      </button>
-      <button
-        type="button"
         onClick={() => setLanguage("sv")}
         className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
           language === "sv"
@@ -87,6 +75,18 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
         aria-pressed={language === "sv"}
       >
         SE
+      </button>
+      <button
+        type="button"
+        onClick={() => setLanguage("en")}
+        className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+          language === "en"
+            ? "bg-[#0B1522] text-[#C59C58] shadow-sm"
+            : "text-[#0B1522]/60 hover:text-[#0B1522]"
+        }`}
+        aria-pressed={language === "en"}
+      >
+        EN
       </button>
     </div>
   );
