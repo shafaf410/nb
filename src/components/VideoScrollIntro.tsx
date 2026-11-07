@@ -137,12 +137,11 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
       }
     } catch (err) {}
 
-    const fallbackDuration = 21.33;
-
     const step = () => {
       const v = getActiveVideo();
       if (!v) return;
 
+      const fallbackDuration = v === mobileVideoRef.current ? 11.71 : 21.33;
       const actualDur =
         v.duration && !isNaN(v.duration) && v.duration > 0
           ? v.duration
