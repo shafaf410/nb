@@ -21,7 +21,7 @@ function ContactContent() {
   return (
     <SmoothScroll>
       <Navbar onRequestWorkforce={scrollToRequestForm} showNav={true} />
-      <main className="min-h-screen flex flex-col bg-[#070D16] pt-16 sm:pt-20">
+      <main className="min-h-screen flex flex-col bg-[#070D16] pt-12 sm:pt-16">
         <WorkforceFormSection />
         <Footer />
       </main>

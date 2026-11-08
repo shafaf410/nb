@@ -139,28 +139,14 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
     if (!container) return;
 
     const ctx = gsap.context(() => {
-      // 1. Headline settles into final scale during scroll with hardware-accelerated transform
+      // 1. Headline subtle entrance
       if (headline) {
-        gsap.fromTo(
-          headline,
-          {
-            scale: 1.08,
-            yPercent: 8,
-            opacity: 0.85,
-          },
-          {
-            scale: 1.0,
-            yPercent: 0,
-            opacity: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: container,
-              start: "top 80%",
-              end: "top 25%",
-              scrub: 1.0,
-            },
-          }
-        );
+        gsap.from(headline, {
+          y: 12,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out",
+        });
       }
 
       // 2. Background media slowly reveals behind it
@@ -215,7 +201,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
     <section
       id="contact"
       ref={containerRef}
-      className="py-24 sm:py-36 lg:py-44 bg-[#070D16] relative overflow-hidden text-white scroll-mt-20"
+      className="pt-2 sm:pt-4 pb-16 sm:pb-24 lg:pb-32 bg-[#070D16] relative overflow-hidden text-white scroll-mt-20"
     >
       <div id="request-form" className="sr-only" />
       <div id="contact-us" className="sr-only" />
@@ -237,7 +223,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         
         {/* Back Button Navigation */}
-        <div className="mb-8">
+        <div className="mb-4 sm:mb-5">
           <button
             type="button"
             onClick={() => {
@@ -258,7 +244,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         </div>
 
         {/* Top Eyebrow Tag */}
-        <div className="flex items-center justify-center gap-3 mb-6">
+        <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
           <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase font-bold">
             {isSv ? "NORVIAN AB // OFFICIELLA E-POSTKONTAKTER" : "NORVIAN AB // OFFICIAL EMAIL CONTACTS"}
@@ -267,7 +253,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         </div>
 
         {/* Section Headline */}
-        <div className="text-center overflow-hidden pb-4 sm:pb-6">
+        <div className="text-center overflow-hidden pb-2 sm:pb-3">
           <div ref={headlineRef} className="origin-top will-change-transform">
             <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-[-0.02em] leading-tight">
               NORVIAN AB
@@ -280,8 +266,8 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         </div>
 
         {/* Header Message & Motto Banner */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2.5 px-4.5 py-1.5 rounded-full bg-white/[0.05] border border-[#C59C58]/40 text-xs sm:text-sm font-medium text-white shadow-sm mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-2.5 px-4.5 py-1.5 rounded-full bg-white/[0.05] border border-[#C59C58]/40 text-xs sm:text-sm font-medium text-white shadow-sm mb-3">
             <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
             <span className="tracking-wide">
               {isSv ? "Er Bransch. Vårt Folk. Ett Mål." : "Your Industry. Our People. One Goal."}
