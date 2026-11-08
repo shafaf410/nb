@@ -186,12 +186,8 @@ export default function ImpressumSection() {
             <div className="pt-2 space-y-1">
               <p>
                 <span className="text-slate-400">{isSv ? "E-post: " : "Email: "}</span>
-                <a href="mailto:contact@norvian.no" className="text-[#C59C58] hover:underline">
-                  contact@norvian.no
-                </a>
-                <span className="text-slate-500"> / </span>
-                <a href="mailto:contact@norvian.se" className="text-[#C59C58] hover:underline">
-                  contact@norvian.se
+                <a href="mailto:office@norvian.se" className="text-[#C59C58] hover:underline font-mono">
+                  office@norvian.se
                 </a>
               </p>
               <p>

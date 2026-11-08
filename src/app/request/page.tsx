@@ -24,6 +24,7 @@ import {
   Clock,
   ArrowRight,
   AlertCircle,
+  Globe,
 } from "lucide-react";
 
 function RequestFormContent() {
@@ -519,8 +520,15 @@ function RequestFormContent() {
 
                   <div className="flex items-center gap-3">
                     <Mail className="w-4 h-4 text-[#C59C58] shrink-0" />
-                    <a href="mailto:contact@norvian.no" className="hover:text-white transition-colors">
-                      contact@norvian.no
+                    <a href="mailto:office@norvian.se" className="hover:text-white transition-colors">
+                      office@norvian.se
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Globe className="w-4 h-4 text-[#C59C58] shrink-0" />
+                    <a href="https://www.norvian.se" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                      www.norvian.se
                     </a>
                   </div>
 

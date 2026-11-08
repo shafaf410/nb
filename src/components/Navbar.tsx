@@ -505,7 +505,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     <span>{isSv ? "Direkt Ledning & Partners:" : "Direct Leadership & Partners:"}</span>
                   </div>
                   <p className="text-[11px] text-slate-600">
-                    Bianka Bittlingmeier • Vinu Mohan • Isabelle Beyer
+                    Bianka Bittlingmeier • Vinu Mohan • Alina K • Isabelle Beyer • Baiju Babu
                   </p>
                 </div>
               </div>

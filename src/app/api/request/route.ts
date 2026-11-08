@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 // Target recipient email: can be configured via environment variable
 // or will be updated with the specific email provided later.
-const DEFAULT_RECIPIENT_EMAIL = process.env.REQUEST_RECIPIENT_EMAIL || process.env.CONTACT_EMAIL || "contact@norvian.no";
+const DEFAULT_RECIPIENT_EMAIL = process.env.REQUEST_RECIPIENT_EMAIL || process.env.CONTACT_EMAIL || "office@norvian.se";
 
 export async function POST(req: Request) {
   try {

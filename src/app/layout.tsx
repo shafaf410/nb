@@ -57,7 +57,7 @@ export default function RootLayout({
       addressCountry: "SE",
     },
     telephone: "+47 22 00 90 00",
-    email: "contact@norvian.no",
+    email: "office@norvian.se",
   };
 
   return (

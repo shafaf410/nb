@@ -328,8 +328,8 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                 <Users className="w-4 h-4 text-[#C59C58]" />
               </div>
 
-              <div className="space-y-3.5">
-                <div className="pb-3 border-b border-white/5">
+              <div className="space-y-3.5 divide-y divide-white/5">
+                <div className="pb-3">
                   <h3 className="font-serif text-sm text-white font-medium">
                     Bianka Bittlingmeier
                   </h3>
@@ -341,7 +341,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                   </p>
                 </div>
 
-                <div className="pb-3 border-b border-white/5">
+                <div className="py-3">
                   <h3 className="font-serif text-sm text-white font-medium">
                     Vinu Mohan
                   </h3>
@@ -353,7 +353,19 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                   </p>
                 </div>
 
-                <div>
+                <div className="py-3">
+                  <h3 className="font-serif text-sm text-white font-medium">
+                    Alina K
+                  </h3>
+                  <p className="text-[#C59C58] text-[11px] font-semibold mt-0.5">
+                    {isSv ? "Filialchef & Administratör" : "Branch Manager & Administrator"}
+                  </p>
+                  <p className="text-white/60 text-[10.5px] mt-0.5 font-light">
+                    {isSv ? "Kontorsdrift & Administration" : "Branch Operations & Administration"}
+                  </p>
+                </div>
+
+                <div className="py-3">
                   <h3 className="font-serif text-sm text-white font-medium">
                     Isabelle Beyer
                   </h3>
@@ -362,6 +374,18 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                   </p>
                   <p className="text-white/60 text-[10.5px] mt-0.5 font-light">
                     {isSv ? "Tysk Marknadskoordinering" : "German Market Coordination"}
+                  </p>
+                </div>
+
+                <div className="pt-3">
+                  <h3 className="font-serif text-sm text-white font-medium">
+                    Baiju Babu
+                  </h3>
+                  <p className="text-[#C59C58] text-[11px] font-semibold mt-0.5">
+                    {isSv ? "Extern Affärspartner – Storbritannien" : "External Business Partner – UK"}
+                  </p>
+                  <p className="text-white/60 text-[10.5px] mt-0.5 font-light">
+                    {isSv ? "UK & Internationell Utveckling" : "UK & International Business Development"}
                   </p>
                 </div>
               </div>
@@ -375,8 +399,8 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
 
               <div className="flex items-center gap-2.5">
                 <Mail className="w-3.5 h-3.5 text-[#C59C58] shrink-0" />
-                <a href="mailto:contact@norvian.no" className="hover:text-[#C59C58] transition-colors font-mono">
-                  contact@norvian.no
+                <a href="mailto:office@norvian.se" className="hover:text-[#C59C58] transition-colors font-mono">
+                  office@norvian.se
                 </a>
               </div>
 

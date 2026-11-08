@@ -4,13 +4,74 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CheckCircle2, ShieldCheck, Send, MapPin, Mail, Phone, ArrowLeft } from "lucide-react";
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Send,
+  MapPin,
+  Mail,
+  Phone,
+  ArrowLeft,
+  Globe,
+  Copy,
+  Check,
+  ExternalLink,
+  Building2,
+} from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import MagneticButton from "@/components/MagneticButton";
 
 interface WorkforceFormProps {
   initialIndustry?: string;
 }
+
+interface ContactPerson {
+  name: string;
+  positionEn: string;
+  positionSv: string;
+  email: string;
+  isGeneral?: boolean;
+}
+
+const OFFICIAL_CONTACTS: ContactPerson[] = [
+  {
+    name: "Bianka Bittlingmeier",
+    positionEn: "Co-Founder & Co-Owner",
+    positionSv: "Medgrundare & Delägare",
+    email: "bianka@norvian.se",
+  },
+  {
+    name: "Vinu Mohan",
+    positionEn: "Co-Founder & Co-Owner",
+    positionSv: "Medgrundare & Delägare",
+    email: "vinu@norvian.se",
+  },
+  {
+    name: "Alina K",
+    positionEn: "Branch Manager & Administrator",
+    positionSv: "Branch Manager & Administratör",
+    email: "alina@norvian.se",
+  },
+  {
+    name: "Isabelle Beyer",
+    positionEn: "External Business Partner – Germany",
+    positionSv: "Extern Affärspartner – Tyskland",
+    email: "isabelle@norvian.se",
+  },
+  {
+    name: "Baiju Babu",
+    positionEn: "External Business Partner – UK",
+    positionSv: "Extern Affärspartner – UK",
+    email: "baiju@norvian.se",
+  },
+  {
+    name: "General Office",
+    positionEn: "General Enquiries",
+    positionSv: "Allmänna Förfrågningar",
+    email: "office@norvian.se",
+    isGeneral: true,
+  },
+];
 
 export default function WorkforceFormSection({ initialIndustry = "" }: WorkforceFormProps) {
   const { t, language } = useLanguage();
@@ -23,6 +84,18 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
     serviceNeeded: initialIndustry || "",
     projectDetails: "",
   });
+
+  const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+
+  const handleCopyEmail = (email: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(email);
+      setCopiedEmail(email);
+      setTimeout(() => {
+        setCopiedEmail(null);
+      }, 2000);
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -187,8 +260,8 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         {/* Top Eyebrow Tag */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
-          <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase">
-            {isSv ? "KONTAKT // DIREKT LEDNING & FÖRFRÅGAN" : "CONTACT // DIRECT LEADERSHIP & INQUIRY"}
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase font-bold">
+            {isSv ? "NORVIAN AB // OFFICIELLA E-POSTKONTAKTER" : "NORVIAN AB // OFFICIAL EMAIL CONTACTS"}
           </span>
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
         </div>
@@ -197,91 +270,127 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         <div className="text-center overflow-hidden pb-4 sm:pb-6">
           <div ref={headlineRef} className="origin-top will-change-transform">
             <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-[-0.02em] leading-tight">
-              {isSv ? "Kontakta " : "Get in Touch with "}
-              <br className="hidden sm:inline" />
-              <span className="italic font-serif text-[#C59C58]">Norvian AB</span>
+              NORVIAN AB
+              <br />
+              <span className="italic font-serif text-[#C59C58] text-2xl sm:text-4xl lg:text-5xl">
+                {isSv ? "Officiella E-postkontakter" : "Official Email Contacts"}
+              </span>
             </h2>
           </div>
         </div>
 
-        {/* Header Message */}
+        {/* Header Message & Motto Banner */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <p className="text-base sm:text-lg lg:text-xl text-white/80 font-light leading-relaxed">
+          <div className="inline-flex items-center gap-2.5 px-4.5 py-1.5 rounded-full bg-white/[0.05] border border-[#C59C58]/40 text-xs sm:text-sm font-medium text-white shadow-sm mb-4">
+            <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
+            <span className="tracking-wide">
+              {isSv ? "Er Bransch. Vårt Folk. Ett Mål." : "Your Industry. Our People. One Goal."}
+            </span>
+          </div>
+          <p className="text-base sm:text-lg text-white/80 font-light leading-relaxed">
             {isSv 
-              ? "Vi är alltid redo att diskutera era projektbehov, bemanningslösningar eller besvara frågor om yrkeskunnig arbetskraft från Sydamerika, Filippinerna, Vietnam och Indien."
-              : "We're always ready to discuss your project requirements, manpower solutions, or any questions about skilled workers from South America, the Philippines, Vietnam, and India."}
+              ? "Välkommen att kontakta vår ledning och våra affärspartners direkt via officiella e-postadresser, eller skicka en förfrågan i formuläret nedan för snabb återkoppling."
+              : "Connect directly with our leadership, key branch managers, and international partners via official email, or submit project details using the form below."}
           </p>
         </div>
 
         {/* 2-Column Responsive Grid: Left = Direct Leadership Contacts, Right = Inquiry Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
           
-          {/* Left Column: Direct Leadership & Partners Card (Image 2) */}
-          <div className="lg:col-span-5 bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 lg:p-10 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)] flex flex-col justify-between">
+          {/* Left Column: Direct Leadership & Official Contacts Card */}
+          <div className="lg:col-span-5 bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 lg:p-9 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)] flex flex-col justify-between">
             <div>
               {/* Card Header Badge */}
-              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/10">
-                <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
-                <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-[#C59C58] uppercase font-semibold">
-                  {isSv ? "DIREKT LEDNING & PARTNERS" : "KEY LEADERSHIP & PARTNERS"}
+              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
+                  <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-[#C59C58] uppercase font-semibold">
+                    NORVIAN AB
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono text-white/50 uppercase tracking-widest">
+                  {isSv ? "Officiella Kontakter" : "Official Roster"}
                 </span>
               </div>
 
-              {/* Person 1: Bianka Bittlingmeier */}
-              <div className="pb-4 border-b border-white/10">
-                <h3 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight">
-                  Bianka Bittlingmeier
+              {/* Card Sub-headline & Slogan */}
+              <div className="mb-5">
+                <h3 className="font-serif text-lg sm:text-xl text-white font-normal">
+                  {isSv ? "Officiella E-postkontakter" : "Official Email Contacts"}
                 </h3>
-                <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
-                  {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
-                </p>
-                <p className="text-white/60 text-[10.5px] sm:text-[11.5px] mt-0.5 font-light leading-relaxed">
-                  {isSv ? "Rekrytering & Affärspartnerskap" : "Recruitment & Business Partnerships"}
+                <p className="text-xs text-[#C59C58] font-medium tracking-wide mt-1 italic">
+                  {isSv ? "Er Bransch. Vårt Folk. Ett Mål." : "Your Industry. Our People. One Goal."}
                 </p>
               </div>
 
-              {/* Person 2: Vinu Mohan */}
-              <div className="py-4 border-b border-white/10">
-                <h3 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight">
-                  Vinu Mohan
-                </h3>
-                <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
-                  {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
-                </p>
-                <p className="text-white/60 text-[10.5px] sm:text-[11.5px] mt-0.5 font-light leading-relaxed">
-                  {isSv ? "Internationell Drift & Rekrytering" : "International Operations & Recruitment"}
-                </p>
-              </div>
+              {/* Roster of Contacts */}
+              <div className="space-y-3.5 divide-y divide-white/10">
+                {OFFICIAL_CONTACTS.map((contact) => (
+                  <div key={contact.email} className="pt-3 first:pt-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <h4 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight truncate">
+                          {contact.name}
+                        </h4>
+                        <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
+                          {isSv ? contact.positionSv : contact.positionEn}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyEmail(contact.email)}
+                        className="p-1.5 rounded-lg bg-white/5 hover:bg-[#C59C58]/20 text-white/60 hover:text-[#C59C58] transition-colors shrink-0 cursor-pointer"
+                        title={isSv ? "Kopiera e-postadress" : "Copy email address"}
+                        aria-label={`Copy email for ${contact.name}`}
+                      >
+                        {copiedEmail === contact.email ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
 
-              {/* Person 3: Isabelle Beyer */}
-              <div className="pt-4">
-                <h3 className="font-serif text-sm sm:text-base text-white font-medium tracking-tight">
-                  Isabelle Beyer
-                </h3>
-                <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
-                  {isSv ? "Extern Affärspartner – Tyskland" : "External Business Partner – Germany"}
-                </p>
-                <p className="text-white/60 text-[10.5px] sm:text-[11.5px] mt-0.5 font-light leading-relaxed">
-                  {isSv ? "Tysk Marknadskoordinering" : "German Market Coordination"}
-                </p>
+                    <div className="mt-1 flex items-center gap-2">
+                      <Mail className="w-3.5 h-3.5 text-[#C59C58] shrink-0" />
+                      <a
+                        href={`mailto:${contact.email}`}
+                        className="text-xs sm:text-[12.5px] font-mono text-white/80 hover:text-[#C59C58] transition-colors truncate"
+                      >
+                        {contact.email}
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Office & Direct Contact Info */}
-            <div className="mt-8 pt-6 border-t border-white/15 space-y-3.5">
-              <div className="flex items-start gap-3 text-xs sm:text-sm text-white/75">
+            {/* Office, Website & Direct Contact Info */}
+            <div className="mt-6 pt-5 border-t border-white/15 space-y-3 text-xs sm:text-sm text-white/75">
+              <div className="flex items-center gap-3">
+                <Globe className="w-4 h-4 text-[#C59C58] shrink-0" />
+                <div className="flex items-center gap-1.5">
+                  <span className="text-white/50">{isSv ? "Webbplats:" : "Website:"}</span>
+                  <a
+                    href="https://www.norvian.se"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-white hover:text-[#C59C58] transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>www.norvian.se</span>
+                    <ExternalLink className="w-3 h-3 text-[#C59C58]" />
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#C59C58] shrink-0 mt-0.5" />
                 <span>Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : "Sweden"}</span>
               </div>
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-white/75">
-                <Mail className="w-4 h-4 text-[#C59C58] shrink-0" />
-                <a href="mailto:contact@norvian.no" className="hover:text-[#C59C58] transition-colors">
-                  contact@norvian.no
-                </a>
-              </div>
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-white/75">
+
+              <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#C59C58] shrink-0" />
-                <a href="tel:+4722009000" className="hover:text-[#C59C58] transition-colors">
+                <a href="tel:+4722009000" className="hover:text-[#C59C58] transition-colors font-mono">
                   +47 22 00 90 00
                 </a>
               </div>
@@ -413,6 +522,161 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
           )}
         </div>
 
+        </div>
+
+        {/* Full Official Corporate Contact Directory Table */}
+        <div className="mt-12 sm:mt-16 lg:mt-20 bg-[#0B1522]/90 backdrop-blur-2xl rounded-3xl p-6 sm:p-10 lg:p-12 border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)] relative overflow-hidden">
+          {/* Subtle Ambient Background Glow */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C59C58]/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Section Heading & Tagline */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 sm:pb-8 border-b border-white/10 relative z-10">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
+                <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase font-bold">
+                  NORVIAN AB
+                </span>
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-white tracking-tight">
+                {isSv ? "Officiella E-postkontakter" : "Official Email Contacts"}
+              </h3>
+              <p className="text-sm sm:text-base text-[#C59C58] font-medium tracking-wide mt-1.5 italic">
+                {isSv ? "Er Bransch. Vårt Folk. Ett Mål." : "Your Industry. Our People. One Goal."}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs font-mono text-white/70">
+              <Globe className="w-4 h-4 text-[#C59C58]" />
+              <span>Website:</span>
+              <a
+                href="https://www.norvian.se"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-[#C59C58] font-semibold underline underline-offset-4 decoration-[#C59C58]/60 transition-colors inline-flex items-center gap-1"
+              >
+                <span>www.norvian.se</span>
+                <ExternalLink className="w-3 h-3 text-[#C59C58]" />
+              </a>
+            </div>
+          </div>
+
+          {/* Table for Desktop & Tablet */}
+          <div className="hidden sm:block mt-6 overflow-x-auto relative z-10">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-white/10 text-[11px] font-mono uppercase tracking-[0.18em] text-[#C59C58]">
+                  <th className="py-4 px-4 font-semibold">{isSv ? "Fullständigt Namn" : "Full Name"}</th>
+                  <th className="py-4 px-4 font-semibold">{isSv ? "Position" : "Position"}</th>
+                  <th className="py-4 px-4 font-semibold text-right">{isSv ? "Officiell E-post" : "Official Email"}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-sm">
+                {OFFICIAL_CONTACTS.map((contact) => (
+                  <tr
+                    key={contact.email}
+                    className="group hover:bg-white/[0.03] transition-colors"
+                  >
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:border-[#C59C58]/50 flex items-center justify-center text-xs font-mono text-[#C59C58] font-bold">
+                          {contact.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                        </div>
+                        <div>
+                          <div className="font-medium text-white group-hover:text-[#C59C58] transition-colors">
+                            {contact.name}
+                          </div>
+                          {contact.isGeneral && (
+                            <span className="text-[10px] font-mono text-white/40 uppercase tracking-wider">
+                              Corporate Desk
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-white/80">
+                      <span className="inline-block px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 text-xs text-white/90">
+                        {isSv ? contact.positionSv : contact.positionEn}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-right">
+                      <div className="inline-flex items-center gap-2 justify-end">
+                        <a
+                          href={`mailto:${contact.email}`}
+                          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-mono tracking-wide transition-all group/link"
+                        >
+                          <Mail className="w-3.5 h-3.5 text-[#C59C58] group-hover/link:text-[#070D16] transition-colors" />
+                          <span>{contact.email}</span>
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => handleCopyEmail(contact.email)}
+                          className="p-1.5 rounded-lg bg-white/5 hover:bg-[#C59C58]/20 text-white/50 hover:text-[#C59C58] transition-colors cursor-pointer"
+                          title={isSv ? "Kopiera e-postadress" : "Copy email address"}
+                          aria-label={`Copy ${contact.email}`}
+                        >
+                          {copiedEmail === contact.email ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Stacked View */}
+          <div className="sm:hidden mt-6 space-y-3.5 relative z-10">
+            {OFFICIAL_CONTACTS.map((contact) => (
+              <div
+                key={contact.email}
+                className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-2.5"
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="font-serif text-base text-white font-medium">
+                    {contact.name}
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={() => handleCopyEmail(contact.email)}
+                    className="p-1.5 rounded-lg bg-white/5 text-white/60 hover:text-[#C59C58]"
+                    aria-label={`Copy ${contact.email}`}
+                  >
+                    {copiedEmail === contact.email ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                </div>
+                <p className="text-[#C59C58] text-xs font-medium">
+                  {isSv ? contact.positionSv : contact.positionEn}
+                </p>
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/[0.06] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 text-xs font-mono transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-[#C59C58] group-hover:text-[#070D16]" />
+                  <span>{contact.email}</span>
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* Table Card Bottom Strip */}
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/60 relative z-10">
+            <div className="flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-[#C59C58]" />
+              <span>NORVIAN AB • Org. Nr: 559473-4997 • Baumansgatan 4, 593 32 Västervik, Sweden</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="font-mono text-[#C59C58]">Website: www.norvian.se</span>
+            </div>
+          </div>
         </div>
 
       </div>
