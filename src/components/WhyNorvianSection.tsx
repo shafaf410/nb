@@ -13,7 +13,7 @@ export default function WhyNorvianSection() {
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const topBeamRef = useRef<HTMLDivElement>(null);
 
-  const icons = [Scale, Users, FileCheck2, ShieldCheck];
+  const icons = [ShieldCheck, Users, FileCheck2];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -110,7 +110,7 @@ export default function WhyNorvianSection() {
         <div className="flex items-center gap-3 mb-6">
           <span className="text-[10px] sm:text-[11px] font-mono font-semibold uppercase tracking-[0.25em] text-[#C59C58] flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-[#C59C58]" />
-            {t.why.tag} // 03 REGULATORY PILLARS
+            {t.why.tag} // 03 WORKFORCE SOLUTIONS
           </span>
           <span className="h-[1px] w-12 sm:w-16 bg-[#C59C58]/60" />
         </div>
@@ -126,14 +126,20 @@ export default function WhyNorvianSection() {
               <div className="overflow-hidden py-1">
                 <div className="headline-line will-change-transform">{t.why.titleLine1}</div>
               </div>
-              <div className="overflow-hidden py-1">
-                <div className="headline-line will-change-transform">{t.why.titleLine2}</div>
-              </div>
-              <div className="overflow-hidden py-1">
-                <div className="headline-line text-[#C59C58] italic font-serif will-change-transform">
-                  {t.why.titleAccent}
+              {t.why.titleLine2 && (
+                <div className="overflow-hidden py-1">
+                  <div className="headline-line text-[#C59C58] italic font-serif will-change-transform">
+                    {t.why.titleLine2}
+                  </div>
                 </div>
-              </div>
+              )}
+              {t.why.titleAccent && (
+                <div className="overflow-hidden py-1">
+                  <div className="headline-line text-[#C59C58] italic font-serif will-change-transform">
+                    {t.why.titleAccent}
+                  </div>
+                </div>
+              )}
             </h2>
           </div>
 
@@ -144,10 +150,10 @@ export default function WhyNorvianSection() {
           </div>
         </div>
 
-        {/* 4 Architectural Benefit Cards */}
+        {/* 3 Architectural Benefit Cards */}
         <div
           ref={cardsContainerRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {t.why.pillars.map((item, idx) => {
             const Icon = icons[idx] || Award;
@@ -219,7 +225,7 @@ function PillarCard({
         <div className="card-bottom-line absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#C59C58]/60 to-transparent origin-left" />
 
         <div className="flex items-center justify-between pt-2">
-          <span className="text-[11px] font-mono font-semibold tracking-wider text-[#C59C58]">
+          <span className="text-[10px] sm:text-[11px] font-mono font-semibold tracking-wider text-[#C59C58] pr-2 leading-relaxed">
             {stats}
           </span>
           <CheckCircle2 className="w-4 h-4 text-[#C59C58] transition-transform duration-300 group-hover:scale-110" />
