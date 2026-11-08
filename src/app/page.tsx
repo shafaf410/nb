@@ -17,7 +17,7 @@ function MainContent() {
   const [isNavVisible, setIsNavVisible] = useState(false);
 
   const handleRequestWorkforce = () => {
-    window.location.href = "/contact";
+    window.location.href = "/request";
   };
 
   const handleSelectIndustry = (key: "shipbuilding" | "construction" | "logistics" | "industrial") => {
@@ -43,7 +43,7 @@ function MainContent() {
 
   const handleRequestForIndustry = (industryName: string) => {
     setActiveModal(null);
-    window.location.href = `/contact?industry=${encodeURIComponent(industryName)}`;
+    window.location.href = `/request?industry=${encodeURIComponent(industryName)}`;
   };
 
   // URL Hash & Browser History Synchronization:

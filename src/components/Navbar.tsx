@@ -9,7 +9,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
 
 interface NavbarProps {
-  onRequestWorkforce: () => void;
+  onRequestWorkforce?: () => void;
   onGoHome?: () => void;
   showNav?: boolean;
 }
@@ -304,9 +304,9 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
               {/* Request CTA Button */}
               <Link
-                href="/contact"
+                href="/request"
                 onClick={(e) => {
-                  if (typeof window !== "undefined" && window.location.pathname === "/contact") {
+                  if (typeof window !== "undefined" && window.location.pathname === "/request") {
                     e.preventDefault();
                     onRequestWorkforce?.();
                   }
@@ -322,9 +322,9 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               <LanguageToggle variant="pill" />
 
               <Link
-                href="/contact"
+                href="/request"
                 onClick={(e) => {
-                  if (typeof window !== "undefined" && window.location.pathname === "/contact") {
+                  if (typeof window !== "undefined" && window.location.pathname === "/request") {
                     e.preventDefault();
                     onRequestWorkforce?.();
                   }
@@ -483,10 +483,10 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 {/* Single Strong Action Button: Request */}
                 <div className="pt-2">
                   <Link
-                    href="/contact"
+                    href="/request"
                     onClick={(e) => {
                       setMobileMenuOpen(false);
-                      if (typeof window !== "undefined" && window.location.pathname === "/contact") {
+                      if (typeof window !== "undefined" && window.location.pathname === "/request") {
                         e.preventDefault();
                         onRequestWorkforce?.();
                       }

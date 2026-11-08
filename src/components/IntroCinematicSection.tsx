@@ -216,7 +216,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
           {/* 4. Request Workforce Action Button (Mobile Touch-Optimized) */}
           <div className="mt-6 sm:mt-7">
             <Link
-              href="/contact"
+              href="/request"
               onClick={(e) => {
                 if (onRequestWorkforce) {
                   e.preventDefault();

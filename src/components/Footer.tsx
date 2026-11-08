@@ -176,9 +176,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/contact" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
+                <Link href="/request" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.requestCta}
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/impressum" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300 text-[#C59C58]/90">
