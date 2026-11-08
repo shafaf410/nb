@@ -158,11 +158,11 @@ export const translations = {
     },
     // Why Norvian
     why: {
-      tag: "NORVIAN AB",
-      titleLine1: "Workforce Solutions",
-      titleLine2: "Across Europe",
-      titleAccent: "",
-      desc: "We supply qualified, experienced workforce across Europe in shipbuilding, construction, manufacturing, transport, and logistics with full regulatory compliance.",
+      tag: "THE NORVIAN ADVANTAGE",
+      titleLine1: "The Right People.",
+      titleLine2: "The Right Standards.",
+      titleAccent: "Absolute Certainty.",
+      desc: "Norvian AB is a Swedish staffing company supplying skilled workers to businesses across Europe.\n\nWe provide experienced workers for shipbuilding, construction, manufacturing, transport and logistics.\n\nOur workers are already based in Europe, including European citizens and skilled workers from other countries.",
       pillars: [
         {
           number: "01",
@@ -407,11 +407,11 @@ export const translations = {
     },
     // Why Norvian
     why: {
-      tag: "NORVIAN AB",
-      titleLine1: "Bemanningslösningar",
-      titleLine2: "Över Hela Europa",
-      titleAccent: "",
-      desc: "Vi levererar kvalificerad och erfaren arbetskraft i hela Europa inom skeppsbyggnad, anläggning, tillverkning, transport och logistik med full regelefterlevnad.",
+      tag: "NORVIANS FÖRDELAR",
+      titleLine1: "Rätt Människor.",
+      titleLine2: "Rätt Standarder.",
+      titleAccent: "Total Trygghet.",
+      desc: "Norvian AB är ett svenskt bemanningsföretag som förser företag i hela Europa med kvalificerad arbetskraft.\n\nVi tillhandahåller erfaren personal inom skeppsbyggnad, anläggning, tillverkning, transport och logistik.\n\nVåra yrkesarbetare är redan baserade i Europa, inklusive EU-medborgare och kvalificerad arbetskraft från andra länder.",
       pillars: [
         {
           number: "01",

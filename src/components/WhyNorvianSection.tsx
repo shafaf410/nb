@@ -110,7 +110,7 @@ export default function WhyNorvianSection() {
         <div className="flex items-center gap-3 mb-6">
           <span className="text-[10px] sm:text-[11px] font-mono font-semibold uppercase tracking-[0.25em] text-[#C59C58] flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-[#C59C58]" />
-            {t.why.tag} // 03 WORKFORCE SOLUTIONS
+            {t.why.tag} // 03 REGULATORY PILLARS
           </span>
           <span className="h-[1px] w-12 sm:w-16 bg-[#C59C58]/60" />
         </div>
@@ -126,25 +126,19 @@ export default function WhyNorvianSection() {
               <div className="overflow-hidden py-1">
                 <div className="headline-line will-change-transform">{t.why.titleLine1}</div>
               </div>
-              {t.why.titleLine2 && (
-                <div className="overflow-hidden py-1">
-                  <div className="headline-line text-[#C59C58] italic font-serif will-change-transform">
-                    {t.why.titleLine2}
-                  </div>
+              <div className="overflow-hidden py-1">
+                <div className="headline-line will-change-transform">{t.why.titleLine2}</div>
+              </div>
+              <div className="overflow-hidden py-1">
+                <div className="headline-line text-[#C59C58] italic font-serif will-change-transform">
+                  {t.why.titleAccent}
                 </div>
-              )}
-              {t.why.titleAccent && (
-                <div className="overflow-hidden py-1">
-                  <div className="headline-line text-[#C59C58] italic font-serif will-change-transform">
-                    {t.why.titleAccent}
-                  </div>
-                </div>
-              )}
+              </div>
             </h2>
           </div>
 
           <div className="lg:col-span-4 lg:pb-3">
-            <p className="text-sm sm:text-base text-[#0B1522]/75 font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-[#0B1522]/75 font-light leading-relaxed whitespace-pre-line">
               {t.why.desc}
             </p>
           </div>
