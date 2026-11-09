@@ -76,24 +76,27 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
     },
   ];
 
-  // Helper to swiftly scroll directly to a specific slide using Lenis if active
+  // Helper to swiftly navigate directly to a specific slide
   const goToSlide = useCallback((index: number) => {
-    // Immediately update active index for instantaneous visual feedback on mobile
+    // Immediately update active index for instantaneous visual feedback
     activeIdxRef.current = index;
     setActiveIndex(index);
 
     const trigger = triggerRef.current;
     if (!trigger) return;
 
-    const st = ScrollTrigger.getById("industries-pin");
-    if (st) {
-      // 4 distinct rest positions: 0.12, 0.38, 0.63, 0.88
-      const targetProgress = index === 0 ? 0.12 : index === 1 ? 0.38 : index === 2 ? 0.63 : 0.88;
-      const targetY = st.start + targetProgress * (st.end - st.start);
-      if (typeof window !== "undefined" && (window as any).lenis) {
-        (window as any).lenis.scrollTo(targetY, { duration: 0.8 });
-      } else {
-        window.scrollTo({ top: targetY, behavior: "smooth" });
+    // Only scroll the window on desktop (1024px+) where ScrollTrigger runway pinning is active
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      const st = ScrollTrigger.getById("industries-pin");
+      if (st) {
+        // 4 distinct rest positions: 0.12, 0.38, 0.63, 0.88
+        const targetProgress = index === 0 ? 0.12 : index === 1 ? 0.38 : index === 2 ? 0.63 : 0.88;
+        const targetY = st.start + targetProgress * (st.end - st.start);
+        if ((window as any).lenis) {
+          (window as any).lenis.scrollTo(targetY, { duration: 0.8 });
+        } else {
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+        }
       }
     }
   }, []);
@@ -125,7 +128,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
 
     const mm = gsap.matchMedia();
 
-    // Desktop Pinned Runway (1024px+)
+    // Desktop Pinned Runway (1024px+): Mouse-wheel scrolling smoothly transitions slides
     mm.add("(min-width: 1024px)", () => {
       ScrollTrigger.create({
         id: "industries-pin",
@@ -155,40 +158,14 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
       });
     });
 
-    // Mobile & Tablet Pinned Runway (<1024px): Enables vertical scrolling to slide cards on mobile!
-    mm.add("(max-width: 1023px)", () => {
-      ScrollTrigger.create({
-        id: "industries-pin",
-        trigger: trigger,
-        start: "top top",
-        end: "+=1600",
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const p = self.progress;
-          let nextIdx = 0;
-          if (p >= 0.75) {
-            nextIdx = 3;
-          } else if (p >= 0.50) {
-            nextIdx = 2;
-          } else if (p >= 0.25) {
-            nextIdx = 1;
-          } else {
-            nextIdx = 0;
-          }
-          if (nextIdx !== activeIdxRef.current) {
-            activeIdxRef.current = nextIdx;
-            setActiveIndex(nextIdx);
-          }
-        },
-      });
-    });
+    // Note: On mobile (<1024px), we intentionally DO NOT pin vertical scroll!
+    // This allows natural vertical page scrolling and eliminates accidental runaway slide transitions.
+    // Mobile users navigate via horizontal swipe, category tabs, dots, or PREV/NEXT buttons.
 
     return () => mm.revert();
   }, []);
 
-  // Robust touch swipe support on mobile devices
+  // Robust horizontal touch swipe support on mobile devices
   const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -204,8 +181,8 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
     const elapsed = Date.now() - touchStartRef.current.time;
 
     // Detect horizontal swipe gesture:
-    // deltaX dominates deltaY and is at least 30px
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30 && elapsed < 800) {
+    // deltaX dominates deltaY by 1.8x and is at least 40px
+    if (Math.abs(deltaX) > Math.abs(deltaY) * 1.8 && Math.abs(deltaX) > 40 && elapsed < 600) {
       if (deltaX > 0 && activeIndex < industries.length - 1) {
         goToSlide(activeIndex + 1);
       } else if (deltaX < 0 && activeIndex > 0) {
@@ -229,10 +206,7 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
       {/* Pinned Desktop Viewport / Responsive Mobile Viewport */}
       <div
         ref={pinRef}
-        className="w-full h-[92vh] sm:h-[95vh] lg:h-screen overflow-hidden flex flex-col justify-between relative bg-[#070D16]"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchCancel}
+        className="w-full min-h-[560px] h-[88vh] sm:h-[92vh] lg:h-screen overflow-hidden flex flex-col justify-between relative bg-[#070D16]"
         style={{ touchAction: "pan-y" }}
       >
         {/* Top Pinned Cinematic HUD with Direct Discipline Tabs */}

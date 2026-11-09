@@ -174,7 +174,7 @@ export const translations = {
         {
           number: "02",
           subtitle: "WORKFORCE SUPPLY",
-          title: "Experienced People, Already in Europe",
+          title: "Experienced Workers, Already in Europe",
           description: "We supply European citizens and skilled workers from other countries who are already living in Europe.\n\nOur workers have experience in shipbuilding, construction, manufacturing, transport, and logistics. We help companies find suitable workers for both short-term and long-term projects.",
           stats: "Experienced Workers | Flexible Staffing",
         },
@@ -424,7 +424,7 @@ export const translations = {
         {
           number: "02",
           subtitle: "BEMANNINGSTJÄNSTER",
-          title: "Erfaren Personal, Redan i Europa",
+          title: "Erfarna Arbetare, Redan i Europa",
           description: "Vi tillhandahåller EU-medborgare samt yrkeskunnig arbetskraft från andra länder som redan är bosatta i Europa.\n\nVåra yrkesarbetare har erfarenhet inom skeppsbyggnad, anläggning, tillverkning, transport och logistik. Vi hjälper företag att hitta lämplig personal för både kort- och långsiktiga projekt.",
           stats: "Erfaren Arbetskraft | Flexibel Bemanning",
         },
