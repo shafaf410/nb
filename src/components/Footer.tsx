@@ -166,11 +166,6 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/#deployment-process" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
-                  {t.nav.process}
-                </a>
-              </li>
-              <li>
                 <Link href="/request" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.requestCta}
                 </Link>
