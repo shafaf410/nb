@@ -20,8 +20,8 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
         title={language === "sv" ? "Switch to English" : "Byt till Svenska"}
         aria-label="Switch Language"
       >
-        <span translate="no" className="notranslate font-bold">
-          {language === "sv" ? "ENG" : "SW"}
+        <span translate="no" className="notranslate font-bold" lang="zxx">
+          {language === "sv" ? "EN" : "SE"}
         </span>
       </button>
     );
@@ -46,7 +46,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
           }`}
           aria-pressed={language === "sv"}
         >
-          <span translate="no" className="notranslate font-bold">SW</span>
+          <span translate="no" className="notranslate font-bold" lang="zxx">SE</span>
         </button>
         <button
           type="button"
@@ -59,7 +59,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
           }`}
           aria-pressed={language === "en"}
         >
-          <span translate="no" className="notranslate font-bold">ENG</span>
+          <span translate="no" className="notranslate font-bold" lang="zxx">EN</span>
         </button>
       </div>
     );
@@ -83,7 +83,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
         }`}
         aria-pressed={language === "sv"}
       >
-        <span translate="no" className="notranslate font-bold">SW</span>
+        <span translate="no" className="notranslate font-bold" lang="zxx">SE</span>
       </button>
       <button
         type="button"
@@ -96,7 +96,7 @@ export default function LanguageToggle({ variant = "pill", className = "" }: Lan
         }`}
         aria-pressed={language === "en"}
       >
-        <span translate="no" className="notranslate font-bold">ENG</span>
+        <span translate="no" className="notranslate font-bold" lang="zxx">EN</span>
       </button>
     </div>
   );
