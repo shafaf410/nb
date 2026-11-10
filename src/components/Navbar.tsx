@@ -282,7 +282,16 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                 <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
               </Link>
 
-              {/* 3. Contact Us Link */}
+              {/* 3. Team Link */}
+              <Link
+                href="/team"
+                className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+              >
+                <span>{t.nav.team}</span>
+                <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
+              </Link>
+
+              {/* 4. Contact Us Link */}
               <Link
                 href="/contact"
                 className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
@@ -466,6 +475,16 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     className="flex items-center justify-between text-base font-serif font-medium text-slate-800 py-3 px-3.5 rounded-xl hover:bg-slate-300/40 transition-colors active:bg-slate-300/60"
                   >
                     <span>{t.nav.about}</span>
+                    <ArrowRight className="w-4 h-4 text-[#9E7324]" />
+                  </Link>
+
+                  {/* Team Link */}
+                  <Link
+                    href="/team"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between text-base font-serif font-medium text-slate-800 py-3 px-3.5 rounded-xl hover:bg-slate-300/40 transition-colors active:bg-slate-300/60"
+                  >
+                    <span>{t.nav.team}</span>
                     <ArrowRight className="w-4 h-4 text-[#9E7324]" />
                   </Link>
 

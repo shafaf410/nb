@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -12,11 +13,13 @@ import {
   Mail,
   Phone,
   ArrowLeft,
+  ArrowRight,
   Globe,
   Copy,
   Check,
   ExternalLink,
   Building2,
+  Users2,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import MagneticButton from "@/components/MagneticButton";
@@ -348,6 +351,29 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Dedicated Leadership & Team Page Banner */}
+              <div className="mt-5 pt-4 border-t border-white/10">
+                <Link
+                  href="/team"
+                  className="group flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-[#C59C58]/15 to-[#C59C58]/5 hover:from-[#C59C58]/25 hover:to-[#C59C58]/15 border border-[#C59C58]/35 hover:border-[#C59C58] transition-all duration-300 shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#C59C58]/25 flex items-center justify-center text-[#E8C587] group-hover:scale-110 transition-transform">
+                      <Users2 className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-white group-hover:text-[#E8C587] transition-colors">
+                        {isSv ? "Möt Vårt Ledarskapsteam" : "Meet Our Leadership Team"}
+                      </div>
+                      <div className="text-[10.5px] text-slate-300">
+                        {isSv ? "Se profiler & foton på grundarna →" : "View founders & partner profiles →"}
+                      </div>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#C59C58] group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
             </div>
 

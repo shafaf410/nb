@@ -161,6 +161,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <Link href="/team" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300 text-[#C59C58]/90">
+                  {t.nav.team}
+                </Link>
+              </li>
+              <li>
                 <a href="/#why-norvian" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">
                   {t.nav.whyNorvian}
                 </a>
