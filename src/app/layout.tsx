@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     icon: "/logo.png",
     apple: "/logo.png",
   },
+  verification: {
+    google: "GKhIUx3_c0IeylmHCyrigVgbWH1UwY27JV1WS5KvY64",
+  },
 };
 
 export default function RootLayout({
@@ -66,6 +69,10 @@ export default function RootLayout({
       className={`${playfair.variable} ${jakarta.variable} antialiased`}
     >
       <head>
+        <meta
+          name="google-site-verification"
+          content="GKhIUx3_c0IeylmHCyrigVgbWH1UwY27JV1WS5KvY64"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
