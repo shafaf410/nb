@@ -20,8 +20,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
   const progressBarRef = useRef<HTMLDivElement>(null);
   const chapterTextRef = useRef<HTMLSpanElement>(null);
 
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const isVideoReadyRef = useRef(false);
+  const [isVideoReady, setIsVideoReady] = useState(true);
+  const isVideoReadyRef = useRef(true);
   const pendingAutoScrollRef = useRef(false);
 
   const [showPrompt, setShowPrompt] = useState(true);
@@ -109,12 +109,6 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
 
     const video = getActiveVideo();
     if (!video) return;
-
-    // If video hasn't finished loading yet, queue it to play as soon as it's ready
-    if (!isVideoReadyRef.current && video.readyState < 2) {
-      pendingAutoScrollRef.current = true;
-      return;
-    }
 
     state.isAutoScrolling = true;
     setShowPrompt(false);
@@ -586,21 +580,8 @@ export default function VideoScrollIntro({ onProgress }: VideoScrollIntroProps) 
             onEnded={finishIntro}
           />
 
-          {/* Elegant Luxury Preloader: Shown until video is buffered & ready */}
-          {!isVideoReady && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-black/40 backdrop-blur-[2px] transition-opacity duration-500">
-              <div className="relative flex items-center justify-center">
-                <div className="w-11 h-11 rounded-full border-2 border-[#C59C58]/25 border-t-[#E8C587] animate-spin" />
-                <span className="absolute w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
-              </div>
-              <span className="mt-4 text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase font-semibold text-white/85">
-                {isSv ? "Laddar upplevelse..." : "Loading experience..."}
-              </span>
-            </div>
-          )}
-
-          {/* Bottom Center Reel Prompt: Scroll or Tap to Play (Shown only once video is fully ready) */}
-          {showPrompt && isVideoReady && (
+          {/* Bottom Center Reel Prompt: Scroll or Tap to Play (Instant initial display) */}
+          {showPrompt && (
             <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center pointer-events-auto z-20 px-4 text-center transition-all duration-700 animate-in fade-in zoom-in-95">
               <button
                 type="button"
