@@ -4,7 +4,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, ShieldCheck, Check, Anchor, Building2, Truck, Factory, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ShieldCheck, Check, Anchor, Building2, Truck, Factory, ChevronLeft, ChevronRight, Hand } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface IndustriesSectionProps {
@@ -181,8 +181,8 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
     const elapsed = Date.now() - touchStartRef.current.time;
 
     // Detect horizontal swipe gesture:
-    // deltaX dominates deltaY by 1.8x and is at least 40px
-    if (Math.abs(deltaX) > Math.abs(deltaY) * 1.8 && Math.abs(deltaX) > 40 && elapsed < 600) {
+    // deltaX dominates deltaY by 1.3x and is at least 30px
+    if (Math.abs(deltaX) > Math.abs(deltaY) * 1.3 && Math.abs(deltaX) > 30 && elapsed < 600) {
       if (deltaX > 0 && activeIndex < industries.length - 1) {
         goToSlide(activeIndex + 1);
       } else if (deltaX < 0 && activeIndex > 0) {
@@ -209,18 +209,18 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
         className="w-full min-h-[560px] h-[88vh] sm:h-[92vh] lg:h-screen overflow-hidden flex flex-col justify-between relative bg-[#070D16]"
         style={{ touchAction: "pan-y" }}
       >
-        {/* Top Pinned Cinematic HUD with Direct Discipline Tabs */}
-        <div className="absolute top-0 inset-x-0 z-30 pt-3 sm:pt-8 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-between pointer-events-auto">
+        {/* Top Pinned Cinematic HUD with Direct Discipline Tabs (z-50 ensures visibility across all 4 slides) */}
+        <div className="absolute top-0 inset-x-0 z-50 pt-2.5 sm:pt-8 px-3 sm:px-12 lg:px-16 w-full flex items-center justify-between gap-2 pointer-events-auto">
           {/* Direct Discipline Tabs on Mobile & Tablet */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto scrollbar-none min-w-0 pr-1">
             {industries.map((ind, i) => (
               <button
                 key={ind.id}
                 onClick={() => goToSlide(i)}
-                className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-wider transition-all duration-300 cursor-pointer ${
+                className={`px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-wider transition-all duration-300 cursor-pointer whitespace-nowrap shrink-0 ${
                   activeIndex === i
                     ? "bg-[#C59C58] text-[#070D16] font-bold shadow-[0_0_12px_rgba(197,156,88,0.5)]"
-                    : "bg-black/50 text-white/60 hover:text-white border border-white/10"
+                    : "bg-black/60 text-white/70 hover:text-white border border-white/10"
                 }`}
               >
                 {ind.number} {ind.id === "shipbuilding" ? (isSv ? "MARINT" : "MARITIME") : ind.id === "construction" ? (isSv ? "BYGG" : "CIVIL") : ind.id === "logistics" ? (isSv ? "LOGISTIK" : "FLEET") : (isSv ? "INDUSTRI" : "INDUSTRIAL")}
@@ -228,17 +228,41 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
             ))}
           </div>
 
-          {/* Guaranteed Correct Discipline Number: 01, 02, 03, 04 */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span className="hidden sm:inline text-[9px] sm:text-[10px] uppercase font-mono tracking-widest text-white/40">
-              {isSv ? "BRANSCH" : "DISCIPLINE"}
-            </span>
-            <div className="h-7 w-9 sm:h-8 sm:w-12 border border-[#C59C58]/40 rounded-lg bg-black/60 backdrop-blur-md flex items-center justify-center overflow-hidden shadow-inner">
-              <span className="font-serif text-sm sm:text-lg font-normal text-[#C59C58] transition-all duration-300">
-                {industries[activeIndex].number}
+          {/* Right Area: Mobile Swipe Indicator (shown until 4th slide) / Desktop Discipline Number Box */}
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            {/* Mobile Swipe Hint: Displayed until 4th slide (activeIndex < 3) */}
+            {activeIndex < industries.length - 1 ? (
+              <button
+                type="button"
+                onClick={() => goToSlide(activeIndex + 1)}
+                className="sm:hidden flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#C59C58]/70 text-[#E8C587] shadow-[0_0_14px_rgba(197,156,88,0.4)] cursor-pointer active:scale-95 transition-all animate-pulse shrink-0"
+                aria-label={isSv ? "Svep till nästa bransch" : "Swipe to next discipline"}
+              >
+                <Hand className="w-3 h-3 text-[#E8C587]" />
+                <span className="text-[9px] font-mono tracking-wider uppercase font-bold text-[#E8C587]">
+                  {isSv ? "SVEP" : "SWIPE"}
+                </span>
+                <ChevronRight className="w-3 h-3 text-[#E8C587]" />
+              </button>
+            ) : (
+              /* On 4th slide on mobile, show subtle end count */
+              <div className="sm:hidden flex items-center px-2 py-0.5 rounded-full bg-black/60 border border-white/15 text-white/60 text-[9px] font-mono">
+                <span>04 / 04</span>
+              </div>
+            )}
+
+            {/* Desktop Discipline Number Box (Always shown on desktop; on mobile shown only when on slide 4) */}
+            <div className={`items-center gap-2 sm:gap-3 ${activeIndex < industries.length - 1 ? "hidden sm:flex" : "hidden sm:flex"}`}>
+              <span className="text-[9px] sm:text-[10px] uppercase font-mono tracking-widest text-white/40">
+                {isSv ? "BRANSCH" : "DISCIPLINE"}
               </span>
+              <div className="h-7 w-9 sm:h-8 sm:w-12 border border-[#C59C58]/40 rounded-lg bg-black/60 backdrop-blur-md flex items-center justify-center overflow-hidden shadow-inner">
+                <span className="font-serif text-sm sm:text-lg font-normal text-[#C59C58] transition-all duration-300">
+                  {industries[activeIndex].number}
+                </span>
+              </div>
+              <span className="text-xs text-white/40 font-mono">/ 04</span>
             </div>
-            <span className="text-xs text-white/40 font-mono">/ 04</span>
           </div>
         </div>
 
@@ -364,8 +388,8 @@ export default function IndustriesSection({ onSelectIndustry, activeIndustryKey 
           </div>
         </div>
 
-        {/* Bottom Pinned HUD: Clean step status, dots, and swift controls */}
-        <div className="absolute bottom-0 inset-x-0 z-30 py-3 sm:py-4 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-between text-white/50 text-[10px] font-mono tracking-widest uppercase bg-gradient-to-t from-[#070D16] via-[#070D16]/80 to-transparent">
+        {/* Bottom Pinned HUD: Clean step status, dots, and swift controls (z-50 ensures visibility) */}
+        <div className="absolute bottom-0 inset-x-0 z-50 py-3 sm:py-4 px-4 sm:px-12 lg:px-16 w-full flex items-center justify-between text-white/50 text-[10px] font-mono tracking-widest uppercase bg-gradient-to-t from-[#070D16] via-[#070D16]/80 to-transparent">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
             <span className="hidden sm:inline">
