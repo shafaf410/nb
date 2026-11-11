@@ -274,7 +274,9 @@ export default function TeamSection() {
                       : "Architect of Norvian's international talent corridors, mobilization pipelines, and cross-border compliance."}
                   </p>
                   <div className="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
-                    <span className="text-[10px] font-mono text-slate-400">English • Hindi • Malayalam</span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {isSv ? "Engelska • Svenska • Ryska" : "English • Swedish • Russian"}
+                    </span>
                     <a
                       href="mailto:vinu@norvian.se"
                       className="inline-flex items-center gap-1.5 text-xs font-mono text-[#E8C587] hover:underline"
