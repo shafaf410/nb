@@ -171,7 +171,7 @@ export default function TeamSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             {/* Founders Photo */}
-            <div className="lg:col-span-5 relative w-full h-60 sm:h-72 lg:h-full min-h-[240px] overflow-hidden bg-[#070D16]">
+            <div className="lg:col-span-5 relative w-full h-80 sm:h-96 lg:h-full min-h-[320px] sm:min-h-[380px] overflow-hidden bg-[#070D16]">
               <Image
                 src="/images/team/co_founders.jpg"
                 alt="Norvian AB Co-Founders Bianka Bittlingmeier & Vinu Mohan"
@@ -180,7 +180,7 @@ export default function TeamSection() {
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1522] via-transparent to-transparent opacity-80 lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1522]/80 pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0B1522] via-[#0B1522]/40 to-transparent pointer-events-none lg:inset-0 lg:h-full lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1522]/80" />
 
               <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-[10.5px] sm:text-[11px] font-mono text-white/90 bg-black/70 backdrop-blur-md px-3 sm:px-3.5 py-1.5 rounded-full border border-white/10 shadow-lg">
                 <span className="flex items-center gap-1.5 text-[#E8C587] font-semibold shrink-0">
@@ -343,8 +343,8 @@ export default function TeamSection() {
                   key={member.name}
                   className="group relative flex flex-col rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 hover:border-[#C59C58]/60 transition-all duration-300 hover:-translate-y-1 shadow-[0_12px_40px_rgba(0,0,0,0.5)] overflow-hidden"
                 >
-                  {/* Photo Container - Balanced 1:1 square aspect ratio prevents chin/face cropping */}
-                  <div className="relative aspect-square sm:aspect-square md:aspect-[4/4.2] w-full overflow-hidden bg-black/40">
+                  {/* Photo Container - Taller 4:5 portrait ratio makes the whole person, face, chin, and attire totally visible on mobile */}
+                  <div className="relative aspect-[4/5] sm:aspect-[4/4.8] md:aspect-[4/4.2] w-full overflow-hidden bg-black/40">
                     <Image
                       src={member.image}
                       alt={`${member.name} - ${role}`}
@@ -352,7 +352,8 @@ export default function TeamSection() {
                       className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-transparent to-transparent opacity-75 pointer-events-none" />
+                    {/* Subtle bottom vignette to ensure legibility of bottom badges while keeping face and clothing completely clear */}
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#070D16]/90 via-[#070D16]/30 to-transparent pointer-events-none" />
 
                     {/* Department Tag Pill */}
                     <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
