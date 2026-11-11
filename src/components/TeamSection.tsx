@@ -79,7 +79,7 @@ export default function TeamSection() {
       tagSv: "Tyska Marknaden",
     },
     {
-      name: "Alina K",
+      name: "Alina Aleksandriuk",
       roleEn: "Branch Manager & Administrator",
       roleSv: "Branch Manager & Administratör",
       deptEn: "Operational Administration & Compliance",

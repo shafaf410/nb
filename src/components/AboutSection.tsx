@@ -355,7 +355,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
 
                 <div className="py-3">
                   <h3 className="font-serif text-sm text-white font-medium">
-                    Alina K
+                    Alina Aleksandriuk
                   </h3>
                   <p className="text-[#C59C58] text-[11px] font-semibold mt-0.5">
                     {isSv ? "Filialchef & Administratör" : "Branch Manager & Administrator"}

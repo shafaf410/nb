@@ -50,7 +50,7 @@ const OFFICIAL_CONTACTS: ContactPerson[] = [
     email: "vinu@norvian.se",
   },
   {
-    name: "Alina K",
+    name: "Alina Aleksandriuk",
     positionEn: "Branch Manager & Administrator",
     positionSv: "Branch Manager & Administratör",
     email: "alina@norvian.se",
