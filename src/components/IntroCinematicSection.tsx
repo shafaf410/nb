@@ -198,18 +198,23 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             <p>
               {isSv ? (
                 <>
-                  <strong className="font-semibold text-[#0B1522]">Norvian AB</strong> är ett erfaret svenskt bemanningsföretag baserat i Västervik, Sverige. Med över 1 000 framgångsrikt placerade arbetare tillhandahåller vi skickliga, erfarna och pålitliga yrkespersoner till industrier över hela Europa.
+                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, med ett internationellt fokus.
                 </>
               ) : (
                 <>
-                  <strong className="font-semibold text-[#0B1522]">Norvian AB</strong> is an experienced Swedish manpower supply company based in Västervik, Sweden. With over 1,000 workers successfully placed, we provide skilled, experienced, and reliable professionals to industries across Europe.
+                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> is a Swedish recruitment company based in Västervik, Sweden, with an international focus.
                 </>
               )}
             </p>
             <p>
               {isSv
-                ? "Vi är specialiserade på bemanningslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik, och hjälper företag att möta sina kompetensbehov med trygghet."
-                : "We specialize in manpower solutions for shipbuilding, construction, manufacturing, and transport & logistics, helping companies meet their workforce needs with confidence."}
+                ? "Vårt team har cirka fem års erfarenhet av internationell rekrytering och samarbete med företag och rekryteringspartners över hela Europa."
+                : "Our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe."}
+            </p>
+            <p>
+              {isSv
+                ? "Vi är specialiserade på rekryteringslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik, och hjälper företag att hitta skickliga, erfarna och pålitliga yrkespersoner för att möta sina kompetensbehov."
+                : "We specialize in recruitment solutions for shipbuilding, construction, manufacturing, and transport & logistics, helping companies find skilled, experienced, and reliable professionals to meet their workforce needs."}
             </p>
           </div>
 

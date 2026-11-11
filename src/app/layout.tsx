@@ -16,7 +16,7 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "NORVIAN AB | Qualified International Workforce & Talent Placement",
-  description: "Norvian AB is an experienced Swedish manpower supply company based in Västervik, Sweden. With over 1,000 workers successfully placed, we provide skilled professionals across Europe in shipbuilding, construction, manufacturing, and transport & logistics.",
+  description: "NORVIAN AB is a Swedish recruitment company based in Västervik, Sweden, with an international focus. Our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe.",
   keywords: [
     "workforce",
     "recruitment",
