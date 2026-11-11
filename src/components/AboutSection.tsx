@@ -106,8 +106,8 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
           </h1>
           <p className="mt-3 text-base sm:text-lg text-white/70 font-light max-w-3xl leading-relaxed">
             {isSv 
-              ? "Svensk personalförsörjning och internationell industriell rekrytering med säte i Västervik, Sverige."
-              : "Swedish manpower supply and international industrial recruitment based in Västervik, Sweden."}
+              ? "Svenskt rekryteringsföretag specialiserat på internationell rekrytering baserat i Västervik, Sverige."
+              : "Swedish recruitment company specializing in international recruitment based in Västervik, Sweden."}
           </p>
         </div>
 
@@ -117,146 +117,202 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
           {/* Main Statement Content (8 Columns) */}
           <div className="about-fade-up lg:col-span-8 space-y-10 sm:space-y-12">
             
-            {/* Section 1: Overview & Track Record */}
+            {/* Section 1: Overview & European Experience */}
             <div className="space-y-4">
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>01</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Företagsbakgrund & Europeisk Erfarenhet" : "Company Overview & European Track Record"}</span>
+                <span>{isSv ? "Företagsöversikt & Europeisk Erfarenhet" : "Company Overview & European Experience"}</span>
               </div>
-              <p className="text-base sm:text-lg text-white/90 font-light leading-relaxed">
+              <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
                   <>
-                    NORVIAN AB är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, med ett internationellt fokus. Vårt team har cirka fem års erfarenhet av internationell rekrytering och samarbete med företag och rekryteringspartners över hela Europa. Vi är specialiserade på rekryteringslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik.
+                    <p>
+                      NORVIAN AB är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, specialiserat på internationell rekrytering.
+                    </p>
+                    <p>
+                      Även om NORVIAN AB registrerades i Sverige 2024, tillför vårt team cirka fem års erfarenhet inom internationell rekrytering samt samarbete med företag och rekryteringspartners över hela Europa.
+                    </p>
+                    <p>
+                      Innan vi etablerade verksamheten under NORVIAN AB förvärvade vi värdefull branscherfarenhet genom tidigare affärsverksamhet under en annan bolagsstruktur.
+                    </p>
+                    <p>
+                      I dag bygger vi vidare på denna erfarenhet för att koppla samman europeiska arbetsgivare med kvalificerade och pålitliga yrkespersoner inom olika branscher.
+                    </p>
                   </>
                 ) : (
                   <>
-                    NORVIAN AB is a Swedish recruitment company based in Västervik, Sweden, with an international focus. Our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe. We specialize in recruitment solutions for shipbuilding, construction, manufacturing, and transport & logistics.
+                    <p>
+                      NORVIAN AB is a Swedish recruitment company based in Västervik, Sweden, specializing in international recruitment.
+                    </p>
+                    <p>
+                      Although NORVIAN AB was registered in Sweden in 2024, our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe.
+                    </p>
+                    <p>
+                      Before establishing our operations under NORVIAN AB, we gained valuable industry experience through our previous business activities under a different company structure.
+                    </p>
+                    <p>
+                      Today, we build on this experience to connect European employers with qualified and reliable professionals across various industries.
+                    </p>
                   </>
                 )}
-              </p>
+              </div>
             </div>
 
-            {/* Section 2: Experienced European Team */}
+            {/* Section 2: European Market Knowledge & Regulatory Understanding */}
             <div className="space-y-4">
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>02</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Europeiskt Team & Regulatorisk Förankring" : "European Team & Regulatory Understanding"}</span>
+                <span>{isSv ? "Europeisk Marknadskunskap & Regulatorisk Förståelse" : "European Market Knowledge & Regulatory Understanding"}</span>
               </div>
-              <p className="text-base sm:text-lg text-white/90 font-light leading-relaxed">
+              <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
                   <>
-                    En av våra främsta styrkor är vårt erfarna europeiska team. Våra företagsägare, administrativa personal och personalsamordnare är europeiska medborgare som förstår europeiska industrier, anställningsregler och rekryteringsförfaranden. Detta hjälper oss att kommunicera och arbeta i nära samarbete med europeiska arbetsgivare och relevanta institutioner.
+                    <p>
+                      En av våra främsta styrkor är vår förståelse för den europeiska arbetsmarknaden och de specifika rekryteringsbehoven hos europeiska företag.
+                    </p>
+                    <p>
+                      Vårt team har praktisk erfarenhet av internationell rekrytering, personalsamordning och samarbete med arbetsgivare och rekryteringspartners över hela Europa.
+                    </p>
+                    <p>
+                      Vi förstår vikten av anställningsregler, dokumentationskrav och rekryteringsförfaranden i olika europeiska länder.
+                    </p>
+                    <p>
+                      Denna kunskap gör det möjligt för oss att kommunicera effektivt med arbetsgivare och relevanta institutioner samt stödja en strukturerad och transparent rekryteringsprocess.
+                    </p>
                   </>
                 ) : (
                   <>
-                    One of our main strengths is our experienced European team. Our company owners, administration staff, and worker coordinators are European citizens who understand European industries, employment regulations, and recruitment procedures. This helps us communicate and work closely with European employers and relevant institutions.
+                    <p>
+                      One of our key strengths is our understanding of the European labour market and the specific recruitment needs of European companies.
+                    </p>
+                    <p>
+                      Our team has practical experience in international recruitment, workforce coordination, and working with employers and recruitment partners across Europe.
+                    </p>
+                    <p>
+                      We understand the importance of employment regulations, documentation requirements, and recruitment procedures in different European countries.
+                    </p>
+                    <p>
+                      This knowledge enables us to communicate effectively with employers and relevant institutions and to support a structured and transparent recruitment process.
+                    </p>
                   </>
                 )}
-              </p>
+              </div>
             </div>
 
-            {/* Section 3: Strict Selection, Verification & Non-Migration Policy */}
+            {/* Section 3: Careful Selection & Document Verification */}
             <div className="space-y-4">
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>03</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Urvalsprocess, Verifiering & Non-Migrationspolicy" : "Strict Selection, Document Verification & Non-Migration Policy"}</span>
+                <span>{isSv ? "Noggrant Urval & Dokumentverifiering" : "Careful Selection & Document Verification"}</span>
               </div>
-              
-              <div className="space-y-4 text-base sm:text-lg text-white/90 font-light leading-relaxed">
-                <p>
-                  {isSv ? (
-                    <>
-                      Vi är mycket noggranna vid urvalet av internationell arbetskraft. Vårt företag fokuserar på att rekrytera skickliga, kvalificerade och erfarna arbetare med fläckfri bakgrund. Vi stöder uttryckligen inte migration eller bosättning i Europa. Norvian AB rekryterar utländska arbetstagare uteslutande för genuina anställningsmöjligheter, inte för migrationsändamål.
-                    </>
-                  ) : (
-                    <>
-                      We are very careful when selecting international workers. Our company focuses on recruiting skilled, qualified, and experienced workers with clean backgrounds. We strictly do not support migration or settlement in Europe. Norvian AB recruits foreign workers only for genuine employment opportunities, not for immigration purposes.
-                    </>
-                  )}
-                </p>
-
-                <p>
-                  {isSv ? (
-                    <>
-                      Samtliga internationella arbetare måste tillhandahålla sina utbildnings- och yrkesbevis, europeiskt erkännande av kvalifikationer där så krävs, samt utdrag ur belastningsregistret från sina hemländer med nödvändig officiell legalisering och intygande.
-                    </>
-                  ) : (
-                    <>
-                      All international workers must provide their educational and professional certificates, European qualification recognition where required, and police clearance certificates from their home countries with the necessary official attestation.
-                    </>
-                  )}
-                </p>
-
-                <p>
-                  {isSv ? (
-                    <>
-                      Vi förlitar oss inte enbart på handlingar som lämnats in av kandidaterna. Vi samarbetar även med privata verifieringsorgan i kandidaternas hemländer för att granska deras certifikat, anställningshistorik och andra relevanta dokument innan rekryteringsprocessen fortskrider.
-                    </>
-                  ) : (
-                    <>
-                      We do not rely only on the documents submitted by candidates. We also work with private verification agencies in their home countries to check their certificates, employment history, and other relevant documents before proceeding with recruitment.
-                    </>
-                  )}
-                </p>
+              <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
+                {isSv ? (
+                  <>
+                    <p>
+                      På NORVIAN AB fokuserar vi på att rekrytera skickliga, kvalificerade och erfarna yrkespersoner som uppfyller de specifika kraven från våra europeiska kunder.
+                    </p>
+                    <p>
+                      Vi lägger stor vikt vid en noggrann och transparent urvalsprocess. Detta inkluderar granskning av yrkeskvalifikationer, relevant arbetslivserfarenhet och styrkande dokument.
+                    </p>
+                    <p>
+                      Där det krävs beaktar vi även erkännande av yrkeskvalifikationer samt tillämpliga anställnings- och arbetstillståndskrav.
+                    </p>
+                    <p>
+                      Vårt mål är att koppla samman europeiska arbetsgivare med pålitliga och lämpliga kandidater samtidigt som vi stödjer en professionell och ansvarsfull rekryteringsprocess.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      At NORVIAN AB, we focus on recruiting skilled, qualified, and experienced professionals who meet the specific requirements of our European clients.
+                    </p>
+                    <p>
+                      We place great importance on a careful and transparent selection process. This includes reviewing professional qualifications, relevant work experience, and supporting documents.
+                    </p>
+                    <p>
+                      Where required, we also consider the recognition of professional qualifications and applicable employment and work authorization requirements.
+                    </p>
+                    <p>
+                      Our goal is to connect European employers with reliable and suitable candidates while supporting a professional and responsible recruitment process.
+                    </p>
+                  </>
+                )}
               </div>
             </div>
 
-            {/* Section 4: Direct Recruitment Visits for Large Volumes (100+ Workers) */}
+            {/* Section 4: Large-Scale Recruitment & Individual Workforce Solutions */}
             <div className="space-y-4">
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>04</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Direkta Rekryteringsbesök (100+ Arbetare)" : "Direct Recruitment Delegations (100+ Workers)"}</span>
+                <span>{isSv ? "Storskalig Rekrytering & Individuella Bemanningslösningar" : "Large-Scale Recruitment & Individual Workforce Solutions"}</span>
               </div>
-
-              <div className="space-y-4 text-base sm:text-lg text-white/90 font-light leading-relaxed">
-                <p>
-                  {isSv ? (
-                    <>
-                      För företag med behov av fler än 100 arbetare kan vi arrangera direkta rekryteringsresor till länder såsom Filippinerna, Indien och länder i Sydamerika. Vårt team reser till dessa länder för att genomföra personliga intervjuer, praktiska arbetsdemonstrationer och yrkesprov innan det slutgiltiga urvalet fastställs.
-                    </>
-                  ) : (
-                    <>
-                      For companies requiring more than 100 workers, we can arrange direct recruitment visits to countries such as the Philippines, India, and countries in South America. Our team travels to these countries to conduct face-to-face interviews, practical work demonstrations, and skills examinations before making the final selection.
-                    </>
-                  )}
-                </p>
-
-                <p>
-                  {isSv ? (
-                    <>
-                      Vi välkomnar även en eller två representanter från det europeiska kundföretaget att delta i intervju- och urvalsprocessen. Norvian AB står för boende och lokala transporter för dessa representanter på vårt företags bekostnad under rekryteringsbesöket.
-                    </>
-                  ) : (
-                    <>
-                      We also welcome one or two representatives from the European client company to take part in the interview and selection process. Norvian AB provides accommodation and local transportation for these representatives at our company’s expense during the recruitment visit.
-                    </>
-                  )}
-                </p>
+              <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
+                {isSv ? (
+                  <>
+                    <p>
+                      För företag med större personalbehov erbjuder NORVIAN AB skräddarsydda rekryteringslösningar utformade för att möta specifika bransch- och bemanningsbehov.
+                    </p>
+                    <p>
+                      Genom vårt internationella rekryteringsnätverk stödjer vi arbetsgivare i att identifiera och välja ut kvalificerade yrkespersoner, med särskilt fokus på kandidater som redan är baserade i Europa.
+                    </p>
+                    <p>
+                      Beroende på projektets storlek och krav kan vi samordna strukturerade rekryteringsprocesser, kandidatintervjuer, kompetensbedömningar och samarbete med internationella rekryteringspartners.
+                    </p>
+                    <p>
+                      För större rekryteringsprojekt kan ytterligare tjänster och urvalsprocesser på plats arrangeras individuellt i samråd med våra kunder.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      For companies with larger workforce requirements, NORVIAN AB offers tailored recruitment solutions designed to meet specific industry and staffing needs.
+                    </p>
+                    <p>
+                      Through our international recruitment network, we support employers in identifying and selecting qualified professionals, with a particular focus on candidates already based in Europe.
+                    </p>
+                    <p>
+                      Depending on the size and requirements of the project, we can coordinate structured recruitment processes, candidate interviews, qualification assessments, and cooperation with international recruitment partners.
+                    </p>
+                    <p>
+                      For larger recruitment projects, additional services and on-site selection processes can be arranged individually in consultation with our clients.
+                    </p>
+                  </>
+                )}
               </div>
             </div>
 
             {/* Section 5: Our Core Objective */}
-            <div className="p-7 sm:p-8 rounded-2xl bg-[#0B1522] border border-white/15 space-y-3">
+            <div className="p-7 sm:p-8 rounded-2xl bg-[#0B1522] border border-white/15 space-y-4">
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>05</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
                 <span>{isSv ? "Vårt Huvudsakliga Mål" : "Our Core Objective"}</span>
               </div>
-              <p className="font-serif text-lg sm:text-xl text-white font-normal leading-relaxed">
+              <div className="space-y-3 text-base sm:text-lg text-white/95 font-light leading-relaxed">
                 {isSv ? (
                   <>
-                    ”Vårt huvudsakliga mål är att förse europeisk industri med genuin, yrkeskunnig och pålitlig arbetskraft. Vi vill att våra kunder ska känna sig helt trygga med att den arbetskraft vi tillhandahåller är vederbörligen kvalificerad, noggrant utvald och redo för arbete.”
+                    <p className="font-serif text-lg sm:text-xl text-white font-normal leading-relaxed">
+                      Vårt mål är att koppla samman europeiska företag med skickliga, erfarna och pålitliga yrkespersoner som möter deras specifika kompetensbehov.
+                    </p>
+                    <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                      Vi är övertygade om att framgångsrik rekrytering bygger på förtroende, transparens och långsiktiga partnerskap. Vårt åtagande är att skapa varaktigt värde för både arbetsgivare och yrkespersoner genom ansvarsfulla och pålitliga rekryteringslösningar.
+                    </p>
                   </>
                 ) : (
                   <>
-                    “Our main goal is to provide European industries with genuine, skilled, and reliable workers. We want our clients to feel confident that the workers we supply are properly qualified, carefully selected, and ready to work.”
+                    <p className="font-serif text-lg sm:text-xl text-white font-normal leading-relaxed">
+                      Our goal is to connect European companies with skilled, experienced, and reliable professionals who meet their specific workforce needs.
+                    </p>
+                    <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                      We believe that successful recruitment is built on trust, transparency, and long-term partnerships. Our commitment is to create lasting value for both employers and professionals through responsible and reliable recruitment solutions.
+                    </p>
                   </>
                 )}
-              </p>
+              </div>
             </div>
 
           </div>
