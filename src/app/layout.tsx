@@ -34,8 +34,14 @@ export const metadata: Metadata = {
     "Västervik Sweden",
   ],
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
   },
   verification: {
     google: "GKhIUx3_c0IeylmHCyrigVgbWH1UwY27JV1WS5KvY64",

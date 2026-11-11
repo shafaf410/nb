@@ -167,25 +167,28 @@ export default function TeamSection() {
         <section className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#0B1522] via-[#09111C] to-[#070D16] border border-[#C59C58]/35 shadow-[0_20px_60px_rgba(0,0,0,0.85)]">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#C59C58]/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             {/* Founders Photo */}
-            <div className="lg:col-span-5 relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-auto lg:h-full min-h-[340px] sm:min-h-[460px] overflow-hidden bg-black/50">
+            <div className="lg:col-span-5 relative w-full aspect-[1332/1181] lg:aspect-auto lg:h-full overflow-hidden bg-[#070D16]">
               <Image
                 src="/images/team/co_founders.jpg"
                 alt="Norvian AB Co-Founders Bianka Bittlingmeier & Vinu Mohan"
                 fill
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                className="object-cover object-[54%_25%] group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1522] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1522]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1522] via-transparent to-transparent opacity-80 lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1522]/80 pointer-events-none" />
 
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-white/90 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10">
-                <span className="flex items-center gap-1.5 text-[#E8C587]">
-                  <Sparkles className="w-3.5 h-3.5" />
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-[10.5px] sm:text-[11px] font-mono text-white/90 bg-black/70 backdrop-blur-md px-3 sm:px-3.5 py-1.5 rounded-full border border-white/10 shadow-lg">
+                <span className="flex items-center gap-1.5 text-[#E8C587] font-semibold shrink-0">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E8C587]" />
                   {isSv ? "Grundarduon" : "Founding Partners"}
                 </span>
-                <span className="text-slate-300">Vinu Mohan &amp; Bianka Bittlingmeier</span>
+                <span className="text-slate-300 shrink-0 text-right">
+                  <span className="sm:hidden">Vinu &amp; Bianka</span>
+                  <span className="hidden sm:inline">Vinu Mohan &amp; Bianka Bittlingmeier</span>
+                </span>
               </div>
             </div>
 
