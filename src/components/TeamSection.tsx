@@ -105,9 +105,9 @@ export default function TeamSection() {
       deptEn: "UK Industrial Partner Relations",
       deptSv: "Brittiska Industrirelationer",
       bioEn:
-        "Leads strategic workforce liaisons and cross-border placement initiatives for industrial, marine, and construction sectors in the United Kingdom and international corridors.",
+        "Leading marketing and business development initiatives, building strategic partnerships and expanding business opportunities across the marine, industrial and construction sectors in the UK and international markets.",
       bioSv:
-        "Leder strategiska arbetskraftssamarbeten och gränsöverskridande bemanningsinitiativ för marin-, industri- och byggsektorn i Storbritannien och internationellt.",
+        "Leder marknadsföring och affärsutvecklingsinitiativ, bygger strategiska partnerskap och expanderar affärsmöjligheter inom marin-, industri- och byggsektorn i Storbritannien och på internationella marknader.",
       email: "baiju@norvian.se",
       locationEn: "United Kingdom",
       locationSv: "Storbritannien",
