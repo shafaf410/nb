@@ -111,7 +111,7 @@ export default function TeamSection() {
       email: "baiju@norvian.se",
       locationEn: "United Kingdom",
       locationSv: "Storbritannien",
-      languages: ["English", "Malayalam"],
+      languages: isSv ? ["Engelska"] : ["English"],
       image: "/images/team/baiju.jpg",
       tagEn: "UK Market",
       tagSv: "UK Marknad",
