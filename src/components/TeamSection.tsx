@@ -238,7 +238,9 @@ export default function TeamSection() {
                       : "Senior executive directing European client relationships, B2B workforce integrations, and strategic partner networks."}
                   </p>
                   <div className="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
-                    <span className="text-[10px] font-mono text-slate-400">Deutsch • Svenska • English</span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {isSv ? "Tyska • Svenska" : "German • Swedish"}
+                    </span>
                     <a
                       href="mailto:bianka@norvian.se"
                       className="inline-flex items-center gap-1.5 text-xs font-mono text-[#E8C587] hover:underline"
