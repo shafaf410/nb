@@ -127,11 +127,11 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <p className="text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
                   <>
-                    Norvian AB är ett svenskt bemannings- och rekryteringsföretag baserat i Västervik, Sverige. Vårt företag registrerades i Sverige 2024, men vårt team har mer än 10 års erfarenhet inom personalförsörjning, arbetskraftshantering och industriell rekrytering. Genom åren har vi framgångsrikt placerat fler än 1 000 arbetare inom olika industrier över hela Europa.
+                    NORVIAN AB är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, med ett internationellt fokus. Vårt team har cirka fem års erfarenhet av internationell rekrytering och samarbete med företag och rekryteringspartners över hela Europa. Vi är specialiserade på rekryteringslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik.
                   </>
                 ) : (
                   <>
-                    Norvian AB is a Swedish manpower supply and recruitment company based in Västervik, Sweden. Our company was registered in Sweden in 2024, but our team has more than 10 years of experience in manpower supply, workforce management, and industrial recruitment. Over the years, we have successfully placed more than 1,000 workers in different industries across Europe.
+                    NORVIAN AB is a Swedish recruitment company based in Västervik, Sweden, with an international focus. Our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe. We specialize in recruitment solutions for shipbuilding, construction, manufacturing, and transport & logistics.
                   </>
                 )}
               </p>
@@ -278,7 +278,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
                     {isSv ? "Juridiskt Namn" : "Legal Entity"}
                   </span>
-                  <span className="text-sm text-white font-serif mt-0.5 block">Norvian AB</span>
+                  <span className="text-sm text-white font-serif mt-0.5 block">NORVIAN AB</span>
                 </div>
 
                 <div>
@@ -292,19 +292,23 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
 
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Erfarenhet" : "Industry Experience"}
+                    {isSv ? "Branscherfarenhet" : "Industry Experience"}
                   </span>
-                  <span className="text-xs text-white/90 mt-0.5 block">
-                    {isSv ? "10+ års branscherfarenhet" : "10+ Years Operational Experience"}
+                  <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
+                    {isSv
+                      ? "Cirka 5 års teamerfarenhet inom internationell rekrytering"
+                      : "Around 5 Years of Team Experience in International Recruitment"}
                   </span>
                 </div>
 
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Genomförda Placeringar" : "Workers Placed"}
+                    {isSv ? "Specialisering" : "Specialization"}
                   </span>
-                  <span className="text-xs text-white/90 mt-0.5 block">
-                    {isSv ? "1 000+ arbetare över hela Europa" : "1,000+ Placed Across Europe"}
+                  <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
+                    {isSv
+                      ? "Internationell rekrytering & skickliga bemanningslösningar över hela Europa"
+                      : "International Recruitment & Skilled Workforce Solutions Across Europe"}
                   </span>
                 </div>
 
