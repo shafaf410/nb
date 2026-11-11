@@ -10,15 +10,11 @@ import {
   MapPin,
   Check,
   Copy,
-  ExternalLink,
   ShieldCheck,
   Building2,
   Users2,
-  Globe2,
   Sparkles,
   ArrowRight,
-  Briefcase,
-  Award,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -37,7 +33,6 @@ interface TeamMember {
   image: string;
   tagEn: string;
   tagSv: string;
-  isCoFounder?: boolean;
 }
 
 export default function TeamSection() {
@@ -64,45 +59,7 @@ export default function TeamSection() {
     }
   };
 
-  const leadershipTeam: TeamMember[] = [
-    {
-      name: "Bianka Bittlingmeier",
-      roleEn: "Co-Founder & Co-Owner",
-      roleSv: "Medgrundare & Delägare",
-      deptEn: "Recruitment & Business Partnerships",
-      deptSv: "Rekrytering & Affärspartnerskap",
-      bioEn:
-        "Senior executive directing European client relationships, B2B workforce integrations, and strategic partner networks. Oversees bespoke talent placement for major Nordic shipbuilding, industrial manufacturing, and civil engineering infrastructure projects.",
-      bioSv:
-        "Ledande strateg med ansvar för europeiska kundrelationer, B2B-integrering och strategiska partnerskapsnätverk. Leder skräddarsydd talangförsörjning till nordiska varv, tillverkningsindustrier och stora infrastrukturprojekt.",
-      email: "bianka@norvian.se",
-      locationEn: "Sweden & Germany",
-      locationSv: "Sverige & Tyskland",
-      languages: ["Deutsch", "Svenska", "English"],
-      image: "/images/team/bianka_bittlingmeier.jpg",
-      tagEn: "Executive Board",
-      tagSv: "Företagsledning",
-      isCoFounder: true,
-    },
-    {
-      name: "Vinu Mohan",
-      roleEn: "Co-Founder & Co-Owner",
-      roleSv: "Medgrundare & Delägare",
-      deptEn: "International Operations & Recruitment",
-      deptSv: "Internationell Verksamhet & Rekrytering",
-      bioEn:
-        "Architect of Norvian's international talent corridors and global recruitment pipelines. Coordinates end-to-end mobilization, rigorous skills verification (ISO 9606, Eurocode, ADR), and compliance pathways bringing skilled professionals into Scandinavia and Europe.",
-      bioSv:
-        "Arkitekten bakom Norvians internationella talangkorridorer och globala rekryteringskanaler. Samordnar storskalig mobilisering, certifierad yrkesverifiering (ISO 9606, Eurocode, ADR) och fullständig regelefterlevnad för nordiska arbetsplatser.",
-      email: "vinu@norvian.se",
-      locationEn: "Sweden & International",
-      locationSv: "Sverige & Internationellt",
-      languages: ["English", "Hindi", "Malayalam"],
-      image: "/images/team/vinu_mohan.jpg",
-      tagEn: "Global Operations",
-      tagSv: "Global Verksamhet",
-      isCoFounder: true,
-    },
+  const regionalTeam: TeamMember[] = [
     {
       name: "Isabelle Beyer",
       roleEn: "External Business Partner – Germany",
@@ -212,13 +169,13 @@ export default function TeamSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             {/* Founders Photo */}
-            <div className="lg:col-span-6 relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-auto lg:h-full min-h-[340px] sm:min-h-[440px] overflow-hidden bg-black/50">
+            <div className="lg:col-span-5 relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-auto lg:h-full min-h-[340px] sm:min-h-[460px] overflow-hidden bg-black/50">
               <Image
                 src="/images/team/co_founders.jpg"
                 alt="Norvian AB Co-Founders Bianka Bittlingmeier & Vinu Mohan"
                 fill
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 42vw"
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B1522] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1522]" />
@@ -232,60 +189,117 @@ export default function TeamSection() {
               </div>
             </div>
 
-            {/* Founders Statement & Highlights */}
-            <div className="lg:col-span-6 p-6 sm:p-10 lg:p-12 space-y-6">
+            {/* Founders Statement & Profiles */}
+            <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs font-mono text-[#C59C58] tracking-wider uppercase">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>{isSv ? "Officiell Grundarledning" : "Official Executive Directorate"}</span>
               </div>
 
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal tracking-tight">
+              <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal tracking-tight">
                 {isSv
                   ? "Ett gemensamt löfte om industriell kvalitet och integritet"
                   : "A shared commitment to industrial excellence and trust"}
               </h2>
 
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
                 {isSv
                   ? "Norvian AB grundades med en tydlig vision: att bygga en transparent, snabb och 100 % efterlevnadssäkrad bro mellan världsledande yrkesskicklighet och Europas mest krävande industrier. Från Västervik till Hamburg och Nordsjöns varv står vårt grundarteam personligen bakom varje placering."
                   : "Norvian AB was founded with a clear mission: to build a transparent, fast, and 100% compliant bridge between world-class trade specialists and Europe's most demanding industrial operations. From our Swedish headquarters in Västervik to partners across Europe, our founders personally champion every deployment."}
               </p>
 
-              {/* Direct Founder Contact Pills */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-1">
-                <a
-                  href="mailto:bianka@norvian.se"
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/10 text-xs font-mono transition-colors"
-                >
-                  <Mail className="w-3.5 h-3.5 text-[#C59C58]" />
-                  <span>bianka@norvian.se</span>
-                </a>
-                <a
-                  href="mailto:vinu@norvian.se"
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/10 text-xs font-mono transition-colors"
-                >
-                  <Mail className="w-3.5 h-3.5 text-[#C59C58]" />
-                  <span>vinu@norvian.se</span>
-                </a>
+              {/* Co-Founders Detail Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                {/* Bianka Bittlingmeier */}
+                <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#E8C587] font-semibold">
+                      {isSv ? "Företagsledning" : "Executive Board"}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {isSv ? "Sverige & Tyskland" : "Sweden & Germany"}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-lg text-white font-medium">Bianka Bittlingmeier</h3>
+                    <div className="text-xs font-mono text-[#C59C58] font-semibold">
+                      {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
+                    </div>
+                    <div className="text-[11px] text-slate-400">
+                      {isSv ? "Rekrytering & Affärspartnerskap" : "Recruitment & Business Partnerships"}
+                    </div>
+                  </div>
+                  <p className="text-[11.5px] text-slate-300 leading-relaxed pt-1">
+                    {isSv
+                      ? "Leder europeiska kundrelationer, B2B-integrering och strategiska partnerskapsnätverk för industri- och varvsprojekt."
+                      : "Senior executive directing European client relationships, B2B workforce integrations, and strategic partner networks."}
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
+                    <span className="text-[10px] font-mono text-slate-400">Deutsch • Svenska • English</span>
+                    <a
+                      href="mailto:bianka@norvian.se"
+                      className="inline-flex items-center gap-1.5 text-xs font-mono text-[#E8C587] hover:underline"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>bianka@norvian.se</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Vinu Mohan */}
+                <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#E8C587] font-semibold">
+                      {isSv ? "Global Verksamhet" : "Global Operations"}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {isSv ? "Sverige & Internationellt" : "Sweden & International"}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-lg text-white font-medium">Vinu Mohan</h3>
+                    <div className="text-xs font-mono text-[#C59C58] font-semibold">
+                      {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
+                    </div>
+                    <div className="text-[11px] text-slate-400">
+                      {isSv ? "Internationell Verksamhet & Rekrytering" : "International Operations & Recruitment"}
+                    </div>
+                  </div>
+                  <p className="text-[11.5px] text-slate-300 leading-relaxed pt-1">
+                    {isSv
+                      ? "Arkitekten bakom Norvians internationella talangkorridorer, certifierade yrkesverifiering och visumarkitektur."
+                      : "Architect of Norvian's international talent corridors, mobilization pipelines, and cross-border compliance."}
+                  </p>
+                  <div className="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
+                    <span className="text-[10px] font-mono text-slate-400">English • Hindi • Malayalam</span>
+                    <a
+                      href="mailto:vinu@norvian.se"
+                      className="inline-flex items-center gap-1.5 text-xs font-mono text-[#E8C587] hover:underline"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>vinu@norvian.se</span>
+                    </a>
+                  </div>
+                </div>
               </div>
 
               {/* Core Pillars */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
+                <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10">
                   <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">1,000+</div>
-                  <div className="text-[11px] font-mono text-slate-400 uppercase mt-0.5">
+                  <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
                     {isSv ? "Specialister Placerade" : "Professionals Placed"}
                   </div>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10">
+                <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10">
                   <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">100%</div>
-                  <div className="text-[11px] font-mono text-slate-400 uppercase mt-0.5">
+                  <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
                     {isSv ? "EU & Visumefterlevnad" : "EU & Visa Compliant"}
                   </div>
                 </div>
-                <div className="col-span-2 sm:col-span-1 p-3.5 rounded-2xl bg-white/[0.04] border border-white/10">
+                <div className="col-span-2 sm:col-span-1 p-3 rounded-2xl bg-white/[0.03] border border-white/10">
                   <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">Västervik</div>
-                  <div className="text-[11px] font-mono text-slate-400 uppercase mt-0.5">
+                  <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
                     {isSv ? "Svenskt Säte & HK" : "Swedish Headquarters"}
                   </div>
                 </div>
@@ -294,24 +308,24 @@ export default function TeamSection() {
           </div>
         </section>
 
-        {/* All Key Team Members & Regional Partners Grid */}
+        {/* Regional Partners & Key Team Members Grid */}
         <section className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-4">
             <div>
               <div className="text-xs font-mono text-[#C59C58] uppercase tracking-wider">
-                {isSv ? "Vårt Team & Partners" : "Our Team & Partners"}
+                {isSv ? "Regionala Partners & Team" : "Regional Partners & Team"}
               </div>
               <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal mt-1">
-                {isSv ? "Ledning, filialer & internationella partners" : "Executive Board, Branch Management & Liaisons"}
+                {isSv ? "Internationella partners & filialer" : "International Partners & Branch Operations"}
               </h2>
             </div>
             <div className="text-xs font-mono text-slate-400">
-              {isSv ? "Direktkontakt med beslutsfattare" : "Direct access to decision makers"}
+              {isSv ? "Direktkontakt med regionala samordnare" : "Direct access to regional coordinators"}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {leadershipTeam.map((member) => {
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {regionalTeam.map((member) => {
               const role = isSv ? member.roleSv : member.roleEn;
               const dept = isSv ? member.deptSv : member.deptEn;
               const bio = isSv ? member.bioSv : member.bioEn;
@@ -331,7 +345,7 @@ export default function TeamSection() {
                       alt={`${member.name} - ${role}`}
                       fill
                       className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-transparent to-transparent opacity-90" />
 
