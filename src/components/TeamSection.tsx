@@ -287,7 +287,7 @@ export default function TeamSection() {
               </div>
 
               {/* Core Pillars */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
+              <div className="grid grid-cols-2 gap-3 pt-1">
                 <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10">
                   <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">1,000+</div>
                   <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
@@ -295,12 +295,6 @@ export default function TeamSection() {
                   </div>
                 </div>
                 <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10">
-                  <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">100%</div>
-                  <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
-                    {isSv ? "EU & Visumefterlevnad" : "EU & Visa Compliant"}
-                  </div>
-                </div>
-                <div className="col-span-2 sm:col-span-1 p-3 rounded-2xl bg-white/[0.03] border border-white/10">
                   <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">Västervik</div>
                   <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
                     {isSv ? "Svenskt Säte & HK" : "Swedish Headquarters"}
