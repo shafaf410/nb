@@ -96,8 +96,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58]" />
               <span>{isSv ? "Officiell Företagsprofil // Norvian AB" : "Official Corporate Statement // Norvian AB"}</span>
             </div>
-            <div className="text-white/50 text-[11px]">
-              {isSv ? "Org. Reg. Sverige (2024) • Cirka 5 Års Teamerfarenhet" : "Registered in Sweden (2024) • Around 5 Years of Team Experience"}
+            <div className="text-white/50 text-[11px] tracking-wider uppercase">
+              {isSv 
+                ? "Registrerat i Sverige (2024) • 5 Års Teamerfarenhet Inom Internationell Rekrytering" 
+                : "Registered in Sweden (2024) • 5 Years of Team Experience in International Recruitment"}
             </div>
           </div>
 
