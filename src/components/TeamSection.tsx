@@ -169,12 +169,12 @@ export default function TeamSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             {/* Founders Photo */}
-            <div className="lg:col-span-5 relative w-full aspect-[1332/1181] lg:aspect-auto lg:h-full overflow-hidden bg-[#070D16]">
+            <div className="lg:col-span-5 relative w-full h-60 sm:h-72 lg:h-full min-h-[240px] overflow-hidden bg-[#070D16]">
               <Image
                 src="/images/team/co_founders.jpg"
                 alt="Norvian AB Co-Founders Bianka Bittlingmeier & Vinu Mohan"
                 fill
-                className="object-cover object-[54%_25%] group-hover:scale-105 transition-transform duration-700"
+                className="object-cover object-[54%_20%] group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 priority
               />
@@ -336,7 +336,7 @@ export default function TeamSection() {
                   className="group relative flex flex-col rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 hover:border-[#C59C58]/60 transition-all duration-300 hover:-translate-y-1 shadow-[0_12px_40px_rgba(0,0,0,0.5)] overflow-hidden"
                 >
                   {/* Photo Container */}
-                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-black/40">
+                  <div className="relative w-full h-56 sm:h-64 md:h-60 lg:h-64 overflow-hidden bg-black/40">
                     <Image
                       src={member.image}
                       alt={`${member.name} - ${role}`}

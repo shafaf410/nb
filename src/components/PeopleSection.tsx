@@ -170,7 +170,7 @@ export default function PeopleSection() {
           <div className="lg:col-span-6 relative flex justify-center">
             <div
               ref={imageContainerRef}
-              className="relative w-full max-w-[500px] aspect-[4/5] rounded-3xl overflow-hidden border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.85)] bg-black"
+              className="relative w-full max-w-[420px] aspect-[4/4.5] sm:aspect-[4/5] rounded-3xl overflow-hidden border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.85)] bg-black"
             >
               {profiles.map((prof, idx) => (
                 <div
