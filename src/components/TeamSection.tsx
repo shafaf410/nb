@@ -335,8 +335,8 @@ export default function TeamSection() {
                   key={member.name}
                   className="group relative flex flex-col rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 hover:border-[#C59C58]/60 transition-all duration-300 hover:-translate-y-1 shadow-[0_12px_40px_rgba(0,0,0,0.5)] overflow-hidden"
                 >
-                  {/* Photo Container */}
-                  <div className="relative w-full h-56 sm:h-64 md:h-60 lg:h-64 overflow-hidden bg-black/40">
+                  {/* Photo Container - Balanced 1:1 square aspect ratio prevents chin/face cropping */}
+                  <div className="relative aspect-square sm:aspect-square md:aspect-[4/4.2] w-full overflow-hidden bg-black/40">
                     <Image
                       src={member.image}
                       alt={`${member.name} - ${role}`}
@@ -344,17 +344,17 @@ export default function TeamSection() {
                       className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-transparent to-transparent opacity-90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#070D16] via-transparent to-transparent opacity-75 pointer-events-none" />
 
                     {/* Department Tag Pill */}
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-[10.5px] font-mono tracking-wider uppercase font-semibold bg-black/70 backdrop-blur-md text-[#E8C587] border border-[#C59C58]/40 shadow-md">
+                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
+                      <span className="px-3 py-1 rounded-full text-[10.5px] font-mono tracking-wider uppercase font-semibold bg-black/75 backdrop-blur-md text-[#E8C587] border border-[#C59C58]/40 shadow-md">
                         {tag}
                       </span>
                     </div>
 
                     {/* Location Badge */}
-                    <div className="absolute bottom-4 left-4 flex items-center gap-1.5 text-xs font-mono text-slate-300 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+                    <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex items-center gap-1.5 text-xs font-mono text-slate-300 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 shadow-sm">
                       <MapPin className="w-3 h-3 text-[#C59C58]" />
                       <span>{location}</span>
                     </div>
