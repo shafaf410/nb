@@ -119,7 +119,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
           <nav
             className={`${
               showNav ? "pointer-events-auto" : "pointer-events-none invisible"
-            } relative w-full max-w-4xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#E2E8F0]/95 backdrop-blur-2xl py-2 px-3.5 sm:py-2.5 sm:px-6 rounded-full border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.25)] flex items-center justify-between gap-3`}
+            } relative w-full max-w-5xl xl:max-w-6xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#E2E8F0]/95 backdrop-blur-2xl py-2 px-3.5 sm:py-2.5 sm:px-6 rounded-full border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.25)] flex items-center justify-between gap-3`}
           >
             {/* Shimmer inside overflow-hidden layer */}
             <div className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
@@ -157,7 +157,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                   className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                   priority
                 />
-                <div className="hidden lg:flex flex-col border-l border-slate-400/40 pl-3">
+                <div className="hidden xl:flex flex-col border-l border-slate-400/40 pl-3">
                   <span className="text-[8.5px] tracking-[0.22em] text-slate-700 font-semibold uppercase leading-tight">
                     {t.nav.brandSub}
                   </span>
@@ -168,18 +168,18 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               </Link>
             </motion.div>
 
-            {/* Center: Desktop Navigation Links (Home, Services Dropdown, About, Contact Us) */}
+            {/* Center: Desktop Navigation Links (Home, Services Dropdown, About, Team, Contact) */}
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={showNav ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
               transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:flex items-center gap-6 lg:gap-8 relative z-10"
+              className="hidden md:flex items-center gap-3.5 lg:gap-6 xl:gap-8 relative z-10 whitespace-nowrap shrink-0"
             >
               {/* 1. Home Link */}
               <Link
                 href="/#home"
                 onClick={handleHomeClick}
-                className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+                className="whitespace-nowrap shrink-0 text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
               >
                 <span>{t.nav.home || (isSv ? "Hem" : "Home")}</span>
                 <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
@@ -187,14 +187,14 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
 
               {/* 2. Services with Dropdown Menu */}
               <div
-                className="relative services-dropdown-container"
+                className="relative services-dropdown-container shrink-0"
                 onMouseEnter={() => setServicesOpen(true)}
                 onMouseLeave={() => setServicesOpen(false)}
               >
                 <button
                   type="button"
                   onClick={() => setServicesOpen((prev) => !prev)}
-                  className="flex items-center gap-1.5 text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group cursor-pointer"
+                  className="flex items-center gap-1.5 whitespace-nowrap shrink-0 text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group cursor-pointer"
                   aria-expanded={servicesOpen}
                 >
                   <span>{t.nav.services}</span>
@@ -276,7 +276,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               {/* 2. About Link */}
               <Link
                 href="/about"
-                className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+                className="whitespace-nowrap shrink-0 text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
               >
                 <span>{t.nav.about}</span>
                 <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
@@ -285,7 +285,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               {/* 3. Team Link */}
               <Link
                 href="/team"
-                className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+                className="whitespace-nowrap shrink-0 text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
               >
                 <span>{t.nav.team}</span>
                 <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
@@ -294,7 +294,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               {/* 4. Contact Us Link */}
               <Link
                 href="/contact"
-                className="text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
+                className="whitespace-nowrap shrink-0 text-[12.5px] lg:text-[13px] font-semibold tracking-wide text-slate-800 hover:text-black transition-all duration-200 py-1.5 relative group hover:-translate-y-0.5"
               >
                 <span>{t.nav.contactUs}</span>
                 <span className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C59C58] via-[#9E7324] to-[#C59C58] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full origin-left" />
@@ -306,7 +306,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
               initial={{ opacity: 0, x: 14 }}
               animate={showNav ? { opacity: 1, x: 0 } : { opacity: 0, x: 14 }}
               transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:flex items-center gap-3 relative z-10 shrink-0"
+              className="hidden md:flex items-center gap-2.5 lg:gap-3 relative z-10 shrink-0"
             >
               {/* Language Toggle (EN / SE) */}
               <LanguageToggle variant="pill" />
@@ -320,9 +320,9 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     onRequestWorkforce?.();
                   }
                 }}
-                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-4.5 sm:px-5 py-1.5 rounded-full text-[11px] font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_14px_rgba(197,156,88,0.35)] hover:shadow-[0_0_20px_rgba(197,156,88,0.5)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#C59C58] via-[#D8B474] to-[#C59C58] hover:from-[#D1A762] hover:to-[#DFBB7D] text-[#070D16] px-4.5 sm:px-5 py-1.5 rounded-full text-[11px] font-bold tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_4px_14px_rgba(197,156,88,0.35)] hover:shadow-[0_0_20px_rgba(197,156,88,0.5)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap shrink-0"
               >
-                <span className="relative z-10 font-bold">{t.nav.requestShort}</span>
+                <span className="relative z-10 font-bold whitespace-nowrap">{t.nav.requestShort}</span>
               </Link>
             </motion.div>
 
