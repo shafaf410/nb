@@ -91,7 +91,9 @@ export default function TeamSection() {
       email: "alina@norvian.se",
       locationEn: "Sweden Operations",
       locationSv: "Sverige Verksamhet",
-      languages: ["English", "Svenska"],
+      languages: isSv
+        ? ["Engelska", "Svenska", "Ryska", "Ukrainska"]
+        : ["English", "Swedish", "Russian", "Ukrainian"],
       image: "/images/team/alina.jpg",
       tagEn: "Operations",
       tagSv: "Administration",
