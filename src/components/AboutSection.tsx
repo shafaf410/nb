@@ -526,7 +526,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     Baiju Babu
                   </h3>
                   <p className="text-[#C59C58] text-[11px] font-semibold mt-0.5">
-                    {isSv ? "Extern Affärspartner – Storbritannien" : "External Business Partner – UK"}
+                    {isSv ? "Affärsutvecklingschef" : "Business Development Manager"}
                   </p>
                   <p className="text-white/60 text-[10.5px] mt-0.5 font-light">
                     {isSv ? "UK & Internationell Utveckling" : "UK & International Business Development"}

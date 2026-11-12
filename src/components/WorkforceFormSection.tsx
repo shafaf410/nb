@@ -68,9 +68,9 @@ const OFFICIAL_CONTACTS: ContactPerson[] = [
   },
   {
     name: "Baiju Babu",
-    positionEn: "External Business Partner – UK",
-    positionSv: "Extern Affärspartner – UK",
-    positionDe: "Externer Geschäftspartner – UK",
+    positionEn: "Business Development Manager",
+    positionSv: "Affärsutvecklingschef",
+    positionDe: "Business Development Manager",
     email: "baiju@norvian.se",
   },
   {

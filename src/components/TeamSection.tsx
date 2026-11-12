@@ -120,12 +120,12 @@ export default function TeamSection() {
     },
     {
       name: "Baiju Babu",
-      roleEn: "External Business Partner – UK",
-      roleSv: "Extern Affärspartner – UK",
-      roleDe: "Externer Geschäftspartner – UK",
-      deptEn: "UK Industrial Partner Relations",
-      deptSv: "Brittiska Industrirelationer",
-      deptDe: "Britische Industriepartner-Beziehungen",
+      roleEn: "Business Development Manager",
+      roleSv: "Affärsutvecklingschef",
+      roleDe: "Business Development Manager",
+      deptEn: "UK & International Market Expansion",
+      deptSv: "UK & Internationell Marknadsexpansion",
+      deptDe: "UK & Internationale Marktexpansion",
       bioEn:
         "Leading marketing and business development initiatives, building strategic partnerships and expanding business opportunities across the marine, industrial and construction sectors in the UK and international markets.",
       bioSv:
