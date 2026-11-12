@@ -308,10 +308,10 @@ export default function TeamSection() {
                   </div>
                   <p className="text-[11.5px] text-slate-300 leading-relaxed pt-1">
                     {isSv
-                      ? "Arkitekten bakom Norvians internationella talangkorridorer, certifierade yrkesverifiering och visumarkitektur."
+                      ? "Ansvarar för Norvian AB:s strategiska inriktning, affärsutveckling, bolagsdrift och hållbara tillväxt, med fokus på långsiktig framgång i Europa."
                       : isDe
-                      ? "Architekt der internationalen Talentkorridore, Fachkräfteverifizierung und Visa-Architektur von Norvian."
-                      : "Architect of Norvian's international talent corridors, mobilization pipelines, and cross-border compliance."}
+                      ? "Verantwortlich für die strategische Ausrichtung, Geschäftsentwicklung, den operativen Betrieb und das nachhaltige Wachstum von Norvian AB mit Fokus auf langfristigen Erfolg in Europa."
+                      : "Responsible for Norvian AB’s strategic direction, business development, corporate operations, and sustainable growth, with a focus on long-term success across Europe."}
                   </p>
                   <div className="pt-2 flex items-center justify-between border-t border-white/10 text-xs">
                     <span className="text-[10px] font-mono text-slate-400">
