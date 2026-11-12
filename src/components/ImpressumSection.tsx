@@ -138,12 +138,12 @@ export default function ImpressumSection() {
           <p className="text-sm text-slate-300 leading-relaxed">
             {isSv
               ? "Norvian AB är ett svenskt rekryterings- och bemanningsföretag baserat i Västervik. Vi hjälper företag att hitta kvalificerad arbetskraft och erbjuder bemanningslösningar för olika branscher i Sverige och över hela Europa."
-              : "Norvian AB is a Swedish recruitment and staffing company based in Västervik. We help businesses find qualified workers and provide staffing solutions for different industries across Sweden and Europe."}
+              : "Norvian AB is a Swedish staffing company based in Västervik. We help businesses find qualified workers and provide staffing solutions for different industries across Sweden and Europe."}
           </p>
           <p className="text-sm text-slate-300 leading-relaxed">
             {isSv
               ? "Vår verksamhet omfattar rekrytering, tillfällig bemanning, personaluthyrning, internationell personalförsörjning och HR-konsultation. Vi erbjuder även affärsutveckling och rådgivningstjänster."
-              : "Our work includes recruitment, temporary staffing, personnel leasing, international workforce supply, and HR consulting. We also offer business development and advisory services."}
+              : "Our work includes staffing, temporary staffing, personnel leasing, international workforce supply, and HR consulting. We also offer business development and advisory services."}
           </p>
           <p className="text-sm text-slate-300 leading-relaxed">
             {isSv
@@ -164,7 +164,7 @@ export default function ImpressumSection() {
             </li>
             <li className="flex items-start gap-3">
               <span className="font-mono text-[#C59C58] font-semibold w-16 shrink-0">78100</span>
-              <span>{isSv ? "– Arbetsförmedling och rekrytering" : "– Employment and recruitment services"}</span>
+              <span>{isSv ? "– Arbetsförmedling och bemanning" : "– Employment and staffing services"}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="font-mono text-[#C59C58] font-semibold w-16 shrink-0">78202</span>

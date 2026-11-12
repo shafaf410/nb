@@ -805,21 +805,21 @@ export default function ServiceDetailPage({
             </div>
           </section>
 
-          {/* 9. Turnkey Recruitment & Mobilization Process */}
+          {/* 9. Turnkey Staffing & Mobilization Process */}
           <section className="px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto py-8 sm:py-14 border-t border-white/10">
             <div className="space-y-2 mb-10 text-center max-w-2xl mx-auto">
               <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.24em] text-[#C59C58] font-bold">
                 {isShipbuilding || isTransport || isConstruction
-                  ? (isSv ? "VÅR REKRYTERINGSPROCESS" : "OUR RECRUITMENT PROCESS")
+                  ? (isSv ? "VÅR BEMANNINGSPROCESS" : "OUR STAFFING PROCESS")
                   : (isSv ? "STRÖMLINJEFORMAD MOBILISERING" : "STREAMLINED DEPLOYMENT")}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-white font-normal">
                 {isShipbuilding
                   ? (isSv ? "Enkla och Pålitliga Bemanningslösningar" : "Simple and Reliable Workforce Solutions")
                   : isTransport
-                  ? (isSv ? "Enkel och Pålitlig Förarrekrytering" : "Simple and Reliable Driver Recruitment")
+                  ? (isSv ? "Enkel och Pålitlig Förarbemanning" : "Simple and Reliable Driver Staffing")
                   : isConstruction
-                  ? (isSv ? "Enkel och Pålitlig Byggrekrytering" : "Simple and Reliable Construction Recruitment")
+                  ? (isSv ? "Enkel och Pålitlig Byggbemanning" : "Simple and Reliable Construction Staffing")
                   : (isSv ? "Hur Vi Mobiliserar Ert Yrkeslag" : "How We Deploy Your Workforce")}
               </h2>
               <p className="text-sm sm:text-base text-white/70 font-light">
@@ -1101,8 +1101,8 @@ export default function ServiceDetailPage({
                         ? "Oavsett om ni söker CNC-programmerare, maskinoperatörer, svetsare, metallkonstruktörer, industrimekaniker eller en komplett produktionspersonal kan Norvian AB hjälpa er att hitta lämpliga yrkespersoner för ert företag."
                         : "Whether you are looking for CNC programmers, CNC machine operators, welders, metal fabricators, industrial mechanics, or a complete production workforce, Norvian AB can help you find suitable professionals for your company.")
                     : (isSv
-                        ? "Kontakta vårt rekryteringsteam för att gå igenom projektplaner, kompetenskrav och tillgänglig personal över hela Skandinavien och Europa."
-                        : "Connect with our recruitment team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe.")}
+                        ? "Kontakta vårt bemanningsteam för att gå igenom projektplaner, kompetenskrav och tillgänglig personal över hela Skandinavien och Europa."
+                        : "Connect with our staffing team to review project schedules, skill requirements, and worker availability across Scandinavia and Europe.")}
                 </p>
 
                 <div className="pt-4 flex flex-wrap items-center justify-center gap-4">

@@ -99,10 +99,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
             </div>
             <div className="text-white/50 text-[11px] tracking-wider uppercase">
               {isSv 
-                ? "Registrerat i Sverige (2024) • 5 Års Teamerfarenhet Inom Internationell Rekrytering" 
+                ? "Registrerat i Sverige (2024) • 5 Års Teamerfarenhet Inom Bemanning" 
                 : isDe
-                ? "Registriert in Schweden (2024) • 5 Jahre Teamerfahrung in Internationaler Rekrutierung"
-                : "Registered in Sweden (2024) • 5 Years of Team Experience in International Recruitment"}
+                ? "Registriert in Schweden (2024) • 5 Jahre Teamerfahrung in Personaldienstleistungen"
+                : "Registered in Sweden (2024) • 5 Years of Team Experience in Staffing Services"}
             </div>
           </div>
 
@@ -111,10 +111,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
           </h1>
           <p className="mt-3 text-base sm:text-lg text-white/70 font-light max-w-3xl leading-relaxed">
             {isSv 
-              ? "Svenskt rekryteringsföretag specialiserat på internationell rekrytering baserat i Västervik, Sverige."
+              ? "Svenskt bemanningsföretag specialiserat på internationell bemanning baserat i Västervik, Sverige."
               : isDe
-              ? "Schwedisches Personalvermittlungsunternehmen spezialisiert auf internationale Rekrutierung mit Sitz in Västervik, Schweden."
-              : "Swedish recruitment company specializing in international recruitment based in Västervik, Sweden."}
+              ? "Schwedisches Personaldienstleistungsunternehmen spezialisiert auf internationale Personallösungen mit Sitz in Västervik, Schweden."
+              : "Swedish staffing company specializing in international staffing based in Västervik, Sweden."}
           </p>
         </div>
 
@@ -135,10 +135,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                 {isSv ? (
                   <>
                     <p>
-                      NORVIAN AB är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, specialiserat på internationell rekrytering.
+                      NORVIAN AB är ett svenskt bemanningsföretag baserat i Västervik, Sverige, specialiserat på internationell bemanning.
                     </p>
                     <p>
-                      Även om NORVIAN AB registrerades i Sverige 2024, tillför vårt team cirka fem års erfarenhet inom internationell rekrytering samt samarbete med företag och rekryteringspartners över hela Europa.
+                      Även om NORVIAN AB registrerades i Sverige 2024, tillför vårt team cirka fem års erfarenhet inom bemanningstjänster samt samarbete med företag och partners över hela Europa.
                     </p>
                     <p>
                       Innan vi etablerade verksamheten under NORVIAN AB förvärvade vi värdefull branscherfarenhet genom tidigare affärsverksamhet under en annan bolagsstruktur.
@@ -150,10 +150,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                 ) : isDe ? (
                   <>
                     <p>
-                      NORVIAN AB ist ein schwedisches Personalvermittlungsunternehmen mit Sitz in Västervik, Schweden, spezialisiert auf die internationale Rekrutierung.
+                      NORVIAN AB ist ein schwedisches Personaldienstleistungsunternehmen mit Sitz in Västervik, Schweden, spezialisiert auf grenzüberschreitende Personallösungen.
                     </p>
                     <p>
-                      Obwohl NORVIAN AB im Jahr 2024 in Schweden registriert wurde, bringt unser Team rund fünf Jahre Erfahrung in der internationalen Personalvermittlung sowie in der Zusammenarbeit mit Unternehmen und Partnern in ganz Europa mit.
+                      Obwohl NORVIAN AB im Jahr 2024 in Schweden registriert wurde, bringt unser Team rund fünf Jahre Erfahrung in Personaldienstleistungen sowie in der Zusammenarbeit mit Unternehmen und Partnern in ganz Europa mit.
                     </p>
                     <p>
                       Vor dem Aufbau unserer Aktivitäten unter NORVIAN AB haben wir wertvolle Branchenerfahrung durch unsere früheren Geschäftsaktivitäten unter einer anderen Unternehmensstruktur gesammelt.
@@ -165,10 +165,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                 ) : (
                   <>
                     <p>
-                      NORVIAN AB is a Swedish recruitment company based in Västervik, Sweden, specializing in international recruitment.
+                      NORVIAN AB is a Swedish staffing company based in Västervik, Sweden, specializing in international staffing.
                     </p>
                     <p>
-                      Although NORVIAN AB was registered in Sweden in 2024, our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe.
+                      Although NORVIAN AB was registered in Sweden in 2024, our team brings around five years of experience in staffing services and working with companies and business partners across Europe.
                     </p>
                     <p>
                       Before establishing our operations under NORVIAN AB, we gained valuable industry experience through our previous business activities under a different company structure.
@@ -192,46 +192,46 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                 {isSv ? (
                   <>
                     <p>
-                      En av våra främsta styrkor är vår förståelse för den europeiska arbetsmarknaden och de specifika rekryteringsbehoven hos europeiska företag.
+                      En av våra främsta styrkor är vår förståelse för den europeiska arbetsmarknaden och de specifika bemanningsbehoven hos europeiska företag.
                     </p>
                     <p>
-                      Vårt team har praktisk erfarenhet av internationell rekrytering, personalsamordning och samarbete med arbetsgivare och rekryteringspartners över hela Europa.
+                      Vårt team har praktisk erfarenhet av internationell bemanning, personalsamordning och samarbete med arbetsgivare och samarbetspartners över hela Europa.
                     </p>
                     <p>
-                      Vi förstår vikten av anställningsregler, dokumentationskrav och rekryteringsförfaranden i olika europeiska länder.
+                      Vi förstår vikten av anställningsregler, dokumentationskrav och bemanningsförfaranden i olika europeiska länder.
                     </p>
                     <p>
-                      Denna kunskap gör det möjligt för oss att kommunicera effektivt med arbetsgivare och relevanta institutioner samt stödja en strukturerad och transparent rekryteringsprocess.
+                      Denna kunskap gör det möjligt för oss att kommunicera effektivt med arbetsgivare och relevanta institutioner samt stödja en strukturerad och transparent bemanningsprocess.
                     </p>
                   </>
                 ) : isDe ? (
                   <>
                     <p>
-                      Eine unserer Hauptstärken ist unser Verständnis des europäischen Arbeitsmarktes und der spezifischen Rekrutierungsbedürfnisse europäischer Unternehmen.
+                      Eine unserer Hauptstärken ist unser Verständnis des europäischen Arbeitsmarktes und der spezifischen Personalbedürfnisse europäischer Unternehmen.
                     </p>
                     <p>
-                      Unser Team verfügt über praktische Erfahrung in der internationalen Personalvermittlung, der Personalkoordination und der Zusammenarbeit mit Arbeitgebern und Rekrutierungspartnern in ganz Europa.
+                      Unser Team verfügt über praktische Erfahrung in internationalen Personaldienstleistungen, der Personalkoordination und der Zusammenarbeit mit Arbeitgebern und Partnern in ganz Europa.
                     </p>
                     <p>
                       Wir verstehen die Bedeutung von Arbeitsvorschriften, Dokumentationsanforderungen und Einstellungsverfahren in verschiedenen europäischen Ländern.
                     </p>
                     <p>
-                      Dieses Wissen ermöglicht es uns, effektiv mit Arbeitgebern und relevanten Institutionen zu kommunizieren und einen strukturierten und transparenten Rekrutierungsprozess zu unterstützen.
+                      Dieses Wissen ermöglicht es uns, effektiv mit Arbeitgebern und relevanten Institutionen zu kommunizieren und einen strukturierten und transparenten Personalprozess zu unterstützen.
                     </p>
                   </>
                 ) : (
                   <>
                     <p>
-                      One of our key strengths is our understanding of the European labour market and the specific recruitment needs of European companies.
+                      One of our key strengths is our understanding of the European labour market and the specific staffing needs of European companies.
                     </p>
                     <p>
-                      Our team has practical experience in international recruitment, workforce coordination, and working with employers and recruitment partners across Europe.
+                      Our team has practical experience in international staffing, workforce coordination, and working with employers and staffing partners across Europe.
                     </p>
                     <p>
-                      We understand the importance of employment regulations, documentation requirements, and recruitment procedures in different European countries.
+                      We understand the importance of employment regulations, documentation requirements, and staffing procedures in different European countries.
                     </p>
                     <p>
-                      This knowledge enables us to communicate effectively with employers and relevant institutions and to support a structured and transparent recruitment process.
+                      This knowledge enables us to communicate effectively with employers and relevant institutions and to support a structured and transparent staffing process.
                     </p>
                   </>
                 )}
@@ -258,13 +258,13 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                       Där det krävs beaktar vi även erkännande av yrkeskvalifikationer samt tillämpliga anställnings- och arbetstillståndskrav.
                     </p>
                     <p>
-                      Vårt mål är att koppla samman europeiska arbetsgivare med pålitliga och lämpliga kandidater samtidigt som vi stödjer en professionell och ansvarsfull rekryteringsprocess.
+                      Vårt mål är att koppla samman europeiska arbetsgivare med pålitliga och lämpliga kandidater samtidigt som vi stödjer en professionell och ansvarsfull bemanningsprocess.
                     </p>
                   </>
                 ) : isDe ? (
                   <>
                     <p>
-                      Bei NORVIAN AB konzentrieren wir uns auf die Rekrutierung von qualifizierten, erfahrenen Fachkräften, die den spezifischen Anforderungen unserer europäischen Kunden entsprechen.
+                      Bei NORVIAN AB konzentrieren wir uns auf die Bereitstellung von qualifizierten, erfahrenen Fachkräften, die den spezifischen Anforderungen unserer europäischen Kunden entsprechen.
                     </p>
                     <p>
                       Wir legen großen Wert auf einen sorgfältigen und transparenten Auswahlprozess. Dazu gehört die Prüfung von Berufsqualifikationen, relevanter Berufserfahrung und entsprechenden Nachweisen.
@@ -273,7 +273,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                       Soweit erforderlich, berücksichtigen wir auch die Anerkennung von Berufsqualifikationen sowie geltende Beschäftigungs- und Arbeitserlaubnisanforderungen.
                     </p>
                     <p>
-                      Unser Ziel ist es, europäische Arbeitgeber mit zuverlässigen und passenden Kandidaten zu verbinden und dabei einen professionellen und verantwortungsvollen Rekrutierungsprozess zu gewährleisten.
+                      Unser Ziel ist es, europäische Arbeitgeber mit zuverlässigen und passenden Kandidaten zu verbinden und dabei einen professionellen und verantwortungsvollen Personalprozess zu gewährleisten.
                     </p>
                   </>
                 ) : (
@@ -288,64 +288,64 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                       Where required, we also consider the recognition of professional qualifications and applicable employment and work authorization requirements.
                     </p>
                     <p>
-                      Our goal is to connect European employers with reliable and suitable candidates while supporting a professional and responsible recruitment process.
+                      Our goal is to connect European employers with reliable and suitable candidates while supporting a professional and responsible staffing process.
                     </p>
                   </>
                 )}
               </div>
             </div>
 
-            {/* Section 4: Large-Scale Recruitment & Individual Workforce Solutions */}
+            {/* Section 4: Large-Scale Staffing & Individual Workforce Solutions */}
             <div className="space-y-4">
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>04</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Storskalig Rekrytering & Individuella Bemanningslösningar" : isDe ? "Großvolumige Rekrutierung & Individuelle Personal-Lösungen" : "Large-Scale Recruitment & Individual Workforce Solutions"}</span>
+                <span>{isSv ? "Storskalig Bemanning & Individuella Bemanningslösningar" : isDe ? "Großvolumige Personaldienstleistungen & Individuelle Personal-Lösungen" : "Large-Scale Staffing & Individual Workforce Solutions"}</span>
               </div>
               <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
                   <>
                     <p>
-                      För företag med större personalbehov erbjuder NORVIAN AB skräddarsydda rekryteringslösningar utformade för att möta specifika bransch- och bemanningsbehov.
+                      För företag med större personalbehov erbjuder NORVIAN AB skräddarsydda bemanningslösningar utformade för att möta specifika bransch- och personalbehov.
                     </p>
                     <p>
-                      Genom vårt internationella rekryteringsnätverk stödjer vi arbetsgivare i att identifiera och välja ut kvalificerade yrkespersoner, med särskilt fokus på kandidater som redan är baserade i Europa.
+                      Genom vårt internationella bemanningsnätverk stödjer vi arbetsgivare i att identifiera och välja ut kvalificerade yrkespersoner, med särskilt fokus på kandidater som redan är baserade i Europa.
                     </p>
                     <p>
-                      Beroende på projektets storlek och krav kan vi samordna strukturerade rekryteringsprocesser, kandidatintervjuer, kompetensbedömningar och samarbete med internationella rekryteringspartners.
+                      Beroende på projektets storlek och krav kan vi samordna strukturerade bemanningsprocesser, kandidatintervjuer, kompetensbedömningar och samarbete med internationella samarbetspartners.
                     </p>
                     <p>
-                      För större rekryteringsprojekt kan ytterligare tjänster och urvalsprocesser på plats arrangeras individuellt i samråd med våra kunder.
+                      För större bemanningsprojekt kan ytterligare tjänster och urvalsprocesser på plats arrangeras individuellt i samråd med våra kunder.
                     </p>
                   </>
                 ) : isDe ? (
                   <>
                     <p>
-                      Für Unternehmen mit größerem Personalbedarf bietet NORVIAN AB maßgeschneiderte Rekrutierungslösungen, die auf spezifische Branchen- und Personalanforderungen abgestimmt sind.
+                      Für Unternehmen mit größerem Personalbedarf bietet NORVIAN AB maßgeschneiderte Personallösungen, die auf spezifische Branchen- und Personalanforderungen abgestimmt sind.
                     </p>
                     <p>
-                      Über unser internationales Rekrutierungsnetzwerk unterstützen wir Arbeitgeber bei der Identifizierung und Auswahl qualifizierter Fachkräfte – mit besonderem Fokus auf Kandidaten, die bereits in Europa ansässig sind.
+                      Über unser internationales Personalnetzwerk unterstützen wir Arbeitgeber bei der Identifizierung und Auswahl qualifizierter Fachkräfte – mit besonderem Fokus auf Kandidaten, die bereits in Europa ansässig sind.
                     </p>
                     <p>
-                      Je nach Projektgröße und Anforderungen koordinieren wir strukturierte Rekrutierungsprozesse, Vorstellungsgespräche, Qualifikationsprüfungen und die Zusammenarbeit mit internationalen Rekrutierungspartnern.
+                      Je nach Projektgröße und Anforderungen koordinieren wir strukturierte Personalprozesse, Vorstellungsgespräche, Qualifikationsprüfungen und die Zusammenarbeit mit internationalen Partnern.
                     </p>
                     <p>
-                      Für größere Rekrutierungsprojekte können zusätzliche Dienstleistungen und Auswahlverfahren vor Ort individuell in Abstimmung mit unseren Kunden organisiert werden.
+                      Für größere Personalprojekte können zusätzliche Dienstleistungen und Auswahlverfahren vor Ort individuell in Abstimmung mit unseren Kunden organisiert werden.
                     </p>
                   </>
                 ) : (
                   <>
                     <p>
-                      For companies with larger workforce requirements, NORVIAN AB offers tailored recruitment solutions designed to meet specific industry and staffing needs.
+                      For companies with larger workforce requirements, NORVIAN AB offers tailored staffing solutions designed to meet specific industry and staffing needs.
                     </p>
                     <p>
-                      Through our international recruitment network, we support employers in identifying and selecting qualified professionals, with a particular focus on candidates already based in Europe.
+                      Through our international staffing network, we support employers in identifying and selecting qualified professionals, with a particular focus on candidates already based in Europe.
                     </p>
                     <p>
-                      Depending on the size and requirements of the project, we can coordinate structured recruitment processes, candidate interviews, qualification assessments, and cooperation with international recruitment partners.
+                      Depending on the size and requirements of the project, we can coordinate structured staffing processes, candidate interviews, qualification assessments, and cooperation with international partners.
                     </p>
                     <p>
-                      For larger recruitment projects, additional services and on-site selection processes can be arranged individually in consultation with our clients.
+                      For larger staffing projects, additional services and on-site selection processes can be arranged individually in consultation with our clients.
                     </p>
                   </>
                 )}
@@ -366,7 +366,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                       Vårt mål är att koppla samman europeiska företag med skickliga, erfarna och pålitliga yrkespersoner som möter deras specifika kompetensbehov.
                     </p>
                     <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-                      Vi är övertygade om att framgångsrik rekrytering bygger på förtroende, transparens och långsiktiga partnerskap. Vårt åtagande är att skapa varaktigt värde för både arbetsgivare och yrkespersoner genom ansvarsfulla och pålitliga rekryteringslösningar.
+                      Vi är övertygade om att framgångsrik bemanning bygger på förtroende, transparens och långsiktiga partnerskap. Vårt åtagande är att skapa varaktigt värde för både arbetsgivare och yrkespersoner genom ansvarsfulla och pålitliga bemanningslösningar.
                     </p>
                   </>
                 ) : isDe ? (
@@ -375,7 +375,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                       Unser Ziel ist es, europäische Unternehmen mit qualifizierten, erfahrenen und zuverlässigen Fachkräften zusammenzubringen, die ihren spezifischen Personalbedarf erfüllen.
                     </p>
                     <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-                      Wir sind überzeugt, dass erfolgreiche Rekrutierung auf Vertrauen, Transparenz und langfristigen Partnerschaften basiert. Unser Anspruch ist es, durch verantwortungsvolle und verlässliche Personallösungen nachhaltigen Mehrwert für Arbeitgeber und Fachkräfte zu schaffen.
+                      Wir sind überzeugt, dass erfolgreiche Personaldienstleistung auf Vertrauen, Transparenz und langfristigen Partnerschaften basiert. Unser Anspruch ist es, durch verantwortungsvolle und verlässliche Personallösungen nachhaltigen Mehrwert für Arbeitgeber und Fachkräfte zu schaffen.
                     </p>
                   </>
                 ) : (
@@ -384,7 +384,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                       Our goal is to connect European companies with skilled, experienced, and reliable professionals who meet their specific workforce needs.
                     </p>
                     <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-                      We believe that successful recruitment is built on trust, transparency, and long-term partnerships. Our commitment is to create lasting value for both employers and professionals through responsible and reliable recruitment solutions.
+                      We believe that successful staffing is built on trust, transparency, and long-term partnerships. Our commitment is to create lasting value for both employers and professionals through responsible and reliable staffing solutions.
                     </p>
                   </>
                 )}
@@ -432,10 +432,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                   </span>
                   <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
                     {isSv
-                      ? "Cirka 5 års teamerfarenhet inom internationell rekrytering"
+                      ? "Cirka 5 års teamerfarenhet inom internationell bemanning"
                       : isDe
-                      ? "Rund 5 Jahre Teamerfahrung in der internationalen Rekrutierung"
-                      : "Around 5 Years of Team Experience in International Recruitment"}
+                      ? "Rund 5 Jahre Teamerfahrung in Personaldienstleistungen"
+                      : "Around 5 Years of Team Experience in Staffing Services"}
                   </span>
                 </div>
 
@@ -445,10 +445,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                   </span>
                   <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
                     {isSv
-                      ? "Internationell rekrytering & skickliga bemanningslösningar över hela Europa"
+                      ? "Internationell bemanning & skickliga bemanningslösningar över hela Europa"
                       : isDe
-                      ? "Internationale Rekrutierung & qualifizierte Personallösungen in ganz Europa"
-                      : "International Recruitment & Skilled Workforce Solutions Across Europe"}
+                      ? "Internationale Personallösungen & qualifizierte Personaldienstleistungen in ganz Europa"
+                      : "International Staffing & Skilled Workforce Solutions Across Europe"}
                   </span>
                 </div>
 
@@ -481,7 +481,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
                   </p>
                   <p className="text-white/60 text-[10.5px] mt-0.5 font-light">
-                    {isSv ? "Rekrytering & Affärspartnerskap" : "Recruitment & Business Partnerships"}
+                    {isSv ? "Bemanning & Affärspartnerskap" : "Staffing & Business Partnerships"}
                   </p>
                 </div>
 
@@ -493,7 +493,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     {isSv ? "Medgrundare & Delägare" : "Co-Founder & Co-Owner"}
                   </p>
                   <p className="text-white/60 text-[10.5px] mt-0.5 font-light">
-                    {isSv ? "Internationell Drift & Rekrytering" : "International Operations & Recruitment"}
+                    {isSv ? "Internationell Drift & Bemanning" : "International Operations & Staffing"}
                   </p>
                 </div>
 

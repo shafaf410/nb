@@ -90,7 +90,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
     complianceBadges: [
       "Min. 5 Years Experience",
       "European & International Pool",
-      "Direct Asian Recruitment",
+      "Direct Asian Staffing",
       "Philippines • Vietnam • Brazil • India",
       "DNV & ISO 9606 Ready",
       "Flexible Manpower Supply",
@@ -98,7 +98,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
     shortDescription:
       "Norvian AB supplies skilled and experienced shipbuilding professionals to shipyards and marine industries across Europe. We provide qualified workers with a minimum of 5 years of shipyard experience, helping companies find the right people for their projects.",
     detailedDescription:
-      "We supply experienced European workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also provide direct international recruitment from the Philippines, Vietnam, Brazil, and India for short-term, long-term, and project-based workforce requirements.",
+      "We supply experienced European workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also provide Direct International Staffing from the Philippines, Vietnam, Brazil, and India for short-term, long-term, and project-based workforce requirements.",
     specializationCategories: [
       {
         category: "Hull Construction & Steel Fabrication",
@@ -216,8 +216,8 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Recruitment & Deployment",
-        desc: "We coordinate the recruitment process and assist with the necessary employment and documentation procedures.",
+        title: "Staffing & Deployment",
+        desc: "We coordinate the staffing process and assist with the necessary employment and documentation procedures.",
       },
     ],
     employerAssurances: [
@@ -232,7 +232,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU & RESIDENT TALENT",
       },
       {
-        title: "Direct International Recruitment",
+        title: "Direct International Staffing",
         desc: "We recruit qualified shipbuilding workers directly from the Philippines, Vietnam, Brazil, and India based on our clients’ requirements.",
         tag: "GLOBAL CORRIDORS",
       },
@@ -272,14 +272,14 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Where do you source your shipbuilding workforce from?",
-        a: "We supply experienced European workers and international professionals already based in Europe with valid visas. Additionally, we conduct direct international recruitment from the Philippines, Vietnam, Brazil, and India.",
+        a: "We supply experienced European workers and international professionals already based in Europe with valid visas. Additionally, we conduct Direct International Staffing from the Philippines, Vietnam, Brazil, and India.",
       },
       {
         q: "What shipyard positions and trades can you provide?",
         a: "We supply Hull Fitters, Steel Fabricators, Shipyard Locksmiths, TIG/MIG/MMA Welders, Pipe Fitters, Mechanical Fitters, Shipbuilding Technicians, Marine Electricians, Ship Painters, and Sandblasters.",
       },
       {
-        q: "How does the recruitment and selection process work?",
+        q: "How does the staffing and selection process work?",
         a: "The process is simple: 1) Share your requirements, 2) We select and review candidate profiles, 3) We share profiles and arrange interviews, and 4) We coordinate deployment and documentation procedures.",
       },
       {
@@ -311,7 +311,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
     shortDescription:
       "Norvian AB supplies skilled and experienced construction workers to construction companies, contractors, and building projects across Europe. We help companies find reliable workers for residential, commercial, industrial, and infrastructure construction projects.\n\nOur focus is on providing qualified construction professionals with practical experience, technical skills, and knowledge of workplace safety.",
     detailedDescription:
-      "We supply experienced European construction workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also offer direct international recruitment from India, the Philippines, Vietnam, Brazil, and other countries, providing skilled workers for residential, commercial, and large-scale construction projects.\n\nWe support construction companies looking for workers for short-term projects, long-term employment, and ongoing workforce requirements.",
+      "We supply experienced European construction workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also offer Direct International Staffing from India, the Philippines, Vietnam, Brazil, and other countries, providing skilled workers for residential, commercial, and large-scale construction projects.\n\nWe support construction companies looking for workers for short-term projects, long-term employment, and ongoing workforce requirements.",
     specializationCategories: [
       {
         category: "Structural & Concrete Construction",
@@ -488,8 +488,8 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Recruitment & Documentation",
-        desc: "We coordinate the recruitment process and assist with the necessary employment documentation and work permit procedures where required.",
+        title: "Staffing & Documentation",
+        desc: "We coordinate the staffing process and assist with the necessary employment documentation and work permit procedures where required.",
       },
       {
         step: "05",
@@ -509,7 +509,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU & RESIDENT TALENT",
       },
       {
-        title: "Direct International Recruitment",
+        title: "Direct International Staffing",
         desc: "We recruit skilled construction workers from India, the Philippines, Vietnam, Brazil, and other international markets according to our clients’ requirements.",
         tag: "GLOBAL CORRIDORS",
       },
@@ -563,7 +563,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Where is your construction workforce recruited from?",
-        a: "We supply experienced European workers, EU-resident international professionals with valid work permits, and direct international recruitment from India, the Philippines, Vietnam, Brazil, and other countries.",
+        a: "We supply experienced European workers, EU-resident international professionals with valid work permits, and Direct International Staffing from India, the Philippines, Vietnam, Brazil, and other countries.",
       },
       {
         q: "Do you handle site cards and documentation (e.g., ID06, HMS)?",
@@ -575,7 +575,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "How quickly can construction workers be mobilized to our job site?",
-        a: "European and resident workers can often be mobilized rapidly, while international direct recruitment timelines depend on required visa and travel documentation procedures.",
+        a: "European and resident workers can often be mobilized rapidly, while international direct staffing timelines depend on required visa and travel documentation procedures.",
       },
     ],
   },
@@ -591,14 +591,14 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       "CE Category Drivers",
       "EU Code 95 Support",
       "European & International Pool",
-      "Direct Global Recruitment",
+      "Direct Global Staffing",
       "India • Philippines • Vietnam • Brazil • Zimbabwe",
       "Practical Driving Verification",
     ],
     shortDescription:
       "Norvian AB supplies skilled and experienced truck and trailer drivers to transport and logistics companies across Europe. We help companies find reliable drivers for international transport, long-distance routes, and daily logistics operations.\n\nOur focus is on providing professional drivers with practical driving experience, good knowledge of road safety, and the skills required for European transport operations.",
     detailedDescription:
-      "We supply experienced European drivers and international drivers already based in Europe with valid residence permits and appropriate work authorization.\n\nWe also offer direct international recruitment of experienced truck and trailer drivers from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other countries, including drivers with professional experience in Saudi Arabia, Qatar, Kuwait, and the UAE.\n\nWe support transport companies looking for drivers for short-term, long-term, and permanent employment.",
+      "We supply experienced European drivers and international drivers already based in Europe with valid residence permits and appropriate work authorization.\n\nWe also offer Direct International Staffing of experienced truck and trailer drivers from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other countries, including drivers with professional experience in Saudi Arabia, Qatar, Kuwait, and the UAE.\n\nWe support transport companies looking for drivers for short-term, long-term, and permanent employment.",
     specializationCategories: [
       {
         category: "Truck & Trailer Drivers",
@@ -731,8 +731,8 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Recruitment & Documentation",
-        desc: "We coordinate the recruitment process and assist with the necessary employment documentation, work permits, and professional driver qualification procedures where required.",
+        title: "Staffing & Documentation",
+        desc: "We coordinate the staffing process and assist with the necessary employment documentation, work permits, and professional driver qualification procedures where required.",
       },
       {
         step: "05",
@@ -752,7 +752,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU & RESIDENT POOL",
       },
       {
-        title: "Direct International Recruitment",
+        title: "Direct International Staffing",
         desc: "We recruit experienced truck and trailer drivers from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other international markets, including drivers with experience in Gulf countries (Saudi Arabia, Qatar, Kuwait, UAE).",
         tag: "GLOBAL CORRIDORS",
       },
@@ -767,9 +767,9 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
         tag: "CODE 95 SUPPORT",
       },
       {
-        title: "Flexible Driver Recruitment",
+        title: "Flexible Driver Staffing",
         desc: "Whether you need a few drivers or a larger team for your transport operations, we can support short-term, long-term, and permanent workforce requirements.",
-        tag: "FLEXIBLE RECRUITMENT",
+        tag: "FLEXIBLE STAFFING",
       },
     ],
     caseStudies: [
@@ -832,7 +832,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
     complianceBadges: [
       "CNC & Machining Specialists",
       "European & International Pool",
-      "Direct International Recruitment",
+      "Direct International Staffing",
       "India • Philippines • Vietnam • Brazil • Zimbabwe",
       "Technical Skills Verified",
       "Flexible Manpower Supply",
@@ -840,7 +840,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
     shortDescription:
       "Norvian AB supplies skilled and experienced industrial workers to factories, manufacturing companies, engineering workshops, and production facilities across Europe. We help companies find qualified professionals for CNC machining, metal fabrication, welding, mechanical assembly, industrial production, and factory operations.",
     detailedDescription:
-      "Our focus is on providing workers with practical industry experience, technical skills, and knowledge of workplace safety.\n\nWe supply experienced European workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also offer direct international recruitment from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other countries, helping industrial companies find skilled workers for their production and manufacturing needs.\n\nWe support companies looking for workers for short-term projects, long-term employment, and ongoing industrial operations.",
+      "Our focus is on providing workers with practical industry experience, technical skills, and knowledge of workplace safety.\n\nWe supply experienced European workers and international professionals already based in Europe with valid visas and appropriate work authorization.\n\nWe also offer Direct International Staffing from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other countries, helping industrial companies find skilled workers for their production and manufacturing needs.\n\nWe support companies looking for workers for short-term projects, long-term employment, and ongoing industrial operations.",
     specializationCategories: [
       {
         category: "CNC Machining & Programming",
@@ -933,7 +933,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
     icon: Factory,
     stats: [
       { value: "Precision", label: "CNC Specialists", sub: "Turning, milling & setup technicians" },
-      { value: "EU & Global", label: "Recruitment Reach", sub: "Europe, India, Philippines, Vietnam, Brazil, Zimbabwe" },
+      { value: "EU & Global", label: "Staffing Reach", sub: "Europe, India, Philippines, Vietnam, Brazil, Zimbabwe" },
       { value: "100%", label: "Verified Skills", sub: "Practical trade assessments & video demos" },
       { value: "Flexible", label: "Deployment Model", sub: "Short-term, long-term & project-based" },
     ],
@@ -1003,8 +1003,8 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Recruitment & Documentation",
-        desc: "We coordinate the recruitment process and assist with the necessary employment documentation and work permit procedures where required.",
+        title: "Staffing & Documentation",
+        desc: "We coordinate the staffing process and assist with the necessary employment documentation and work permit procedures where required.",
       },
       {
         step: "05",
@@ -1029,7 +1029,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU Talent Pool",
       },
       {
-        title: "Direct International Recruitment",
+        title: "Direct International Staffing",
         desc: "We recruit skilled industrial workers from India, the Philippines, Vietnam, Brazil, Zimbabwe, and other established manufacturing markets.",
         tag: "Global Reach",
       },
@@ -1061,7 +1061,7 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
     ],
     testimonial: {
-      quote: "Norvian AB provided us with thoroughly vetted CNC machinists and mechanical fitters who started contributing from day one. Their recruitment speed, skills verification videos, and legal documentation support were outstanding.",
+      quote: "Norvian AB provided us with thoroughly vetted CNC machinists and mechanical fitters who started contributing from day one. Their staffing speed, skills verification videos, and legal documentation support were outstanding.",
       author: "Henrik Lindqvist",
       role: "Plant Operations Manager",
       company: "Nordic Precision Manufacturing",
@@ -1086,11 +1086,11 @@ export const SERVICES_DATA_EN: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Do you handle visa and work authorization procedures?",
-        a: "Yes. We coordinate the recruitment process and assist with all necessary employment contracts, work permits, and legal relocation procedures according to national regulations.",
+        a: "Yes. We coordinate the staffing process and assist with all necessary employment contracts, work permits, and legal relocation procedures according to national regulations.",
       },
       {
         q: "How quickly can industrial personnel be deployed to our facility?",
-        a: "For European workers and EU-resident candidates, deployment can occur in as little as 1 to 2 weeks. For international direct recruitment requiring visa processing, timelines typically range from 4 to 8 weeks.",
+        a: "For European workers and EU-resident candidates, deployment can occur in as little as 1 to 2 weeks. For international direct staffing requiring visa processing, timelines typically range from 4 to 8 weeks.",
       },
     ],
   },
@@ -1106,7 +1106,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     badge: "MINST 5 ÅRS ERFARENHET",
     complianceBadges: [
       "Minst 5 års varvserfarenhet",
-      "Europeisk & global rekrytering",
+      "Europeisk & global bemanning",
       "Giltigt visum & arbetstillstånd",
       "Filippinerna • Vietnam • Brasilien • Indien",
       "DNV & ISO 9606 redo",
@@ -1115,7 +1115,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     shortDescription:
       "Norvian AB levererar kvalificerad och erfaren varvspersonal till varv och marin industri över hela Europa. Vi tillhandahåller yrkesarbetare med minst 5 års varvserfarenhet och hjälper företag att hitta rätt personal för sina projekt.",
     detailedDescription:
-      "Vi tillhandahåller erfarna europeiska yrkesarbetare och internationella specialister som redan befinner sig i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell rekrytering från Filippinerna, Vietnam, Brasilien och Indien för korttidsbehov, långtidsuppdrag och projektbaserad bemanning.",
+      "Vi tillhandahåller erfarna europeiska yrkesarbetare och internationella specialister som redan befinner sig i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell bemanning från Filippinerna, Vietnam, Brasilien och Indien för korttidsbehov, långtidsuppdrag och projektbaserad bemanning.",
     specializationCategories: [
       {
         category: "Skrovkonstruktion & Ståltillverkning",
@@ -1163,7 +1163,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     icon: Anchor,
     stats: [
       { value: "5+ År", label: "Varvserfarenhet", sub: "Minst 5 års verifierad erfarenhet" },
-      { value: "4 Länder", label: "Direktrekrytering", sub: "Filippinerna, Vietnam, Brasilien, Indien" },
+      { value: "4 Länder", label: "Direktbemanning", sub: "Filippinerna, Vietnam, Brasilien, Indien" },
       { value: "100%", label: "Arbetstillstånd", sub: "EU-medborgare & visuminnehavare" },
       { value: "Flexibelt", label: "Bemanningsupplägg", sub: "Korttids-, långtids- & projektbasis" },
     ],
@@ -1233,8 +1233,8 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Rekrytering & Mobilisering",
-        desc: "Vi koordinerar rekryteringsprocessen och bistår med nödvändiga anställnings- och dokumentationsprocedurer.",
+        title: "Bemanning & Mobilisering",
+        desc: "Vi koordinerar bemanningsprocessen och bistår med nödvändiga anställnings- och dokumentationsprocedurer.",
       },
     ],
     employerAssurances: [
@@ -1249,7 +1249,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU & BOSATTA I EUROPA",
       },
       {
-        title: "Direkt Internationell Rekrytering",
+        title: "Direkt Internationell Bemanning",
         desc: "Vi rekryterar kvalificerad varvspersonal direkt från Filippinerna, Vietnam, Brasilien och Indien utifrån våra kunders krav.",
         tag: "GLOBALA KORRIDORER",
       },
@@ -1289,14 +1289,14 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Varifrån rekryterar ni er varvsarbetskraft?",
-        a: "Vi tillhandahåller erfarna europeiska arbetare och internationella specialister som redan bor i Europa med giltiga visum. Dessutom utför vi direktrekrytering från Filippinerna, Vietnam, Brasilien och Indien.",
+        a: "Vi tillhandahåller erfarna europeiska arbetare och internationella specialister som redan bor i Europa med giltiga visum. Dessutom utför vi direktbemanning från Filippinerna, Vietnam, Brasilien och Indien.",
       },
       {
         q: "Vilka varvsroller kan ni leverera?",
         a: "Vi levererar skrovmontörer, stålkonstruktörer, varvslåssmeder, TIG/MIG/MMA-svetsare, rörläggare, mekaniska montörer, varvstekniker, marinelektriker, fartygsmålare och blästrare.",
       },
       {
-        q: "Hur ser rekryterings- och urvalsprocessen ut?",
+        q: "Hur ser bemannings- och urvalsprocessen ut?",
         a: "Processen är enkel: 1) Ni delar era behov, 2) Vi väljer och granskar kandidatprofiler, 3) Vi delar profiler och bokar intervjuer, 4) Vi koordinerar mobilisering och dokumentation.",
       },
       {
@@ -1328,7 +1328,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     shortDescription:
       "Norvian AB levererar yrkesskickliga och erfarna byggnadsarbetare till byggföretag, entreprenörer och projekt över hela Europa. Vi hjälper företag att hitta pålitlig personal för bostads-, kommersiella, industriella och infrastrukturprojekt.\n\nVårt fokus ligger på att tillhandahålla kvalificerade yrkespersoner med praktisk erfarenhet, teknisk kompetens och god förståelse för arbetsplatssäkerhet.",
     detailedDescription:
-      "Vi tillhandahåller erfarna europeiska byggnadsarbetare och internationella specialister som redan bor i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell rekrytering från Indien, Filippinerna, Vietnam, Brasilien och andra länder, och levererar yrkeskunnig personal för bostads-, kommersiella och storskaliga byggprojekt.\n\nVi stödjer byggföretag som söker personal för korttidsuppdrag, långtidsanställning och fortlöpande bemanningsbehov.",
+      "Vi tillhandahåller erfarna europeiska byggnadsarbetare och internationella specialister som redan bor i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell bemanning från Indien, Filippinerna, Vietnam, Brasilien och andra länder, och levererar yrkeskunnig personal för bostads-, kommersiella och storskaliga byggprojekt.\n\nVi stödjer byggföretag som söker personal för korttidsuppdrag, långtidsanställning och fortlöpande bemanningsbehov.",
     specializationCategories: [
       {
         category: "Struktur & Betongbyggnad",
@@ -1425,7 +1425,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     icon: Building2,
     stats: [
       { value: "5 Områden", label: "Yrkesinriktningar", sub: "Betong, mureri, VVS, ytskikt, stål" },
-      { value: "EU & Globalt", label: "Rekryteringsnätverk", sub: "Europa, Indien, Filippinerna, Brasilien" },
+      { value: "EU & Globalt", label: "Bemanningsnätverk", sub: "Europa, Indien, Filippinerna, Brasilien" },
       { value: "100%", label: "Arbetstillstånd", sub: "Giltiga visum och behörighetskort" },
       { value: "Flexibelt", label: "Bemanningsupplägg", sub: "Korttids-, långtids- och projektbasis" },
     ],
@@ -1505,8 +1505,8 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Rekrytering & Dokumentation",
-        desc: "Vi samordnar rekryteringsprocessen och bistår med nödvändiga anställningshandlingar och arbetstillståndsförfaranden.",
+        title: "Bemanning & Dokumentation",
+        desc: "Vi samordnar bemanningsprocessen och bistår med nödvändiga anställningshandlingar och arbetstillståndsförfaranden.",
       },
       {
         step: "05",
@@ -1526,7 +1526,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU & BOSATTA I EUROPA",
       },
       {
-        title: "Direkt Internationell Rekrytering",
+        title: "Direkt Internationell Bemanning",
         desc: "Vi rekryterar kvalificerad byggpersonal från Indien, Filippinerna, Vietnam, Brasilien och andra internationella marknader enligt våra kunders önskemål.",
         tag: "GLOBALA KORRIDORER",
       },
@@ -1580,7 +1580,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Varifrån rekryteras er byggpersonal?",
-        a: "Vi levererar erfarna europeiska arbetare, i Europa bosatta internationella yrkespersoner med arbetstillstånd, samt direktrekrytering från Indien, Filippinerna, Vietnam och Brasilien.",
+        a: "Vi levererar erfarna europeiska arbetare, i Europa bosatta internationella yrkespersoner med arbetstillstånd, samt direktbemanning från Indien, Filippinerna, Vietnam och Brasilien.",
       },
       {
         q: "Hjälper ni till med ID06, HMS och arbetsplatstillstånd?",
@@ -1592,7 +1592,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Hur snabbt kan byggpersonal vara på plats?",
-        a: "Europeisk och i Europa bosatt personal kan mobiliseras med kort varsel, medan internationell direktrekrytering beror på gällande visum- och handläggningstider.",
+        a: "Europeisk och i Europa bosatt personal kan mobiliseras med kort varsel, medan internationell direktbemanning beror på gällande visum- och handläggningstider.",
       },
     ],
   },
@@ -1608,14 +1608,14 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       "CE-kategorichaufförer",
       "Stöd för YKB Kod 95",
       "Europeiska & internationella förare",
-      "Direktrekrytering: Indien, Filippinerna, Brasilien m.fl.",
+      "Direktbemanning: Indien, Filippinerna, Brasilien m.fl.",
       "Praktisk körverifiering",
       "Korttids-, långtids- & tillsvidareanställning",
     ],
     shortDescription:
       "Norvian AB levererar yrkesskickliga och erfarna lastbils- och trailerchaufförer till transport- och logistikföretag över hela Europa. Vi hjälper företag att hitta pålitliga förare för internationell transport, långdistansrutter och daglig logistikdrift.\n\nVårt fokus är att tillhandahålla professionella förare med praktisk körvana, god trafiksäkerhetsförståelse och de färdigheter som krävs för europeisk åkeridrift.",
     detailedDescription:
-      "Vi tillhandahåller erfarna europeiska förare och internationella chaufförer som redan bor i Europa med giltiga uppehållstillstånd och arbetstillstånd.\n\nVi erbjuder även direkt internationell rekrytering av erfarna lastbils- och trailerchaufförer från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra länder, inklusive förare med yrkeserfarenhet från Saudiarabien, Qatar, Kuwait och Förenade Arabemiraten.\n\nVi stöttar transportföretag som söker förare för korttidsuppdrag, långtidsanställning och tillsvidareanställning.",
+      "Vi tillhandahåller erfarna europeiska förare och internationella chaufförer som redan bor i Europa med giltiga uppehållstillstånd och arbetstillstånd.\n\nVi erbjuder även direkt internationell bemanning av erfarna lastbils- och trailerchaufförer från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra länder, inklusive förare med yrkeserfarenhet från Saudiarabien, Qatar, Kuwait och Förenade Arabemiraten.\n\nVi stöttar transportföretag som söker förare för korttidsuppdrag, långtidsanställning och tillsvidareanställning.",
     specializationCategories: [
       {
         category: "Lastbils- & Trailerchaufförer",
@@ -1675,7 +1675,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     stats: [
       { value: "Klass CE", label: "Tunga Förare", sub: "Lastbil och trailer certifierade" },
       { value: "Kod 95", label: "YKB-stöd", sub: "Komplett kompetensutbildning" },
-      { value: "Globalt", label: "Rekryteringsnätverk", sub: "EU, Indien, Filippinerna, Brasilien, Golfen" },
+      { value: "Globalt", label: "Bemanningsnätverk", sub: "EU, Indien, Filippinerna, Brasilien, Golfen" },
       { value: "100%", label: "Arbetstillstånd", sub: "Visum och tillstånd säkrade" },
     ],
     technicalMatrix: [
@@ -1748,8 +1748,8 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Rekrytering & Dokumentation",
-        desc: "Vi samordnar rekryteringsprocessen och bistår med anställningshandlingar, arbetstillstånd och procedurer för yrkesförarkompetens där det krävs.",
+        title: "Bemanning & Dokumentation",
+        desc: "Vi samordnar bemanningsprocessen och bistår med anställningshandlingar, arbetstillstånd och procedurer för yrkesförarkompetens där det krävs.",
       },
       {
         step: "05",
@@ -1769,7 +1769,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU & BOSATTA FÖRARE",
       },
       {
-        title: "Direkt Internationell Rekrytering",
+        title: "Direkt Internationell Bemanning",
         desc: "Vi rekryterar erfarna lastbils- och trailerchaufförer från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra marknader, inklusive förare med erfarenhet från Gulfländerna (Saudiarabien, Qatar, Kuwait, FAE).",
         tag: "GLOBALA KORRIDORER",
       },
@@ -1784,7 +1784,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
         tag: "YKB KOD 95-STÖD",
       },
       {
-        title: "Flexibel Förarrekrytering",
+        title: "Flexibel Förarbemanning",
         desc: "Oavsett om ni behöver några enstaka förare eller ett större team för er åkeriverksamhet stöttar vi korttids-, långtids- och tillsvidarebehov.",
         tag: "FLEXIBEL FLOTTABEMANNING",
       },
@@ -1835,7 +1835,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Vilka anställningsformer erbjuder ni?",
-        a: "Vi stöttar korttidsuppdrag, säsongstoppar, långtidsuppdrag samt direkt rekrytering för tillsvidareanställning.",
+        a: "Vi stöttar korttidsuppdrag, säsongstoppar, långtidsuppdrag samt direkt bemanning för tillsvidareanställning.",
       },
     ],
   },
@@ -1849,7 +1849,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     complianceBadges: [
       "CNC- & maskinspecialister",
       "Europeisk & internationell talangpool",
-      "Direkt internationell rekrytering",
+      "Direkt internationell bemanning",
       "Indien • Filippinerna • Vietnam • Brasilien • Zimbabwe",
       "Verifierade tekniska yrkeskunskaper",
       "Flexibel bemanningslösning",
@@ -1857,7 +1857,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     shortDescription:
       "Norvian AB levererar yrkesskickliga och erfarna industriarbetare till fabriker, tillverkningsföretag, verkstäder och produktionsanläggningar över hela Europa. Vi hjälper företag att hitta kvalificerad personal för CNC-bearbetning, metallkonstruktion, svetsning, mekaniskt montage, industriproduktion och fabriksdrift.",
     detailedDescription:
-      "Vårt fokus ligger på att tillhandahålla arbetare med praktisk branscherfarenhet, teknisk kompetens och god förståelse för arbetsmiljö och säkerhet.\n\nVi tillhandahåller erfarna europeiska yrkesarbetare och internationella specialister som redan befinner sig i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell rekrytering från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra länder för att hjälpa industriföretag att möta sina produktions- och tillverkningsbehov.\n\nVi stöttar företag som söker personal för korttidsprojekt, långtidsanställningar och löpande industriell verksamhet.",
+      "Vårt fokus ligger på att tillhandahålla arbetare med praktisk branscherfarenhet, teknisk kompetens och god förståelse för arbetsmiljö och säkerhet.\n\nVi tillhandahåller erfarna europeiska yrkesarbetare och internationella specialister som redan befinner sig i Europa med giltiga visum och arbetstillstånd.\n\nVi erbjuder även direkt internationell bemanning från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra länder för att hjälpa industriföretag att möta sina produktions- och tillverkningsbehov.\n\nVi stöttar företag som söker personal för korttidsprojekt, långtidsanställningar och löpande industriell verksamhet.",
     specializationCategories: [
       {
         category: "CNC-bearbetning & Programmering",
@@ -1950,7 +1950,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
     icon: Factory,
     stats: [
       { value: "Precision", label: "CNC-Specialister", sub: "Fräs-, svarv- och ställtekniker" },
-      { value: "EU & Global", label: "Rekryteringsnätverk", sub: "Europa, Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe" },
+      { value: "EU & Global", label: "Bemanningsnätverk", sub: "Europa, Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe" },
       { value: "100%", label: "Verifierad Kompetens", sub: "Praktiska yrkestester & videodokumentation" },
       { value: "Flexibel", label: "Bemanningsmodell", sub: "Korttids-, långtids- & projektanställning" },
     ],
@@ -2020,7 +2020,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         step: "04",
-        title: "Rekrytering & Dokumentation",
+        title: "Bemanning & Dokumentation",
         desc: "Vi samordnar processen och hanterar anställningsavtal, visum- och arbetstillståndsförfaranden där det krävs.",
       },
       {
@@ -2046,7 +2046,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
         tag: "EU-Tillgänglig",
       },
       {
-        title: "Direkt Internationell Rekrytering",
+        title: "Direkt Internationell Bemanning",
         desc: "Vi rekryterar yrkesskickliga industriarbetare från Indien, Filippinerna, Vietnam, Brasilien, Zimbabwe och andra ledande tillverkningsländer.",
         tag: "Global Räckvidd",
       },
@@ -2078,7 +2078,7 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
     ],
     testimonial: {
-      quote: "Norvian AB levererade noggrant granskade CNC-operatörer och mekaniska montörer som kom in och levererade från första dagen. Rekryteringstempot, demonstrationsvideorna och den juridiska hanteringen var i toppklass.",
+      quote: "Norvian AB levererade noggrant granskade CNC-operatörer och mekaniska montörer som kom in och levererade från första dagen. Bemanningstempot, demonstrationsvideorna och den juridiska hanteringen var i toppklass.",
       author: "Henrik Lindqvist",
       role: "Platschef / Fabrikschef",
       company: "Nordic Precision Manufacturing",
@@ -2099,11 +2099,11 @@ export const SERVICES_DATA_SV: Record<ServiceKey, ServiceDetailItem> = {
       },
       {
         q: "Klarar ni både korttidsbehov och långtidsanställningar?",
-        a: "Ja. Vi hjälper företag med kortvariga säsongstoppar, projektbaserade montageteam samt permanent rekrytering för långsiktig fabriksdrift.",
+        a: "Ja. Vi hjälper företag med kortvariga säsongstoppar, projektbaserade montageteam samt permanent bemanning för långsiktig fabriksdrift.",
       },
       {
         q: "Hjälper ni till med visum och arbetstillstånd?",
-        a: "Ja. Vi koordinerar hela rekryteringen och bistår med anställningsdokument, visumansökningar och myndighetskontakter enligt gällande EU- och nationella lagar.",
+        a: "Ja. Vi koordinerar hela bemanningen och bistår med anställningsdokument, visumansökningar och myndighetskontakter enligt gällande EU- och nationella lagar.",
       },
       {
         q: "Hur snabbt kan industriarbetare vara på plats i fabriken?",

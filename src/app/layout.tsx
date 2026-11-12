@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "NORVIAN AB is a Swedish staffing company based in Västervik, Sweden, providing workforce solutions across Europe. Our team brings around five years of experience in European staffing services and working with companies and business partners across Europe.",
   keywords: [
     "workforce",
-    "recruitment",
+    "staffing",
     "shipbuilding",
     "construction",
     "manufacturing",
@@ -57,7 +57,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "EmploymentAgency",
     name: "NORVIAN AB",
-    description: "Swedish manpower supply and international recruitment consultancy",
+    description: "Swedish manpower supply and international staffing consultancy",
     address: {
       "@type": "PostalAddress",
       streetAddress: "Baumansgatan 4",

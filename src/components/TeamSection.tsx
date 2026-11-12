@@ -189,7 +189,7 @@ export default function TeamSection() {
               ? "De drivande krafterna bakom Norvian AB. Med djup expertis inom skandinavisk industri, internationell personalförsörjning och europeiska marknader levererar vi kvalitetssäkrad arbetskraft med fullständig regelefterlevnad."
               : isDe
               ? "Die treibenden Kräfte hinter Norvian AB. Mit fundierter Expertise in skandinavischer Industrie, internationalen Rekrutierungskorridoren und voller europäischer Rechtskonformität verbinden wir erstklassige Arbeitgeber mit qualifizierten Fachkräften."
-              : "The experienced leaders driving Norvian AB. Combining deep industry insight, international recruitment corridors, and European regulatory compliance, we connect premier employers with qualified professionals."}
+              : "The experienced leaders driving Norvian AB. Combining deep industry insight, international staffing corridors, and European regulatory compliance, we connect premier employers with qualified professionals."}
           </p>
         </header>
 
@@ -263,7 +263,7 @@ export default function TeamSection() {
                       {isSv ? "Medgrundare & Delägare" : isDe ? "Mitgründerin & Miteigentümerin" : "Co-Founder & Co-Owner"}
                     </div>
                     <div className="text-[11px] text-slate-400">
-                      {isSv ? "Rekrytering & Affärspartnerskap" : isDe ? "Rekrutierung & Geschäftspartnerschaften" : "Recruitment & Business Partnerships"}
+                      {isSv ? "Bemanning & Affärspartnerskap" : isDe ? "Personaldienstleistungen & Geschäftspartnerschaften" : "Staffing & Business Partnerships"}
                     </div>
                   </div>
                   <p className="text-[11.5px] text-slate-300 leading-relaxed pt-1">
@@ -303,7 +303,7 @@ export default function TeamSection() {
                       {isSv ? "Medgrundare & Delägare" : isDe ? "Mitgründer & Miteigentümer" : "Co-Founder & Co-Owner"}
                     </div>
                     <div className="text-[11px] text-slate-400">
-                      {isSv ? "Internationell Verksamhet & Rekrytering" : isDe ? "Internationale Operationen & Rekrutierung" : "International Operations & Recruitment"}
+                      {isSv ? "Internationell Verksamhet & Bemanning" : isDe ? "Internationale Operationen & Personaldienstleistungen" : "International Operations & Staffing"}
                     </div>
                   </div>
                   <p className="text-[11.5px] text-slate-300 leading-relaxed pt-1">
