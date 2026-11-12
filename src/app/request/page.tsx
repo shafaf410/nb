@@ -516,8 +516,8 @@ function RequestFormContent() {
                 <div className="space-y-3 text-xs text-white/70 font-light pt-1">
                   <div className="flex items-center gap-3">
                     <Phone className="w-4 h-4 text-[#C59C58] shrink-0" />
-                    <a href="tel:+4722009000" className="hover:text-white transition-colors">
-                      +47 22 00 90 00
+                    <a href="tel:+46793090307" className="hover:text-white transition-colors">
+                      +46 79 30 90 30 7
                     </a>
                   </div>
 

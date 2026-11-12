@@ -490,11 +490,11 @@ export default function TeamSection() {
             </a>
             <span className="text-slate-600">•</span>
             <a
-              href="tel:+4722009000"
+              href="tel:+46793090307"
               className="hover:text-[#E8C587] transition-colors flex items-center gap-1.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#C59C58]" />
-              <span>+47 22 00 90 00</span>
+              <span>+46 79 30 90 30 7</span>
             </a>
           </div>
         </section>

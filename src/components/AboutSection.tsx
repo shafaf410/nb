@@ -550,8 +550,8 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
 
               <div className="flex items-center gap-2.5">
                 <Phone className="w-3.5 h-3.5 text-[#C59C58] shrink-0" />
-                <a href="tel:+4722009000" className="hover:text-[#C59C58] transition-colors font-mono">
-                  +47 22 00 90 00
+                <a href="tel:+46793090307" className="hover:text-[#C59C58] transition-colors font-mono">
+                  +46 79 30 90 30 7
                 </a>
               </div>
 

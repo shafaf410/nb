@@ -65,7 +65,7 @@ export default function RootLayout({
       addressLocality: "Västervik",
       addressCountry: "SE",
     },
-    telephone: "+47 22 00 90 00",
+    telephone: "+46 79 30 90 30 7",
     email: "office@norvian.se",
   };
 

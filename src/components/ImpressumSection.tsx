@@ -192,12 +192,8 @@ export default function ImpressumSection() {
               </p>
               <p>
                 <span className="text-slate-400">{isSv ? "Telefon: " : "Phone: "}</span>
-                <a href="tel:+4722009000" className="text-slate-200 hover:underline">
-                  +47 22 00 90 00
-                </a>
-                <span className="text-slate-500"> / </span>
-                <a href="tel:+46708278282" className="text-slate-200 hover:underline">
-                  +46 70 827 82 82
+                <a href="tel:+46793090307" className="text-slate-200 hover:underline">
+                  +46 79 30 90 30 7
                 </a>
               </p>
               <p>
