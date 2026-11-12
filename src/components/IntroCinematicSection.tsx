@@ -15,6 +15,7 @@ interface IntroCinematicSectionProps {
 export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinematicSectionProps) {
   const { language, t } = useLanguage();
   const isSv = language === "sv";
+  const isDe = language === "de";
   const sectionRef = useRef<HTMLElement>(null);
   const headlineLine1Ref = useRef<HTMLDivElement>(null);
   const headlineLine2Ref = useRef<HTMLDivElement>(null);
@@ -106,11 +107,11 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
               <span className="inline-flex items-center justify-center w-3 h-3 rounded-full border border-[#C59C58] text-[7px] leading-none text-[#C59C58]">
                 ☉
               </span>
-              {isSv ? "NORVIAN AB • SVERIGE" : "NORVIAN AB • SWEDEN"}
+              {isSv ? "NORVIAN AB • SVERIGE" : isDe ? "NORVIAN AB • SCHWEDEN" : "NORVIAN AB • SWEDEN"}
             </span>
             <span className="h-[1px] w-8 sm:w-16 bg-[#C59C58]/55" />
             <span className="text-[9.5px] sm:text-[10.5px] uppercase tracking-[0.18em] text-[#0B1522]/50 font-medium">
-              {isSv ? "VÄSTERVIK // HELA EUROPA" : "VÄSTERVIK // ACROSS EUROPE"}
+              {isSv ? "VÄSTERVIK // HELA EUROPA" : isDe ? "VÄSTERVIK // GANZ EUROPA" : "VÄSTERVIK // ACROSS EUROPE"}
             </span>
           </div>
 
@@ -123,10 +124,10 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             >
               <h1 className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-[-0.03em] text-[#0B1522]">
                 <span className="inline-block mr-2 sm:mr-3.5 word-item">
-                  {isSv ? "ER" : "YOUR"}
+                  {isSv ? "ER" : isDe ? "IHRE" : "YOUR"}
                 </span>
                 <span className="inline-block word-item">
-                  {isSv ? "INDUSTRI" : "INDUSTRY"}
+                  {isSv ? "INDUSTRI" : isDe ? "BRANCHE" : "INDUSTRY"}
                 </span>
               </h1>
             </div>
@@ -138,10 +139,10 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             >
               <div className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-[-0.03em] text-[#0B1522]">
                 <span className="inline-block mr-2 sm:mr-3.5 word-item">
-                  {isSv ? "VÅRT" : "OUR"}
+                  {isSv ? "VÅRT" : isDe ? "UNSERE" : "OUR"}
                 </span>
                 <span className="inline-block word-item">
-                  {isSv ? "FOLK" : "PEOPLE"}
+                  {isSv ? "FOLK" : isDe ? "MENSCHEN" : "PEOPLE"}
                 </span>
               </div>
             </div>
@@ -153,10 +154,10 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             >
               <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-[-0.03em] text-[#0B1522]">
                 <span className="inline-block mr-2 sm:mr-3.5 word-item italic font-serif text-[#C59C58]">
-                  {isSv ? "ETT" : "ONE"}
+                  {isSv ? "ETT" : isDe ? "EIN" : "ONE"}
                 </span>
                 <span className="inline-block word-item italic font-serif text-[#C59C58]">
-                  {isSv ? "MÅL." : "GOAL."}
+                  {isSv ? "MÅL." : isDe ? "ZIEL." : "GOAL."}
                 </span>
               </h2>
             </div>
@@ -168,6 +169,8 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             <p className="text-[14.5px] sm:text-[16.5px] lg:text-[17.5px] font-serif font-medium text-[#0B1522] tracking-[-0.01em] leading-snug">
               {isSv
                 ? "Levererar kvalificerade yrkespersoner över hela Europa."
+                : isDe
+                ? "Bereitstellung qualifizierter Fachkräfte in ganz Europa."
                 : "Delivering Skilled Professionals Across Europe."}
             </p>
           </div>
@@ -185,7 +188,7 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1522]/65 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-2.5 left-3 flex items-center gap-2">
               <span className="text-[9px] font-mono uppercase tracking-widest text-white/95 bg-black/60 px-2.5 py-1 rounded backdrop-blur-xs border border-white/10">
-                {isSv ? "NORVIAN AB • SKANDINAVISK FLOTTA" : "NORVIAN AB • SCANDINAVIAN FLEET"}
+                {isSv ? "NORVIAN AB • SKANDINAVISK FLOTTA" : isDe ? "NORVIAN AB • SKANDINAVISCHE FLOTTE" : "NORVIAN AB • SCANDINAVIAN FLEET"}
               </span>
             </div>
           </div>
@@ -200,6 +203,10 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
                 <>
                   <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, med ett internationellt fokus.
                 </>
+              ) : isDe ? (
+                <>
+                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> ist ein schwedisches Personalvermittlungsunternehmen mit Sitz in Västervik, Schweden, mit internationaler Ausrichtung.
+                </>
               ) : (
                 <>
                   <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> is a Swedish recruitment company based in Västervik, Sweden, with an international focus.
@@ -209,11 +216,15 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             <p>
               {isSv
                 ? "Vårt team har cirka fem års erfarenhet av internationell rekrytering och samarbete med företag och rekryteringspartners över hela Europa."
+                : isDe
+                ? "Unser Team bringt rund fünf Jahre Erfahrung in der internationalen Personalvermittlung und der Zusammenarbeit mit Unternehmen und Rekrutierungspartnern in ganz Europa mit."
                 : "Our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe."}
             </p>
             <p>
               {isSv
                 ? "Vi är specialiserade på rekryteringslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik, och hjälper företag att hitta skickliga, erfarna och pålitliga yrkespersoner för att möta sina kompetensbehov."
+                : isDe
+                ? "Wir sind spezialisiert auf Rekrutierungslösungen für Schiffbau, Bauwesen, Fertigung sowie Transport & Logistik und unterstützen Unternehmen dabei, qualifizierte, erfahrene und zuverlässige Fachkräfte für ihren Personalbedarf zu finden."
                 : "We specialize in recruitment solutions for shipbuilding, construction, manufacturing, and transport & logistics, helping companies find skilled, experienced, and reliable professionals to meet their workforce needs."}
             </p>
           </div>

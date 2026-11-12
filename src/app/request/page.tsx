@@ -30,6 +30,7 @@ import {
 function RequestFormContent() {
   const { language } = useLanguage();
   const isSv = language === "sv";
+  const isDe = language === "de";
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -122,11 +123,11 @@ function RequestFormContent() {
               className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-wider text-white/65 hover:text-[#C59C58] transition-colors group"
             >
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 text-[#C59C58]" />
-              <span>{isSv ? "Tillbaka till Start" : "Back to Overview"}</span>
+              <span>{isSv ? "Tillbaka till Start" : isDe ? "Zurück zur Übersicht" : "Back to Overview"}</span>
             </Link>
 
             <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-[#C59C58] bg-[#C59C58]/10 border border-[#C59C58]/20 px-3 py-1 rounded-full">
-              {isSv ? "Bemanningsförfrågan" : "Workforce Inquiry Desk"}
+              {isSv ? "Bemanningsförfrågan" : isDe ? "Personalanfrage Desk" : "Workforce Inquiry Desk"}
             </span>
           </div>
 
@@ -140,15 +141,17 @@ function RequestFormContent() {
             </div>
 
             <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-[-0.02em] leading-[1.12] mb-4">
-              {isSv ? "Begär Kvalificerad " : "Request Qualified "}
+              {isSv ? "Begär Kvalificerad " : isDe ? "Qualifizierte " : "Request Qualified "}
               <span className="text-[#C59C58] italic font-serif">
-                {isSv ? "Arbetskraft." : "Workforce."}
+                {isSv ? "Arbetskraft." : isDe ? "Fachkräfte Anfragen." : "Workforce."}
               </span>
             </h1>
 
             <p className="text-sm sm:text-base text-white/75 font-light leading-relaxed">
               {isSv
                 ? "Fyll i era bemanningsbehov nedan. Vårt operativa driftsteam i Västervik utvärderar tillgänglighet, kompetenser och levererar en detaljerad plan inom 24 timmar."
+                : isDe
+                ? "Geben Sie Ihre Personalanforderungen unten ein. Unser Einsatzteam in Västervik prüft Verfügbarkeiten und Qualifikationen und liefert Ihnen innerhalb von 24 Stunden eine konkrete Einsatzplanung."
                 : "Submit your technical trade specifications and mobilization timeline. Our Sweden HQ team evaluates candidate availability and provides an exact deployment schedule within 24 hours."}
             </p>
           </div>

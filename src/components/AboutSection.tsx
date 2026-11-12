@@ -27,6 +27,7 @@ interface AboutSectionProps {
 export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) {
   const { language } = useLanguage();
   const isSv = language === "sv";
+  const isDe = language === "de";
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -82,10 +83,10 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               }
             }}
             className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm"
-            aria-label={isSv ? "Gå tillbaka till föregående sida" : "Go back to previous page"}
+            aria-label={isSv ? "Gå tillbaka till föregående sida" : isDe ? "Zurück zur vorherigen Seite" : "Go back to previous page"}
           >
             <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>{isSv ? "Tillbaka" : "Back"}</span>
+            <span>{isSv ? "Tillbaka" : isDe ? "Zurück" : "Back"}</span>
           </button>
         </div>
 
@@ -94,21 +95,25 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[#C59C58] tracking-widest uppercase mb-4">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C59C58]" />
-              <span>{isSv ? "Officiell Företagsprofil // Norvian AB" : "Official Corporate Statement // Norvian AB"}</span>
+              <span>{isSv ? "Officiell Företagsprofil // Norvian AB" : isDe ? "Offizielles Unternehmensprofil // Norvian AB" : "Official Corporate Statement // Norvian AB"}</span>
             </div>
             <div className="text-white/50 text-[11px] tracking-wider uppercase">
               {isSv 
                 ? "Registrerat i Sverige (2024) • 5 Års Teamerfarenhet Inom Internationell Rekrytering" 
+                : isDe
+                ? "Registriert in Schweden (2024) • 5 Jahre Teamerfahrung in Internationaler Rekrutierung"
                 : "Registered in Sweden (2024) • 5 Years of Team Experience in International Recruitment"}
             </div>
           </div>
 
           <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-white tracking-tight">
-            {isSv ? "Om Norvian AB" : "About Norvian AB"}
+            {isSv ? "Om Norvian AB" : isDe ? "Über Norvian AB" : "About Norvian AB"}
           </h1>
           <p className="mt-3 text-base sm:text-lg text-white/70 font-light max-w-3xl leading-relaxed">
             {isSv 
               ? "Svenskt rekryteringsföretag specialiserat på internationell rekrytering baserat i Västervik, Sverige."
+              : isDe
+              ? "Schwedisches Personalvermittlungsunternehmen spezialisiert auf internationale Rekrutierung mit Sitz in Västervik, Schweden."
               : "Swedish recruitment company specializing in international recruitment based in Västervik, Sweden."}
           </p>
         </div>
@@ -124,7 +129,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>01</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Företagsöversikt & Europeisk Erfarenhet" : "Company Overview & European Experience"}</span>
+                <span>{isSv ? "Företagsöversikt & Europeisk Erfarenhet" : isDe ? "Unternehmensüberblick & Europäische Erfahrung" : "Company Overview & European Experience"}</span>
               </div>
               <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
@@ -140,6 +145,21 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     </p>
                     <p>
                       I dag bygger vi vidare på denna erfarenhet för att koppla samman europeiska arbetsgivare med kvalificerade och pålitliga yrkespersoner inom olika branscher.
+                    </p>
+                  </>
+                ) : isDe ? (
+                  <>
+                    <p>
+                      NORVIAN AB ist ein schwedisches Personalvermittlungsunternehmen mit Sitz in Västervik, Schweden, spezialisiert auf die internationale Rekrutierung.
+                    </p>
+                    <p>
+                      Obwohl NORVIAN AB im Jahr 2024 in Schweden registriert wurde, bringt unser Team rund fünf Jahre Erfahrung in der internationalen Personalvermittlung sowie in der Zusammenarbeit mit Unternehmen und Partnern in ganz Europa mit.
+                    </p>
+                    <p>
+                      Vor dem Aufbau unserer Aktivitäten unter NORVIAN AB haben wir wertvolle Branchenerfahrung durch unsere früheren Geschäftsaktivitäten unter einer anderen Unternehmensstruktur gesammelt.
+                    </p>
+                    <p>
+                      Heute bauen wir auf diese Erfahrung auf, um europäische Arbeitgeber mit qualifizierten und zuverlässigen Fachkräften in verschiedenen Branchen zu verbinden.
                     </p>
                   </>
                 ) : (
@@ -166,7 +186,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>02</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Europeisk Marknadskunskap & Regulatorisk Förståelse" : "European Market Knowledge & Regulatory Understanding"}</span>
+                <span>{isSv ? "Europeisk Marknadskunskap & Regulatorisk Förståelse" : isDe ? "Europäische Marktkenntnis & Regulatorisches Verständnis" : "European Market Knowledge & Regulatory Understanding"}</span>
               </div>
               <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
@@ -182,6 +202,21 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     </p>
                     <p>
                       Denna kunskap gör det möjligt för oss att kommunicera effektivt med arbetsgivare och relevanta institutioner samt stödja en strukturerad och transparent rekryteringsprocess.
+                    </p>
+                  </>
+                ) : isDe ? (
+                  <>
+                    <p>
+                      Eine unserer Hauptstärken ist unser Verständnis des europäischen Arbeitsmarktes und der spezifischen Rekrutierungsbedürfnisse europäischer Unternehmen.
+                    </p>
+                    <p>
+                      Unser Team verfügt über praktische Erfahrung in der internationalen Personalvermittlung, der Personalkoordination und der Zusammenarbeit mit Arbeitgebern und Rekrutierungspartnern in ganz Europa.
+                    </p>
+                    <p>
+                      Wir verstehen die Bedeutung von Arbeitsvorschriften, Dokumentationsanforderungen und Einstellungsverfahren in verschiedenen europäischen Ländern.
+                    </p>
+                    <p>
+                      Dieses Wissen ermöglicht es uns, effektiv mit Arbeitgebern und relevanten Institutionen zu kommunizieren und einen strukturierten und transparenten Rekrutierungsprozess zu unterstützen.
                     </p>
                   </>
                 ) : (
@@ -208,7 +243,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>03</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Noggrant Urval & Dokumentverifiering" : "Careful Selection & Document Verification"}</span>
+                <span>{isSv ? "Noggrant Urval & Dokumentverifiering" : isDe ? "Sorgfältige Auswahl & Dokumentenprüfung" : "Careful Selection & Document Verification"}</span>
               </div>
               <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
@@ -224,6 +259,21 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     </p>
                     <p>
                       Vårt mål är att koppla samman europeiska arbetsgivare med pålitliga och lämpliga kandidater samtidigt som vi stödjer en professionell och ansvarsfull rekryteringsprocess.
+                    </p>
+                  </>
+                ) : isDe ? (
+                  <>
+                    <p>
+                      Bei NORVIAN AB konzentrieren wir uns auf die Rekrutierung von qualifizierten, erfahrenen Fachkräften, die den spezifischen Anforderungen unserer europäischen Kunden entsprechen.
+                    </p>
+                    <p>
+                      Wir legen großen Wert auf einen sorgfältigen und transparenten Auswahlprozess. Dazu gehört die Prüfung von Berufsqualifikationen, relevanter Berufserfahrung und entsprechenden Nachweisen.
+                    </p>
+                    <p>
+                      Soweit erforderlich, berücksichtigen wir auch die Anerkennung von Berufsqualifikationen sowie geltende Beschäftigungs- und Arbeitserlaubnisanforderungen.
+                    </p>
+                    <p>
+                      Unser Ziel ist es, europäische Arbeitgeber mit zuverlässigen und passenden Kandidaten zu verbinden und dabei einen professionellen und verantwortungsvollen Rekrutierungsprozess zu gewährleisten.
                     </p>
                   </>
                 ) : (
@@ -250,7 +300,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>04</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Storskalig Rekrytering & Individuella Bemanningslösningar" : "Large-Scale Recruitment & Individual Workforce Solutions"}</span>
+                <span>{isSv ? "Storskalig Rekrytering & Individuella Bemanningslösningar" : isDe ? "Großvolumige Rekrutierung & Individuelle Personal-Lösungen" : "Large-Scale Recruitment & Individual Workforce Solutions"}</span>
               </div>
               <div className="space-y-3.5 text-base sm:text-lg text-white/90 font-light leading-relaxed">
                 {isSv ? (
@@ -266,6 +316,21 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     </p>
                     <p>
                       För större rekryteringsprojekt kan ytterligare tjänster och urvalsprocesser på plats arrangeras individuellt i samråd med våra kunder.
+                    </p>
+                  </>
+                ) : isDe ? (
+                  <>
+                    <p>
+                      Für Unternehmen mit größerem Personalbedarf bietet NORVIAN AB maßgeschneiderte Rekrutierungslösungen, die auf spezifische Branchen- und Personalanforderungen abgestimmt sind.
+                    </p>
+                    <p>
+                      Über unser internationales Rekrutierungsnetzwerk unterstützen wir Arbeitgeber bei der Identifizierung und Auswahl qualifizierter Fachkräfte – mit besonderem Fokus auf Kandidaten, die bereits in Europa ansässig sind.
+                    </p>
+                    <p>
+                      Je nach Projektgröße und Anforderungen koordinieren wir strukturierte Rekrutierungsprozesse, Vorstellungsgespräche, Qualifikationsprüfungen und die Zusammenarbeit mit internationalen Rekrutierungspartnern.
+                    </p>
+                    <p>
+                      Für größere Rekrutierungsprojekte können zusätzliche Dienstleistungen und Auswahlverfahren vor Ort individuell in Abstimmung mit unseren Kunden organisiert werden.
                     </p>
                   </>
                 ) : (
@@ -292,7 +357,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <div className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58] flex items-center gap-2">
                 <span>05</span>
                 <span className="h-[1px] w-6 bg-[#C59C58]/40" />
-                <span>{isSv ? "Vårt Huvudsakliga Mål" : "Our Core Objective"}</span>
+                <span>{isSv ? "Vårt Huvudsakliga Mål" : isDe ? "Unser Zentrales Ziel" : "Our Core Objective"}</span>
               </div>
               <div className="space-y-3 text-base sm:text-lg text-white/95 font-light leading-relaxed">
                 {isSv ? (
@@ -302,6 +367,15 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
                     </p>
                     <p className="text-white/80 text-sm sm:text-base leading-relaxed">
                       Vi är övertygade om att framgångsrik rekrytering bygger på förtroende, transparens och långsiktiga partnerskap. Vårt åtagande är att skapa varaktigt värde för både arbetsgivare och yrkespersoner genom ansvarsfulla och pålitliga rekryteringslösningar.
+                    </p>
+                  </>
+                ) : isDe ? (
+                  <>
+                    <p className="font-serif text-lg sm:text-xl text-white font-normal leading-relaxed">
+                      Unser Ziel ist es, europäische Unternehmen mit qualifizierten, erfahrenen und zuverlässigen Fachkräften zusammenzubringen, die ihren spezifischen Personalbedarf erfüllen.
+                    </p>
+                    <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                      Wir sind überzeugt, dass erfolgreiche Rekrutierung auf Vertrauen, Transparenz und langfristigen Partnerschaften basiert. Unser Anspruch ist es, durch verantwortungsvolle und verlässliche Personallösungen nachhaltigen Mehrwert für Arbeitgeber und Fachkräfte zu schaffen.
                     </p>
                   </>
                 ) : (
@@ -326,7 +400,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
             <div className="bg-[#0B1522] border border-white/15 rounded-2xl p-6 sm:p-7 space-y-5">
               <div className="pb-3 border-b border-white/10 flex items-center justify-between">
                 <span className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58]">
-                  {isSv ? "Bolagsfakta" : "Corporate Profile"}
+                  {isSv ? "Bolagsfakta" : isDe ? "Unternehmensdaten" : "Corporate Profile"}
                 </span>
                 <Building2 className="w-4 h-4 text-[#C59C58]" />
               </div>
@@ -334,48 +408,56 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
               <div className="space-y-4 text-xs font-mono">
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Juridiskt Namn" : "Legal Entity"}
+                    {isSv ? "Juridiskt Namn" : isDe ? "Rechtsträger" : "Legal Entity"}
                   </span>
                   <span className="text-sm text-white font-serif mt-0.5 block">NORVIAN AB</span>
                 </div>
 
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Registrering" : "Registration"}
+                    {isSv ? "Registrering" : isDe ? "Registrierung" : "Registration"}
                   </span>
                   <span className="text-xs text-white/90 mt-0.5 block">
-                    {isSv ? "Registrerat i Sverige (2024)" : "Registered in Sweden (2024)"}
+                    {isSv
+                      ? "Registrerat i Sverige (2024)"
+                      : isDe
+                      ? "Registriert in Schweden (2024)"
+                      : "Registered in Sweden (2024)"}
                   </span>
                 </div>
 
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Branscherfarenhet" : "Industry Experience"}
+                    {isSv ? "Branscherfarenhet" : isDe ? "Branchenerfahrung" : "Industry Experience"}
                   </span>
                   <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
                     {isSv
                       ? "Cirka 5 års teamerfarenhet inom internationell rekrytering"
+                      : isDe
+                      ? "Rund 5 Jahre Teamerfahrung in der internationalen Rekrutierung"
                       : "Around 5 Years of Team Experience in International Recruitment"}
                   </span>
                 </div>
 
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Specialisering" : "Specialization"}
+                    {isSv ? "Specialisering" : isDe ? "Spezialisierung" : "Specialization"}
                   </span>
                   <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
                     {isSv
                       ? "Internationell rekrytering & skickliga bemanningslösningar över hela Europa"
+                      : isDe
+                      ? "Internationale Rekrutierung & qualifizierte Personallösungen in ganz Europa"
                       : "International Recruitment & Skilled Workforce Solutions Across Europe"}
                   </span>
                 </div>
 
                 <div>
                   <span className="text-white/40 block uppercase text-[10px] tracking-wider">
-                    {isSv ? "Huvudkontor" : "Headquarters"}
+                    {isSv ? "Huvudkontor" : isDe ? "Hauptsitz" : "Headquarters"}
                   </span>
                   <span className="text-xs text-white/90 mt-0.5 block leading-relaxed">
-                    Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : "Sweden"}
+                    Baumansgatan 4, 593 32 Västervik, {isSv ? "Sverige" : isDe ? "Schweden" : "Sweden"}
                   </span>
                 </div>
               </div>
@@ -385,7 +467,7 @@ export default function AboutSection({ onRequestWorkforce }: AboutSectionProps) 
             <div className="bg-[#0B1522] border border-white/15 rounded-2xl p-6 sm:p-7 space-y-4">
               <div className="pb-3 border-b border-white/10 flex items-center justify-between">
                 <span className="text-[11px] font-mono tracking-widest uppercase text-[#C59C58]">
-                  {isSv ? "Ledning & Partners" : "Leadership & Partners"}
+                  {isSv ? "Ledning & Partners" : isDe ? "Führung & Partner" : "Leadership & Partners"}
                 </span>
                 <Users className="w-4 h-4 text-[#C59C58]" />
               </div>

@@ -32,6 +32,7 @@ interface ContactPerson {
   name: string;
   positionEn: string;
   positionSv: string;
+  positionDe?: string;
   email: string;
   isGeneral?: boolean;
 }
@@ -41,36 +42,42 @@ const OFFICIAL_CONTACTS: ContactPerson[] = [
     name: "Bianka Bittlingmeier",
     positionEn: "Co-Founder & Co-Owner",
     positionSv: "Medgrundare & Delägare",
+    positionDe: "Mitgründerin & Miteigentümerin",
     email: "bianka@norvian.se",
   },
   {
     name: "Vinu Mohan",
     positionEn: "Co-Founder & Co-Owner",
     positionSv: "Medgrundare & Delägare",
+    positionDe: "Mitgründer & Miteigentümer",
     email: "vinu@norvian.se",
   },
   {
     name: "Alina Aleksandriuk",
     positionEn: "Branch Manager & Administrator",
     positionSv: "Branch Manager & Administratör",
+    positionDe: "Niederlassungsleiterin & Administratorin",
     email: "alina@norvian.se",
   },
   {
     name: "Isabelle Beyer",
     positionEn: "External Business Partner – Germany",
     positionSv: "Extern Affärspartner – Tyskland",
+    positionDe: "Externe Geschäftspartnerin – Deutschland",
     email: "isabelle@norvian.se",
   },
   {
     name: "Baiju Babu",
     positionEn: "External Business Partner – UK",
     positionSv: "Extern Affärspartner – UK",
+    positionDe: "Externer Geschäftspartner – UK",
     email: "baiju@norvian.se",
   },
   {
     name: "General Office",
     positionEn: "General Enquiries",
     positionSv: "Allmänna Förfrågningar",
+    positionDe: "Allgemeine Anfragen",
     email: "office@norvian.se",
     isGeneral: true,
   },
@@ -79,6 +86,7 @@ const OFFICIAL_CONTACTS: ContactPerson[] = [
 export default function WorkforceFormSection({ initialIndustry = "" }: WorkforceFormProps) {
   const { t, language } = useLanguage();
   const isSv = language === "sv";
+  const isDe = language === "de";
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -239,10 +247,10 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               }
             }}
             className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-[#C59C58] text-white hover:text-[#070D16] border border-white/15 hover:border-[#C59C58] text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-sm"
-            aria-label={isSv ? "Gå tillbaka till föregående sida" : "Go back to previous page"}
+            aria-label={isSv ? "Gå tillbaka till föregående sida" : isDe ? "Zurück zur vorherigen Seite" : "Go back to previous page"}
           >
             <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>{isSv ? "Tillbaka" : "Back"}</span>
+            <span>{isSv ? "Tillbaka" : isDe ? "Zurück" : "Back"}</span>
           </button>
         </div>
 
@@ -250,7 +258,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
         <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
           <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C59C58] uppercase font-bold">
-            {isSv ? "NORVIAN AB // OFFICIELLA E-POSTKONTAKTER" : "NORVIAN AB // OFFICIAL EMAIL CONTACTS"}
+            {isSv ? "NORVIAN AB // OFFICIELLA E-POSTKONTAKTER" : isDe ? "NORVIAN AB // OFFIZIELLE E-MAIL-KONTAKTE" : "NORVIAN AB // OFFICIAL EMAIL CONTACTS"}
           </span>
           <span className="h-[1px] w-8 sm:w-12 bg-[#C59C58]/60" />
         </div>
@@ -262,7 +270,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
               NORVIAN AB
               <br />
               <span className="italic font-serif text-[#C59C58] text-2xl sm:text-4xl lg:text-5xl">
-                {isSv ? "Officiella E-postkontakter" : "Official Email Contacts"}
+                {isSv ? "Officiella E-postkontakter" : isDe ? "Offizielle E-Mail-Kontakte" : "Official Email Contacts"}
               </span>
             </h2>
           </div>
@@ -273,7 +281,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
           <div className="inline-flex items-center gap-2.5 px-4.5 py-1.5 rounded-full bg-white/[0.05] border border-[#C59C58]/40 text-xs sm:text-sm font-medium text-white shadow-sm mb-3">
             <span className="w-2 h-2 rounded-full bg-[#C59C58] animate-pulse" />
             <span className="tracking-wide">
-              {isSv ? "Er Bransch. Vårt Folk. Ett Mål." : "Your Industry. Our People. One Goal."}
+              {isSv ? "Er Bransch. Vårt Folk. Ett Mål." : isDe ? "Ihre Branche. Unsere Menschen. Ein Ziel." : "Your Industry. Our People. One Goal."}
             </span>
           </div>
           <p className="text-base sm:text-lg text-white/80 font-light leading-relaxed">
@@ -322,7 +330,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                           {contact.name}
                         </h4>
                         <p className="text-[#C59C58] font-semibold text-[11px] sm:text-xs mt-0.5">
-                          {isSv ? contact.positionSv : contact.positionEn}
+                          {isSv ? contact.positionSv : isDe && contact.positionDe ? contact.positionDe : contact.positionEn}
                         </p>
                       </div>
                       <button
@@ -608,7 +616,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                     </td>
                     <td className="py-4 px-4 text-white/80">
                       <span className="inline-block px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 text-xs text-white/90">
-                        {isSv ? contact.positionSv : contact.positionEn}
+                        {isSv ? contact.positionSv : isDe && contact.positionDe ? contact.positionDe : contact.positionEn}
                       </span>
                     </td>
                     <td className="py-4 px-4 text-right">
@@ -666,7 +674,7 @@ export default function WorkforceFormSection({ initialIndustry = "" }: Workforce
                   </button>
                 </div>
                 <p className="text-[#C59C58] text-xs font-medium">
-                  {isSv ? contact.positionSv : contact.positionEn}
+                  {isSv ? contact.positionSv : isDe && contact.positionDe ? contact.positionDe : contact.positionEn}
                 </p>
                 <a
                   href={`mailto:${contact.email}`}

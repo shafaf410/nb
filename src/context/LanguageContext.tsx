@@ -27,7 +27,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("norvian_user_chosen_lang") as Language;
-      if (saved === "en" || saved === "sv") {
+      if (saved === "en" || saved === "sv" || saved === "de") {
         setLanguageState(saved);
       }
     } catch {
@@ -45,7 +45,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleLanguage = () => {
-    const next = language === "sv" ? "en" : "sv";
+    const next: Language = language === "sv" ? "en" : language === "en" ? "de" : "sv";
     setLanguage(next);
   };
 

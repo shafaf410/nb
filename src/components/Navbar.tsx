@@ -17,6 +17,7 @@ interface NavbarProps {
 export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }: NavbarProps) {
   const { t, language } = useLanguage();
   const isSv = language === "sv";
+  const isDe = language === "de";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -62,32 +63,32 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
     {
       id: "shipbuilding",
       href: "/#service-shipbuilding",
-      title: isSv ? "Skeppsbyggnad & Marint" : "Shipbuilding & Marine",
-      desc: isSv ? "Varv, torrdockor & marint" : "Shipyards, dry docks & offshore",
+      title: isSv ? "Skeppsbyggnad & Marint" : isDe ? "Schiffbau & Marine" : "Shipbuilding & Marine",
+      desc: isSv ? "Varv, torrdockor & marint" : isDe ? "Werften, Trockendocks & Offshore" : "Shipyards, dry docks & offshore",
       icon: Anchor,
       tag: "01",
     },
     {
       id: "construction",
       href: "/#service-construction",
-      title: isSv ? "Bygg & Anläggning" : "Construction & Civil",
-      desc: isSv ? "Infrastruktur & stålkonstruktion" : "Civil builds & structural steel",
+      title: isSv ? "Bygg & Anläggning" : isDe ? "Bau & Infrastruktur" : "Construction & Civil",
+      desc: isSv ? "Infrastruktur & stålkonstruktion" : isDe ? "Infrastruktur & Stahlbau" : "Civil builds & structural steel",
       icon: Building2,
       tag: "02",
     },
     {
       id: "logistics",
       href: "/#service-logistics",
-      title: isSv ? "Tung Logistik & Transport" : "Heavy Logistics & Fleet",
-      desc: isSv ? "Åkeri & terminaldistribution" : "Freight transport & fleet logistics",
+      title: isSv ? "Tung Logistik & Transport" : isDe ? "Schwerlastlogistik & Flotte" : "Heavy Logistics & Fleet",
+      desc: isSv ? "Åkeri & terminaldistribution" : isDe ? "Fernverkehr & Flottenlogistik" : "Freight transport & fleet logistics",
       icon: Truck,
       tag: "03",
     },
     {
       id: "industrial",
       href: "/#service-industrial",
-      title: isSv ? "Industri & Tillverkning" : "Industrial Production & Trades",
-      desc: isSv ? "Svets, CNC & mekanisk montering" : "Precision welding, CNC & assembly",
+      title: isSv ? "Industri & Tillverkning" : isDe ? "Industrie & Fertigung" : "Industrial Production & Trades",
+      desc: isSv ? "Svets, CNC & mekanisk montering" : isDe ? "Präzisionsschweißen, CNC & Montage" : "Precision welding, CNC & assembly",
       icon: Factory,
       tag: "04",
     },
@@ -218,7 +219,7 @@ export default function Navbar({ onRequestWorkforce, onGoHome, showNav = true }:
                     >
                       <div className="px-3 py-2 border-b border-slate-300/70 flex items-center justify-between">
                         <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#9E7324] font-bold">
-                          {isSv ? "Specialiserade Branscher" : "Specialized Disciplines"}
+                          {isSv ? "Specialiserade Branscher" : isDe ? "Spezialisierte Branchen" : "Specialized Disciplines"}
                         </span>
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       </div>
