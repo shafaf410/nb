@@ -332,10 +332,10 @@ export default function TeamSection() {
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10">
                   <div className="font-serif text-xl sm:text-2xl text-[#E8C587] font-semibold">
-                    {isSv ? "Europa" : isDe ? "Europa" : "Europe"}
+                    {isSv ? "Intra-EU" : isDe ? "Intra-EU" : "Intra-EU"}
                   </div>
                   <div className="text-[10.5px] font-mono text-slate-400 uppercase mt-0.5">
-                    {isSv ? "Internationell Rekrytering" : isDe ? "Internationale Rekrutierung" : "International Recruitment"}
+                    {isSv ? "Bemanningslösningar" : isDe ? "Personaldienstleistungen" : "Staffing Services"}
                   </div>
                 </div>
                 <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10">
