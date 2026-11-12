@@ -201,31 +201,31 @@ export default function IntroCinematicSection({ onRequestWorkforce }: IntroCinem
             <p>
               {isSv ? (
                 <>
-                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> är ett svenskt rekryteringsföretag baserat i Västervik, Sverige, med ett internationellt fokus.
+                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> är ett svenskt bemanningsföretag baserat i Västervik, Sverige, som levererar bemanningslösningar över hela Europa.
                 </>
               ) : isDe ? (
                 <>
-                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> ist ein schwedisches Personalvermittlungsunternehmen mit Sitz in Västervik, Schweden, mit internationaler Ausrichtung.
+                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> ist ein schwedisches Personaldienstleistungsunternehmen mit Sitz in Västervik, Schweden, das Personallösungen in ganz Europa anbietet.
                 </>
               ) : (
                 <>
-                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> is a Swedish recruitment company based in Västervik, Sweden, with an international focus.
+                  <strong className="font-semibold text-[#0B1522]">NORVIAN AB</strong> is a Swedish staffing company based in Västervik, Sweden, providing workforce solutions across Europe.
                 </>
               )}
             </p>
             <p>
               {isSv
-                ? "Vårt team har cirka fem års erfarenhet av internationell rekrytering och samarbete med företag och rekryteringspartners över hela Europa."
+                ? "Vårt team har cirka fem års erfarenhet av europeiska bemanningstjänster och samarbete med företag och affärspartners över hela Europa."
                 : isDe
-                ? "Unser Team bringt rund fünf Jahre Erfahrung in der internationalen Personalvermittlung und der Zusammenarbeit mit Unternehmen und Rekrutierungspartnern in ganz Europa mit."
-                : "Our team brings around five years of experience in international recruitment and working with companies and recruitment partners across Europe."}
+                ? "Unser Team bringt rund fünf Jahre Erfahrung in europäischen Personaldienstleistungen und der Zusammenarbeit mit Unternehmen und Geschäftspartnern in ganz Europa mit."
+                : "Our team brings around five years of experience in European staffing services and working with companies and business partners across Europe."}
             </p>
             <p>
               {isSv
-                ? "Vi är specialiserade på rekryteringslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik, och hjälper företag att hitta skickliga, erfarna och pålitliga yrkespersoner för att möta sina kompetensbehov."
+                ? "Vi är specialiserade på bemanningslösningar för skeppsbyggnad, bygg & anläggning, tillverkning samt transport & logistik, och hjälper företag att möta sina personalbehov med skickliga, erfarna och pålitliga arbetare."
                 : isDe
-                ? "Wir sind spezialisiert auf Rekrutierungslösungen für Schiffbau, Bauwesen, Fertigung sowie Transport & Logistik und unterstützen Unternehmen dabei, qualifizierte, erfahrene und zuverlässige Fachkräfte für ihren Personalbedarf zu finden."
-                : "We specialize in recruitment solutions for shipbuilding, construction, manufacturing, and transport & logistics, helping companies find skilled, experienced, and reliable professionals to meet their workforce needs."}
+                ? "Wir sind spezialisiert auf Personallösungen für Schiffbau, Bauwesen, Fertigung sowie Transport & Logistik und unterstützen Unternehmen dabei, ihren Personalbedarf mit qualifizierten, erfahrenen und zuverlässigen Arbeitskräften zu decken."
+                : "We specialize in staffing solutions for shipbuilding, construction, manufacturing, and transport & logistics, helping companies meet their workforce needs with skilled, experienced, and reliable workers."}
             </p>
           </div>
 
