@@ -199,16 +199,16 @@ export default function TeamSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             {/* Founders Photo */}
-            <div className="lg:col-span-5 relative w-full h-80 sm:h-96 lg:h-full min-h-[320px] sm:min-h-[380px] overflow-hidden bg-[#070D16]">
+            <div className="lg:col-span-5 relative w-full aspect-[4/3] sm:aspect-[16/11] lg:aspect-auto lg:h-full min-h-[380px] lg:min-h-[520px] overflow-hidden bg-[#070D16]">
               <Image
                 src="/images/team/co_founders.jpg"
                 alt="Norvian AB Co-Founders Bianka Bittlingmeier & Vinu Mohan"
                 fill
-                className="object-cover object-[54%_20%] group-hover:scale-105 transition-transform duration-700"
+                className="object-cover object-top sm:object-[50%_15%] group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 priority
               />
-              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0B1522] via-[#0B1522]/40 to-transparent pointer-events-none lg:inset-0 lg:h-full lg:bg-gradient-to-r lg:from-transparent lg:to-[#0B1522]/80" />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B1522] via-[#0B1522]/50 to-transparent pointer-events-none lg:inset-0 lg:h-full lg:bg-gradient-to-r lg:from-transparent lg:via-[#0B1522]/30 lg:to-[#0B1522]/90" />
 
               <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-[10.5px] sm:text-[11px] font-mono text-white/90 bg-black/70 backdrop-blur-md px-3 sm:px-3.5 py-1.5 rounded-full border border-white/10 shadow-lg">
                 <span className="flex items-center gap-1.5 text-[#E8C587] font-semibold shrink-0">
