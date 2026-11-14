@@ -15,11 +15,13 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "NORVIAN AB | Qualified International Workforce & Talent Placement",
+  metadataBase: new URL("https://norvian.se"),
+  title: "NORVIAN AB | Swedish Staffing Company",
   description: "NORVIAN AB is a Swedish staffing company based in Västervik, Sweden, providing workforce solutions across Europe. Our team brings around five years of experience in European staffing services and working with companies and business partners across Europe.",
   keywords: [
     "workforce",
     "staffing",
+    "Swedish staffing company",
     "shipbuilding",
     "construction",
     "manufacturing",
@@ -33,6 +35,28 @@ export const metadata: Metadata = {
     "593 32 Västervik",
     "Västervik Sweden",
   ],
+  openGraph: {
+    title: "NORVIAN AB | Swedish Staffing Company",
+    description: "NORVIAN AB is a Swedish staffing company based in Västervik, Sweden, providing workforce solutions across Europe.",
+    url: "https://norvian.se",
+    siteName: "NORVIAN AB",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "NORVIAN AB - Swedish Staffing Company",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NORVIAN AB | Swedish Staffing Company",
+    description: "NORVIAN AB is a Swedish staffing company based in Västervik, Sweden, providing workforce solutions across Europe.",
+    images: ["/logo.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
